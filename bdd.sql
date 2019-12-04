@@ -9,10 +9,13 @@ CREATE TABLE accounts (
 
 CREATE TABLE accounts_accounts
 (
-    id_account_follower INT PRIMARY KEY NOT NULL,
-    id_account_followed INT PRIMARY KEY NOT NULL,
+    id_account_follower INT NOT NULL,
+    id_account_followed INT  NOT NULL,
     FOREIGN KEY (id_account_follower) REFERENCES accounts(id_account) ON UPDATE CASCADE,
-    FOREIGN KEY (id_account_followed) REFERENCES accounts(id_account) ON UPDATE CASCADE
+    FOREIGN KEY (id_account_followed) REFERENCES accounts(id_account) ON UPDATE CASCADE,
+    PRIMARY KEY(id_account_follower,id_account_followed)
+
+
 );
 
 
@@ -40,9 +43,22 @@ CREATE TABLE accounts_bracelets
     id_account_bracelet INT NOT NULL,
     id_bracelet_account INT NOT NULL,
     FOREIGN KEY (id_account_bracelet) REFERENCES accounts(id_account) ON UPDATE CASCADE,
-    FOREIGN KEY (id_bracelet_account) REFERENCES bracelets(id_bracelet) ON UPDATE CASCADE
+    FOREIGN KEY (id_bracelet_account) REFERENCES bracelets(id_bracelet) ON UPDATE CASCADE,
+    PRIMARY KEY(id_account_bracelet,id_bracelet_account)
 );
 
+CREATE TABLE places
+(
+    id_place INT PRIMARY KEY NOT NULL,
+    name_place VARCHAR(32),
+    latitude_place INT NOT NULL,
+    longitude_place INT NOT NULL,
+    idbracelet_place INT NOT NULL,
+    idaccount_place INT NOT NULL,
+    FOREIGN KEY (idbracelet_place) REFERENCES bracelets(id_bracelet) ON UPDATE CASCADE,
+    FOREIGN KEY (idaccount_place) REFERENCES accounts(id_account) ON UPDATE CASCADE
+
+);
 CREATE TABLE travels
 (
     id_travel INT PRIMARY KEY NOT NULL,
@@ -58,15 +74,3 @@ CREATE TABLE travels
     FOREIGN KEY (idbracelet_travel) REFERENCES bracelets(id_bracelet) ON UPDATE CASCADE
 );
 
-CREATE TABLE places
-(
-    id_place INT PRIMARY KEY NOT NULL,
-    name_place VARCHAR(32),
-    latitude_place INT NOT NULL,
-    longitude_place INT NOT NULL,
-    idbracelet_place INT NOT NULL,
-    idaccount_place INT NOT NULL,
-    FOREIGN KEY (idbracelet_place) REFERENCES bracelets(id_bracelet) ON UPDATE CASCADE,
-    FOREIGN KEY (idaccount_place) REFERENCES accounts(id_account) ON UPDATE CASCADE
-
-);
