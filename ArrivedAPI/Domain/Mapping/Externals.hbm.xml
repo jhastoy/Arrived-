@@ -1,0 +1,21 @@
+﻿<?xml version ="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly ="Domain"
+                   namespace="Domain">
+  <class name ="Externals" table ="externals">
+    <id name = "IdExternal" column="id_external" type="int">
+      <generator class ="native"></generator>
+    </id>
+    <property name ="PhoneNumberExternal" column ="phonenumber_external" not-null="false"/>
+    <property name ="NameExternal" column ="name_external" not-null="false"/>
+    <property name ="SurnameExternal" column ="surname_external" not-null="false"/>
+    <many-to-one name ="AccountsExternal" class="Accounts" column="id_account" cascade="all" />
+
+
+
+
+
+
+  </class>
+</hibernate-mapping>

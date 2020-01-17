@@ -1,0 +1,21 @@
+﻿<?xml version ="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly ="Domain"
+                   namespace="Domain">
+  <class name ="Positions" table ="positions">
+    <id name = "IdPosition" column="id_position" type="int">
+      <generator class ="native"></generator>
+    </id>
+    <property name ="DateTimePosition" column ="datetime_position" not-null="false"/>
+    <property name ="LatitudePosition" column ="latitude_position" not-null="false"/>
+    <property name ="LongitudePosition" column ="longitude_position" not-null="false"/>
+    <many-to-one name ="AccountPosition" class="Accounts" column="id_account" cascade="all" />
+
+
+
+
+
+
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,31 @@
+﻿<?xml version ="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly ="Domain"
+                   namespace="Domain">
+  <class name ="Bracelets" table ="bracelets">
+    <id name = "IdBracelet" column="id_bracelet" type="int">
+      <generator class ="native"></generator>
+    </id>
+    <property name ="MaterialIdBracelet" column ="material_id_bracelet" not-null="false"/>
+    <property name ="NameBracelet" column ="name_bracelet" not-null="false"/>
+    <property name ="SurnameBracelet" column ="surname_bracelet" not-null="false"/>
+    
+    <bag name ="AccountsBracelet" table ="accounts_bracelets" cascade="save-update">
+      <key column ="id_bracelet"/>
+      <many-to-many class ="Accounts" column ="id_account"/>
+    </bag>
+    <bag name="PlacesBracelet">
+      <key column="id_bracelet" />
+      <one-to-many class="Places" />
+    </bag>
+    <bag name="TravelsBracelet">
+      <key column="id_bracelet" />
+      <one-to-many class="Travels" />
+    </bag>
+
+
+    
+
+  </class>
+</hibernate-mapping>

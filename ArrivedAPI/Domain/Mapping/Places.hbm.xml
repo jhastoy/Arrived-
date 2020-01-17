@@ -1,0 +1,25 @@
+﻿<?xml version ="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly ="Domain"
+                   namespace="Domain">
+  <class name ="Places" table ="places">
+    <id name = "IdPlace" column="id_place" type="int">
+      <generator class ="native"></generator>
+    </id>
+    <property name ="NamePlace" column ="name_place" not-null="false"/>
+    <property name ="LatitudePlace" column ="latitude_place" not-null="false"/>
+    <property name ="LongitudePlace" column ="longitude_place" not-null="false"/>
+    <many-to-one name ="AccountPlace" class="Accounts" column="id_account" cascade="all" />
+    <many-to-one name="BraceletPlace" class="Bracelets" column="id_bracelet" cascade="all" />
+    <bag name="TravelsPlace">
+      <key column="id_travel" />
+      <one-to-many class="Travels" />
+    </bag>
+
+
+
+
+
+  </class>
+</hibernate-mapping>

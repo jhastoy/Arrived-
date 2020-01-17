@@ -145,4 +145,4 @@ C:\Users\theka\source\repos\ArrivedAPI\ArrivedAPI\bin\Debug\netcoreapp3.0\System
 C:\Users\theka\source\repos\ArrivedAPI\ArrivedAPI\bin\Debug\netcoreapp3.0\WebMatrix.Data.dll
 C:\Users\theka\source\repos\ArrivedAPI\ArrivedAPI\bin\Debug\netcoreapp3.0\WebMatrix.WebData.dll
 C:\Users\theka\source\repos\ArrivedAPI\ArrivedAPI\bin\Debug\netcoreapp3.0\Microsoft.Web.Infrastructure.dll
-C:\Users\theka\source\repos\ArrivedAPI\ArrivedAPI\obj\Debug\netcoreapp3.0\ArrivedAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\theka\source\repos\ArrivedAPI\ArrivedAPI\obj\Debug\netcoreapp3.0\ArrivedAPI.csprojAssemblyReference.cache

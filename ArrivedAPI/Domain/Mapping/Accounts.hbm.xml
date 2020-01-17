@@ -1,0 +1,45 @@
+﻿<?xml version ="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly ="Domain"
+                   namespace="Domain">
+  <class name ="Accounts" table ="accounts">
+    <id name = "IdAccount" column="id_account" type="int">
+      <generator class ="native"></generator>
+    </id>
+    <property name ="PhoneNumberAccount" column ="phonenumber_account" not-null="false"/>
+    <property name ="PasswordAccount" column ="password_account" not-null="false"/>
+    <property name ="EmailAccount" column ="email_account" not-null="false"/>
+    <property name ="SurnameAccount" column ="surname_account" not-null="false"/>
+    <property name ="NameAccount" column ="name_account" not-null="false"/>
+
+    <bag name ="AccountsFollowed" table ="accounts_accounts" cascade="save-update">
+      <key column ="id_account_followed"/>
+      <many-to-many class ="Accounts" column ="id_account"/>
+    </bag>
+    <bag name ="BraceletsAccount" table ="accounts_bracelets" cascade="save-update">
+      <key column ="id_account"/>
+      <many-to-many class ="Bracelets" column ="id_bracelet"/>
+    </bag>
+
+    <bag name="ExternalsAccount">
+      <key column="id_account" />
+      <one-to-many class="Externals" />
+    </bag>
+    <bag name="PlacesAccount">
+      <key column="id_account" />
+      <one-to-many class="Places" />
+    </bag>
+    <bag name="PositionsAccount">
+      <key column="id_account" />
+      <one-to-many class="Positions" />
+    </bag>
+    <bag name="TravelsAccount">
+      <key column="id_account" />
+      <one-to-many class="Travels" />
+    </bag>
+
+
+
+  </class>
+</hibernate-mapping>

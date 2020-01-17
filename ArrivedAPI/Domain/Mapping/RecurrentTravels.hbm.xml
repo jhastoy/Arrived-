@@ -1,0 +1,21 @@
+﻿<?xml version ="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly ="Domain"
+                   namespace="Domain">
+  <class name ="RecurrentTravels" table ="travels">
+    <id name = "IdTravel" column="id_travel" type="int">
+      <generator class ="native"></generator>
+    </id>
+    <property name ="NameTravel" column ="name_travel" not-null="false"/>
+    <property name ="TimeTravel" column ="time_travel" not-null="false"/>
+    <many-to-one name ="AccountTravel" class="Accounts" column="id_account" cascade="all" />
+    <many-to-one name ="BraceletTravel" class="Bracelets" column="id_bracelet" cascade="all" />
+    <many-to-one name ="PlaceStartTravel" class="Places" column="id_start_place" cascade="all" />
+    <many-to-one name ="PlaceEndTravel" class="Places" column="id_end_place" cascade="all" />
+
+
+
+
+  </class>
+</hibernate-mapping>

@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using ArrivedAPI.Models;
+using Domain;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using Test.Repositories;
 
 namespace ArrivedAPI.Controllers
 {
@@ -12,47 +13,62 @@ namespace ArrivedAPI.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        
+        private IAccountRepository _accountRepo;
+        public AccountsController()
+        {
+            _accountRepo = new AccountRepository();
+        }
         // GET: api/Accounts
-        [HttpGet]
+
+
+        [HttpGet( Name = "GetAll")]
         public IActionResult  Get()
         {
-            var context = new arrivedContext();
-            IEnumerable<Accounts> allAccounts = context.Accounts;
-            return Ok(allAccounts);
+            return Ok(_accountRepo.Get());
         }
 
         // GET: api/Accounts/5
         [HttpGet("{id}", Name = "Get")]
         public IActionResult Get(int id)
         {
-
-            var context = new arrivedContext();
-            var account = context.Accounts.Where(x => x.IdAccount == id).FirstOrDefault();
+            Accounts account = _accountRepo.GetById(id);
             if(account == null)
             {
                 return NotFound();
             }
-            
             return Ok(account);
         }
 
-        // POST: api/Accounts
-        [HttpPost]
-        public void Post([FromBody] string value)   
+        [HttpGet(Name = "Refresh")]
+        public IActionResult Refresh()
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Accounts a = _accountRepo.GetById(GetIdByToken(identity));
+            return Ok(_accountRepo.Get());
         }
 
-        // PUT: api/Accounts/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPost(Name = "AddFollowedAccount")]
+        public IActionResult AddFollowedAccount([FromBody] string phoneNumber)
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Accounts a = _accountRepo.GetById(GetIdByToken(identity));
+            Accounts addAccount = _accountRepo.AddAccountByPhoneNumber(a,phoneNumber);
+            if(addAccount == null)
+            {
+                return BadRequest(new { message = "Utilisateur Inexistant" });
+            }
+            else
+            {
+                return (Ok(addAccount));
+            }
+
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        public int GetIdByToken(ClaimsIdentity identity)
         {
+            IEnumerable<Claim> claim = identity.Claims;
+            return int.Parse(claim.Where(c => c.Type == "Id").Select(c => c.Value).SingleOrDefault());
         }
+
     }
 }
