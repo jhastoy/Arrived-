@@ -9,7 +9,7 @@ import {
   ActivityIndicator
 } from "react-native";
 import { deleteToken, getToken } from "../API/Token";
-
+import isTokenValid from "../API/Authentification";
 class LoadPage extends React.Component {
   constructor(props) {
     super(props);
@@ -22,8 +22,12 @@ class LoadPage extends React.Component {
     getToken().then(token => {
       console.log(token);
       if (token != null) {
-        console.log("not null");
-        this.props.navigation.replace("HomePage");
+        response = isTokenValid();
+        if (response) {
+          this.props.navigation.replace("HomePage");
+        } else {
+          this.props.navigation.replace("LoginPage");
+        }
       } else {
         this.props.navigation.replace("LoginPage");
       }

@@ -14,7 +14,7 @@
     <many-to-one name="BraceletPlace" class="Bracelets" column="id_bracelet" cascade="all" />
     <bag name="TravelsPlace">
       <key column="id_travel" />
-      <one-to-many class="Travels" />
+      <one-to-many class="RecurrentTravels" />
     </bag>
 
 

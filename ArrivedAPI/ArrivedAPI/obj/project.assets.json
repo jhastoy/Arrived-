@@ -8181,11 +8181,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\ArrivedAPI\\ArrivedAPI.csproj",
+      "projectUniqueName": "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\ArrivedAPI\\ArrivedAPI.csproj",
       "projectName": "ArrivedAPI",
-      "projectPath": "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\ArrivedAPI\\ArrivedAPI.csproj",
+      "projectPath": "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\ArrivedAPI\\ArrivedAPI.csproj",
       "packagesPath": "C:\\Users\\theka\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\ArrivedAPI\\obj\\",
+      "outputPath": "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\ArrivedAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -8206,11 +8206,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Domain\\Domain.csproj"
+            "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj"
             },
-            "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Test\\Test.csproj": {
-              "projectPath": "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Test\\Test.csproj"
+            "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Test\\Test.csproj": {
+              "projectPath": "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Test\\Test.csproj"
             }
           }
         }

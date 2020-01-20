@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Domain;
 
 namespace ArrivedAPI.Controllers
 {
@@ -13,9 +14,10 @@ namespace ArrivedAPI.Controllers
     public class TokenController : ControllerBase
     {
         [Authorize]
-        public IActionResult IsTokenValid([FromBody] string token)
+        [HttpPost]
+        public IActionResult IsTokenValid([FromBody] Accounts token)
         {
-            return Ok(true);
+            return Ok("valid");
         }
     }
 }

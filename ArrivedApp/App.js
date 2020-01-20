@@ -6,11 +6,7 @@ import FollowComponent from "./Components/FollowComponent";
 
 export default class App extends React.Component {
   render() {
-    return (
-      <View style={styles.container}>
-        <FollowComponent />
-      </View>
-    );
+    return <Navigation />;
   }
 }
 

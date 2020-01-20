@@ -1,0 +1,35 @@
+﻿<?xml version ="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly ="Domain"
+                   namespace="Domain">
+  <class name ="Travel" table ="travels">
+    <id name = "IdTravel" column="id_travel" type="int">
+      <generator class ="native"></generator>
+    </id>
+    <one-to-one name ="TravellerTravel"  class ="Accounts" cascade="save-update"/>
+    <many-to-one name ="StartPlaceTravel" class="Places" column="id_start_place" cascade="all" />
+    <many-to-one name ="EndPlaceTravel" class="Places" column="id_end_place" cascade="all" />
+
+    <property name ="StartPositionTravel" column ="start_position_travel" not-null="false"/>
+    <property name ="EndPositionTravel" column ="end_position_travel" not-null="false"/>
+    <property name ="StartDateTravel" column ="start_date_travel" not-null="false"/>
+    <property name ="EndDateTravel" column ="end_date_travel" not-null="false"/>
+    <property name ="TransportTypeTravel" column ="transport_type_travel" not-null="false"/>
+    <property name ="UserPositionsTravel" column ="user_positions_travel" not-null="false"/>
+    <property name ="BaseDistanceTravel" column ="base_distance_travel" not-null="false"/>
+    <property name ="UserDistanceTravel" column ="user_distance_travel" not-null="false"/>
+    <property name ="UserWarningsTravel" column ="user_warnings_travel" not-null="false"/>
+
+
+    <bag name ="FollowerTravel" table ="accounts_travels" cascade="save-update">
+      <key column ="id_follower_account"/>
+      <many-to-many class ="Accounts" column ="id_travel_followed"/>
+    </bag>
+
+
+
+
+
+  </class>
+</hibernate-mapping>

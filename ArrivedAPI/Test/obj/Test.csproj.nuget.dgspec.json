@@ -1,28 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Test\\Test.csproj": {}
+    "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Test\\Test.csproj": {}
   },
   "projects": {
-    "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Domain\\Domain.csproj": {
+    "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Domain\\Domain.csproj"
+        "projectPath": "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj"
       },
       "frameworks": {
         "net461": {}
       }
     },
-    "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Test\\Test.csproj": {
+    "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Test\\Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Test\\Test.csproj",
+        "projectUniqueName": "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Test\\Test.csproj",
         "projectName": "Test",
-        "projectPath": "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Test\\Test.csproj",
+        "projectPath": "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Test\\Test.csproj",
         "packagesPath": "C:\\Users\\theka\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Test\\obj\\",
+        "outputPath": "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Test\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\",
@@ -43,8 +43,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\theka\\source\\repos\\ArrivedAPI\\Domain\\Domain.csproj"
+              "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\theka\\Google Drive\\ENSC\\S3\\Arrived!\\Développement\\Arrived\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj"
               }
             }
           }

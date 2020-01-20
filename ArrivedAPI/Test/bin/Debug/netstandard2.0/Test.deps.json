@@ -392,6 +392,22 @@
         "runtime": {
           "Domain.exe": {}
         }
+      },
+      "Google.Maps/0.32.0.0": {
+        "runtime": {
+          "Google.Maps.dll": {
+            "assemblyVersion": "0.32.0.0",
+            "fileVersion": "0.32.0.0"
+          }
+        }
+      },
+      "Newtonsoft.Json/10.0.0.0": {
+        "runtime": {
+          "Newtonsoft.Json.dll": {
+            "assemblyVersion": "10.0.0.0",
+            "fileVersion": "10.0.3.21018"
+          }
+        }
       }
     }
   },
@@ -641,6 +657,16 @@
     },
     "Domain/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Google.Maps/0.32.0.0": {
+      "type": "reference",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Newtonsoft.Json/10.0.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     }

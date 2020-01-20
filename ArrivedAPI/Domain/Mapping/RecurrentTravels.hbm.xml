@@ -3,7 +3,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly ="Domain"
                    namespace="Domain">
-  <class name ="RecurrentTravels" table ="travels">
+  <class name ="RecurrentTravels" table ="recurrent_travels">
     <id name = "IdTravel" column="id_travel" type="int">
       <generator class ="native"></generator>
     </id>

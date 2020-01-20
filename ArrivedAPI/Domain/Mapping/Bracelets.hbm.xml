@@ -21,7 +21,7 @@
     </bag>
     <bag name="TravelsBracelet">
       <key column="id_bracelet" />
-      <one-to-many class="Travels" />
+      <one-to-many class="RecurrentTravels" />
     </bag>
 
 

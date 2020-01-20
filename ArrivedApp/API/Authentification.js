@@ -53,3 +53,24 @@ export function Register(name, surname, email, password, phoneNumber) {
     }
   });
 }
+
+export async function IsTokenValid() {
+  getToken().then(token =>
+    fetch("https://arrivedapi.conveyor.cloud/api/Token", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      },
+      body: JSON.stringify({
+        PasswordAccount: "test"
+      })
+    }).then(reponse => {
+      if (response.ok) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+  );
+}

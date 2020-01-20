@@ -2105,6 +2105,14 @@
           "Test.dll": {}
         }
       },
+      "Google.Maps/0.32.0.0": {
+        "runtime": {
+          "Google.Maps.dll": {
+            "assemblyVersion": "0.32.0.0",
+            "fileVersion": "0.32.0.0"
+          }
+        }
+      },
       "Microsoft.AspNetCore.Antiforgery/3.1.0.0": {
         "compile": {
           "Microsoft.AspNetCore.Antiforgery.dll": {}
@@ -4876,6 +4884,11 @@
     },
     "Test/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Google.Maps/0.32.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     },

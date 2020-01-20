@@ -23,6 +23,8 @@ namespace Domain
         public virtual ICollection<Places> PlacesAccount { get; set; }
         public virtual ICollection<Positions> PositionsAccount { get; set; }
         public virtual ICollection<RecurrentTravels> TravelsAccount { get; set; }
+        public virtual ICollection<Travel> FollowedTravelsAccount { get; set; }
+        public virtual Travel TravelAccount { get; set; }
 
         public virtual void Censure()
         {
