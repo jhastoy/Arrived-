@@ -20,54 +20,64 @@ namespace Domain
 
         public virtual Places StartPlaceTravel { get; set; }
         public virtual Places EndPlaceTravel { get; set; }
-        public virtual string StartPositionTravel { get; set; }
-        public virtual string EndPositionTravel { get; set; }
+        public virtual Positions StartPositionTravel { get; set; }
+        public virtual Positions EndPositionTravel { get; set; }
 
         public virtual DateTime StartDateTravel { get; set; }
         public virtual DateTime EndDateTravel { get; set; }
 
         public virtual int TransportTypeTravel { get; set; }
-        public virtual string[] UserPositionsTravel { get; set; }
+        public virtual ICollection<Positions> UserPositionsTravel { get; set; }
         public virtual int BaseDistanceTravel { get; set; }
-        public virtual int UserDistanceTravel { get; set; }
+        public virtual ICollection<int> UserDistanceTravel { get; set; }
         public virtual double ProgressionTravel { get; set; }
-        public virtual string[] UserWarningsTravel { get; set; }
+        public virtual ICollection<string> UserWarningsTravel { get; set; }
 
         public Travel() { }
         public Travel(Accounts traveller, ICollection<Accounts> follower, Places startPlace, Places endPlace, int transportType)
         {
-            UserDistanceTravel = 0;
+            UserPositionsTravel = new List<Positions>();
+            UserDistanceTravel = new List<int>();
+            UserWarningsTravel = new List<string>();
+            UserDistanceTravel = new List<int>();
+
             TravellerTravel = traveller;
             FollowerTravel = follower;
 
             StartPlaceTravel = startPlace;
             EndPlaceTravel = endPlace;
-            StartPositionTravel = StartPlaceTravel.LatitudePlace + " " + StartPlaceTravel.LongitudePlace;
-            EndPositionTravel = EndPlaceTravel.LatitudePlace + " " + EndPlaceTravel.LongitudePlace;
+            StartPositionTravel = StartPlaceTravel.PositionPlace;
+            EndPositionTravel = EndPlaceTravel.PositionPlace;
 
             TransportTypeTravel = transportType;
             InitDates();
             InitDistance();
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
         }
-        public Travel(Accounts traveller, ICollection<Accounts> follower, string startPosition, Places endPlace, int transportType)
+        public Travel(Accounts traveller, ICollection<Accounts> follower, Positions startPosition, Places endPlace, int transportType)
         {
-            UserDistanceTravel = 0;
+            UserPositionsTravel = new List<Positions>();
+            UserDistanceTravel = new List<int>();
+            UserWarningsTravel = new List<string>();
+            UserDistanceTravel = new List<int>();
 
             TravellerTravel = traveller;
             FollowerTravel = follower;
             StartPositionTravel = startPosition;
             EndPlaceTravel = endPlace;
-            EndPositionTravel = EndPlaceTravel.LatitudePlace + " " + EndPlaceTravel.LongitudePlace;
+            EndPositionTravel = EndPlaceTravel.PositionPlace;
 
             TransportTypeTravel = transportType;
             InitDates();
             InitDistance();
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
         }
-        public Travel(Accounts traveller, ICollection<Accounts> follower, string startPosition, string endPosition, int transportType)
+        public Travel(Accounts traveller, ICollection<Accounts> follower, Positions startPosition, Positions endPosition, int transportType)
         {
-            UserDistanceTravel = 0;
+            UserPositionsTravel = new List<Positions>();
+            UserDistanceTravel = new List<int>();
+            UserWarningsTravel = new List<string>();
+            UserDistanceTravel = new List<int>();
 
             TravellerTravel = traveller;
             FollowerTravel = follower;
@@ -78,9 +88,12 @@ namespace Domain
             InitDistance();
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
         }
-        public Travel(string startPosition, string endPosition, int transportType)
+        public Travel(Positions startPosition, Positions endPosition, int transportType)
         {
-            UserDistanceTravel = 0;
+            UserPositionsTravel = new List<Positions>();
+            UserDistanceTravel = new List<int>();
+            UserWarningsTravel = new List<string>();
+            UserDistanceTravel = new List<int>();
 
             StartPositionTravel = startPosition;
             EndPositionTravel = endPosition;
@@ -101,14 +114,14 @@ namespace Domain
         }
         public virtual int CalculateDistance()
         {
-            var request = MatrixRequest(StartPositionTravel);
+            var request = MatrixRequest(StartPositionTravel.LatitudePosition + " " + StartPositionTravel.LongitudePosition);
             var response = new Google.Maps.DistanceMatrix.DistanceMatrixService();
             var distance = response.GetResponseAsync(request).Result.Rows[0].Elements[0].distance;
             return FormatDistance(distance.ToString());
         }
         public virtual DateTime  CalculateDuration()
         {
-            var request = MatrixRequest(StartPositionTravel);
+            var request = MatrixRequest(StartPositionTravel.LatitudePosition + " " + StartPositionTravel.LongitudePosition);
             var response = new Google.Maps.DistanceMatrix.DistanceMatrixService();
             var duration = response.GetResponseAsync(request).Result.Rows[0].Elements[0].duration;
             return FormatDuration(duration.ToString());
@@ -116,7 +129,16 @@ namespace Domain
 
         public virtual DateTime FormatDuration(string googleDuration)
         {
-            var format = googleDuration.Replace(" mins ", "").Replace(" hours ", ":").Replace(" hour ", ":");
+            var format = googleDuration;
+
+            if (format.IndexOf("hour") == -1 || format.IndexOf("hours") == -1)
+            {
+                format = "00:" + format.Replace(" mins ", "");
+            }
+            else
+            {
+                format = format.Replace(" mins ", "").Replace(" hours ", ":").Replace(" hour ", ":");
+            }
             int index = format.IndexOf("(");
             format = format.Remove(index, 6);
             DateTime date = Convert.ToDateTime(format);
@@ -145,7 +167,7 @@ namespace Domain
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
             var request = new Google.Maps.DistanceMatrix.DistanceMatrixRequest();
             request.AddOrigin(new Location(startPosition));
-            request.AddDestination(new Location(EndPositionTravel));
+            request.AddDestination(new Location(EndPositionTravel.LatitudePosition + " " + EndPositionTravel.LongitudePosition));
             switch(TransportTypeTravel)
             {
                 case 0:
@@ -165,11 +187,12 @@ namespace Domain
         }
         public virtual void Update()
         {
-            var request = MatrixRequest(UserPositionsTravel.Last());
+            var request = MatrixRequest(UserPositionsTravel.Last().LatitudePosition + " " + UserPositionsTravel.Last().LongitudePosition);
             var response = new Google.Maps.DistanceMatrix.DistanceMatrixService().GetResponseAsync(request).Result.Rows[0].Elements[0];
-            EndDateTravel = response.duration
-            UserDistanceTravel = FormatDistance(response.distance.ToString());
-            ProgressionTravel = (UserDistanceTravel / BaseDistanceTravel) * 100;
+            var duration = FormatDuration(response.duration.ToString());
+            EndDateTravel = StartDateTravel.AddHours(duration.Hour).AddMinutes(duration.Minute);
+            UserDistanceTravel.Add( FormatDistance(response.distance.ToString()));
+            ProgressionTravel = 100 - ((double)UserDistanceTravel.Last() / (double)BaseDistanceTravel) * 100;
         }
         public virtual void  Censure()
         {

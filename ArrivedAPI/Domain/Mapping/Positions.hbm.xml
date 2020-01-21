@@ -10,7 +10,6 @@
     <property name ="DateTimePosition" column ="datetime_position" not-null="false"/>
     <property name ="LatitudePosition" column ="latitude_position" not-null="false"/>
     <property name ="LongitudePosition" column ="longitude_position" not-null="false"/>
-    <many-to-one name ="AccountPosition" class="Accounts" column="id_account" cascade="all" />
 
 
 

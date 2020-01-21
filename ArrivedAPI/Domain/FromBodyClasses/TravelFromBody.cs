@@ -11,8 +11,8 @@ namespace Domain.FromBodyClasses
         public int[] FollowerAccountsIds { get; set; }
         public int  StartPlaceId { get; set; }
         public int  EndPlaceId { get; set; }
-        public virtual string StartPositionTravel { get; set; }
-        public virtual string EndPositionTravel { get; set; }
+        public virtual Positions StartPositionTravel { get; set; }
+        public virtual Positions EndPositionTravel { get; set; }
         public virtual int TransportTypeTravel { get; set; }
 
     }

@@ -59,6 +59,7 @@
     <Compile Include="Accounts.cs" />
     <Compile Include="Bracelets.cs" />
     <Compile Include="Externals.cs" />
+    <Compile Include="FromBodyClasses\PositionFromBody.cs" />
     <Compile Include="FromBodyClasses\TravelFromBody.cs" />
     <Compile Include="Places.cs" />
     <Compile Include="Positions.cs" />

@@ -11,12 +11,14 @@ namespace Domain
     {
         static void Main(string[] args)
         {
-            Travel travel = new Travel("8 Rue des remparts, Bordeaux", "1252 ROUTE DE CAZENAVE ORX", 0);
-            Console.WriteLine(travel.StartDateTravel);
-            Console.WriteLine(travel.EndDateTravel);
-            Console.WriteLine(travel.BaseDistanceTravel);
+            GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
+            var request = new Google.Maps.DistanceMatrix.DistanceMatrixRequest();
+            request.AddOrigin(new Location("44.840477 -0.579564"));
+            request.AddDestination(new Location("43.609316 -1.357550"));
+            var response = new Google.Maps.DistanceMatrix.DistanceMatrixService();
+            var duration = response.GetResponseAsync(request).Result.Rows[0].Elements[0].duration;
+            Console.WriteLine(duration);
             Console.ReadLine();
-
 
         }
     }

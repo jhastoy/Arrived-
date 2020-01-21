@@ -8,8 +8,8 @@
       <generator class ="native"></generator>
     </id>
     <property name ="NamePlace" column ="name_place" not-null="false"/>
-    <property name ="LatitudePlace" column ="latitude_place" not-null="false"/>
-    <property name ="LongitudePlace" column ="longitude_place" not-null="false"/>
+    <one-to-one name ="PositionPlace"  class ="Positions" cascade="save-update"/>
+
     <many-to-one name ="AccountPlace" class="Accounts" column="id_account" cascade="all" />
     <many-to-one name="BraceletPlace" class="Bracelets" column="id_bracelet" cascade="all" />
     <bag name="TravelsPlace">

@@ -66,6 +66,20 @@ namespace ArrivedAPI.Controllers
             }
             return Ok(t);
         }
+        [Authorize]
+        [Route("[action]")]
+        [HttpPut]
+        
+        public IActionResult UpdateUserPosition([FromBody] Positions position)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Travel t = _travelRepo.GetTravelByIdAcount(GetIdByToken(identity));
+            t.UserPositionsTravel.Add(position);
+            t.Update();
+            _travelRepo.AddOrUpdateTravel(t);
+            t.Censure();
+            return Ok(t);
+        }
         public int GetIdByToken(ClaimsIdentity identity)
         {
             IEnumerable<Claim> claim = identity.Claims;
