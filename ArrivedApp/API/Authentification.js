@@ -1,4 +1,4 @@
-import { getToken, saveToken } from "./Token";
+import { getToken, saveToken } from "./Storage";
 export function Login(email, password) {
   console.log(email);
   console.log(password);
@@ -65,7 +65,7 @@ export async function IsTokenValid() {
       body: JSON.stringify({
         PasswordAccount: "test"
       })
-    }).then(reponse => {
+    }).then(response => {
       if (response.ok) {
         return true;
       } else {

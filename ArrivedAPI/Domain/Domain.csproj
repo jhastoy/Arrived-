@@ -59,11 +59,11 @@
     <Compile Include="Accounts.cs" />
     <Compile Include="Bracelets.cs" />
     <Compile Include="Externals.cs" />
+    <Compile Include="FromBodyClasses\AccountFromBody.cs" />
     <Compile Include="FromBodyClasses\PositionFromBody.cs" />
     <Compile Include="FromBodyClasses\TravelFromBody.cs" />
     <Compile Include="Places.cs" />
     <Compile Include="Positions.cs" />
-    <Compile Include="RecurrentTravels.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Travel.cs" />
@@ -86,9 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\Positions.hbm.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Mapping\RecurrentTravels.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Mapping\Travel.hbm.xml" />

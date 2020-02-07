@@ -22,3 +22,15 @@ C:\Users\theka\Google Drive\ENSC\S3\Arrived!\Développement\Arrived\Arrived-\Arr
 C:\Users\theka\Google Drive\ENSC\S3\Arrived!\Développement\Arrived\Arrived-\ArrivedAPI\Domain\obj\Debug\Domain.csproj.CopyComplete
 C:\Users\theka\Google Drive\ENSC\S3\Arrived!\Développement\Arrived\Arrived-\ArrivedAPI\Domain\obj\Debug\Domain.exe
 C:\Users\theka\Google Drive\ENSC\S3\Arrived!\Développement\Arrived\Arrived-\ArrivedAPI\Domain\obj\Debug\Domain.pdb
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\Domain.exe.config
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\Domain.exe
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\Domain.pdb
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\BouncyCastle.Crypto.dll
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\Google.Maps.dll
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\Newtonsoft.Json.dll
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\BouncyCastle.Crypto.xml
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\Newtonsoft.Json.xml
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\Domain\obj\Debug\Domain.csprojAssemblyReference.cache
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\Domain\obj\Debug\Domain.csproj.CopyComplete
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\Domain\obj\Debug\Domain.exe
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\Domain\obj\Debug\Domain.pdb

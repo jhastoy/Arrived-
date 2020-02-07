@@ -7,21 +7,22 @@
     <id name = "IdAccount" column="id_account" type="int">
       <generator class ="native"></generator>
     </id>
+    <property name ="InTravel" column ="intravel_account" not-null="false"/>
     <property name ="PhoneNumberAccount" column ="phonenumber_account" not-null="false"/>
     <property name ="PasswordAccount" column ="password_account" not-null="false"/>
     <property name ="EmailAccount" column ="email_account" not-null="false"/>
     <property name ="SurnameAccount" column ="surname_account" not-null="false"/>
     <property name ="NameAccount" column ="name_account" not-null="false"/>
-    <one-to-one name ="TravelAccount"  class ="Travel" cascade="save-update"/>
-
-    <bag name ="AccountsFollowed" table ="accounts_accounts" cascade="save-update">
-      <key column ="id_account_followed"/>
+    <many-to-one
+            name="TravelAccount"
+            column="travel_account"
+            class="Travel"
+            cascade="save-update" />
+    <bag name ="FriendsAccount" table ="accounts_accounts" cascade="save-update">
+      <key column ="id_account_friend"/>
       <many-to-many class ="Accounts" column ="id_account"/>
     </bag>
-    <bag name ="FollowedTravelsAccount" table ="accounts_travels" cascade="save-update">
-      <key column ="id_travel_followed"/>
-      <many-to-many class ="Travel" column ="id_follower_account"/>
-    </bag>
+   
     <bag name ="BraceletsAccount" table ="accounts_bracelets" cascade="save-update">
       <key column ="id_account"/>
       <many-to-many class ="Bracelets" column ="id_bracelet"/>
@@ -35,15 +36,12 @@
       <key column="id_account" />
       <one-to-many class="Places" />
     </bag>
-    <bag name="PositionsAccount">
-      <key column="id_account" />
-      <one-to-many class="Positions" />
-    </bag>
-    <bag name="TravelsAccount">
-      <key column="id_account" />
-      <one-to-many class="RecurrentTravels" />
-    </bag>
 
+
+    <bag name ="FollowedTravelsAccount" table ="accounts_followedtravels" cascade="save-update">
+      <key column ="id_account"/>
+      <many-to-many class ="Travel" column ="id_travel"/>
+    </bag>
 
 
   </class>

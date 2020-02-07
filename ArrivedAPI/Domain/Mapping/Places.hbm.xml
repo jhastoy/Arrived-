@@ -10,12 +10,7 @@
     <property name ="NamePlace" column ="name_place" not-null="false"/>
     <one-to-one name ="PositionPlace"  class ="Positions" cascade="save-update"/>
 
-    <many-to-one name ="AccountPlace" class="Accounts" column="id_account" cascade="all" />
-    <many-to-one name="BraceletPlace" class="Bracelets" column="id_bracelet" cascade="all" />
-    <bag name="TravelsPlace">
-      <key column="id_travel" />
-      <one-to-many class="RecurrentTravels" />
-    </bag>
+
 
 
 

@@ -10,7 +10,6 @@ namespace Domain
         public virtual string NameExternal { get; set; }
         public virtual string SurnameExternal { get; set; }
 
-        public virtual Accounts AccountsExternal { get; set; }
 
         public Externals()
         {

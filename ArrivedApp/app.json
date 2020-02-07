@@ -4,11 +4,11 @@
     "slug": "ArrivedApp",
     "privacy": "public",
     "sdkVersion": "36.0.0",
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "androidStatusBar": {
+      "barStyle": "dark-content",
+      "backgroundColor": "#0A48A5"
+    },
+    "platforms": ["ios", "android", "web"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,11 +20,17 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
+    },
+    "android": {
+      "package": "jean.hastoy.arrived",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"
+        }
+      }
     }
   }
 }

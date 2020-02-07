@@ -1,5 +1,5 @@
 import React from "react";
-import { getToken, saveToken } from "../API/Token";
+import initData from "../API/InitData";
 import {
   TouchableOpacity,
   TextInput,
@@ -35,15 +35,11 @@ class LoginPage extends React.Component {
   }
   _connect() {
     this.setState({ isLoading: true });
-    Login(this.email, this.password)
+    Login("shanrio@ensc.fr", "Crunch")
       .then(response => {
-        saveToken(response.token);
+        initData(response);
         this.setState({ isLoading: false });
         console.log(response);
-        showMessage({
-          message: "Bonjour " + response.nameAccount + " !",
-          type: "success"
-        });
         this.props.navigation.replace("HomePage");
       })
       .catch(error => {

@@ -16,7 +16,6 @@ namespace Domain
 
         public virtual ICollection<Accounts> AccountsBracelet { get; set; }
         public virtual ICollection<Places> PlacesBracelet { get; set; }
-        public virtual ICollection<RecurrentTravels> TravelsBracelet { get; set; }
 
     }
 }

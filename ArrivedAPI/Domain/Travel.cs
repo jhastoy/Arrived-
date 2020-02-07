@@ -15,8 +15,7 @@ namespace Domain
     public partial class Travel
     {
         public virtual int IdTravel { get; set; }
-        public virtual Accounts TravellerTravel { get; set; }
-        public virtual ICollection<Accounts> FollowerTravel { get; set; }
+
 
         public virtual Places StartPlaceTravel { get; set; }
         public virtual Places EndPlaceTravel { get; set; }
@@ -34,6 +33,14 @@ namespace Domain
         public virtual ICollection<string> UserWarningsTravel { get; set; }
 
         public Travel() { }
+        public Travel(DateTime startDate,DateTime endDate,int transportType,double progression,ICollection<string> userWarnings)
+        {
+            StartDateTravel = startDate;
+            EndDateTravel = endDate;
+            TransportTypeTravel = transportType;
+            ProgressionTravel = progression;
+            UserWarningsTravel = userWarnings;
+        }
         public Travel(Accounts traveller, ICollection<Accounts> follower, Places startPlace, Places endPlace, int transportType)
         {
             UserPositionsTravel = new List<Positions>();
@@ -41,8 +48,6 @@ namespace Domain
             UserWarningsTravel = new List<string>();
             UserDistanceTravel = new List<int>();
 
-            TravellerTravel = traveller;
-            FollowerTravel = follower;
 
             StartPlaceTravel = startPlace;
             EndPlaceTravel = endPlace;
@@ -61,8 +66,6 @@ namespace Domain
             UserWarningsTravel = new List<string>();
             UserDistanceTravel = new List<int>();
 
-            TravellerTravel = traveller;
-            FollowerTravel = follower;
             StartPositionTravel = startPosition;
             EndPlaceTravel = endPlace;
             EndPositionTravel = EndPlaceTravel.PositionPlace;
@@ -79,8 +82,7 @@ namespace Domain
             UserWarningsTravel = new List<string>();
             UserDistanceTravel = new List<int>();
 
-            TravellerTravel = traveller;
-            FollowerTravel = follower;
+
             StartPositionTravel = startPosition;
             EndPositionTravel = endPosition;
             TransportTypeTravel = transportType;
@@ -130,8 +132,10 @@ namespace Domain
         public virtual DateTime FormatDuration(string googleDuration)
         {
             var format = googleDuration;
+            Console.WriteLine(format.IndexOf("hour"));
+            Console.WriteLine(format.IndexOf("hours"));
 
-            if (format.IndexOf("hour") == -1 || format.IndexOf("hours") == -1)
+            if (format.IndexOf("hour") == -1 && format.IndexOf("hours") == -1)
             {
                 format = "00:" + format.Replace(" mins ", "");
             }
@@ -194,11 +198,18 @@ namespace Domain
             UserDistanceTravel.Add( FormatDistance(response.distance.ToString()));
             ProgressionTravel = 100 - ((double)UserDistanceTravel.Last() / (double)BaseDistanceTravel) * 100;
         }
-        public virtual void  Censure()
+        public virtual bool IsArrived()
         {
-            FollowerTravel = null;
-            TravellerTravel = null;
+            if(ProgressionTravel >= 98)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
+
         
     }
 }

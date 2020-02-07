@@ -30,17 +30,24 @@ namespace ArrivedAPI.Controllers
         public IActionResult AddTravel([FromBody] TravelFromBody t)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Travel travel = new Travel( t.StartPositionTravel, t.EndPositionTravel, t.TransportTypeTravel);
 
-            List<Accounts> followerAccount = new List<Accounts>();
             foreach(int i in t.FollowerAccountsIds)
             {
-                followerAccount.Add(_accountRepo.GetById(i));
+                var follower = _accountRepo.GetById(i);
+                if(follower.FollowedTravelsAccount == null)
+                {
+                    follower.FollowedTravelsAccount = new List<Travel>();
+                }
+                follower.FollowedTravelsAccount.Add(travel);
+                _accountRepo.Update(follower);
             }
-            Accounts user = _accountRepo.GetById(GetIdByToken(identity));
 
-            
-            Travel travel = new Travel(user, followerAccount, t.StartPositionTravel, t.EndPositionTravel, t.TransportTypeTravel);
-            _travelRepo.AddOrUpdateTravel(travel);
+            var user = _accountRepo.GetById(GetIdByToken(identity));
+            user.TravelAccount = travel;
+            user.InTravel = true;
+            _accountRepo.Update(user);
+
             return Ok();
         }
         [Authorize]
@@ -49,8 +56,8 @@ namespace ArrivedAPI.Controllers
         public IActionResult GetUserTravel()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            Travel t = _travelRepo.GetTravelByIdAcount(GetIdByToken(identity));
-            t.Censure();
+            var a = _accountRepo.GetById(GetIdByToken(identity));
+            Travel t = new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel, a.TravelAccount.UserWarningsTravel);
             return Ok(t);
         }
         [Authorize]
@@ -59,25 +66,37 @@ namespace ArrivedAPI.Controllers
         public IActionResult GetFollowedTravels()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            ICollection<Travel> t = _travelRepo.GetFollowedTravelsByIdAcount(GetIdByToken(identity));
-            foreach(Travel travel in t)
+            var user = _accountRepo.GetById(GetIdByToken(identity));
+            List<Accounts> followed = new List<Accounts>();
+            
+            foreach(Accounts a in user.FriendsAccount)
             {
-                travel.Censure();
+                if (a.InTravel && user.FollowedTravelsAccount.Where(x => x.IdTravel == a.TravelAccount.IdTravel).FirstOrDefault() != null) 
+                {
+                    Accounts account = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel,new Travel(a.TravelAccount.StartDateTravel,a.TravelAccount.EndDateTravel,a.TravelAccount.TransportTypeTravel,a.TravelAccount.ProgressionTravel,a.TravelAccount.UserWarningsTravel));
+                    followed.Add(account);
+                }
             }
-            return Ok(t);
+            return Ok(followed);
         }
         [Authorize]
         [Route("[action]")]
         [HttpPut]
         
-        public IActionResult UpdateUserPosition([FromBody] Positions position)
+        public IActionResult UpdateUserPosition([FromBody] Positions[] positions)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            Travel t = _travelRepo.GetTravelByIdAcount(GetIdByToken(identity));
-            t.UserPositionsTravel.Add(position);
+            Travel t = _accountRepo.GetById(GetIdByToken(identity)).TravelAccount;
+            foreach(Positions p in positions)
+            {
+                t.UserPositionsTravel.Add(p);
+            }
             t.Update();
             _travelRepo.AddOrUpdateTravel(t);
-            t.Censure();
+            if (t.IsArrived())
+            {
+                return Ok(true);
+            }
             return Ok(t);
         }
         public int GetIdByToken(ClaimsIdentity identity)

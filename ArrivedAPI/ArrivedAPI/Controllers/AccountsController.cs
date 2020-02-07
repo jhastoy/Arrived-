@@ -47,12 +47,12 @@ namespace ArrivedAPI.Controllers
             return Ok(_accountRepo.Get());
         }
 
-        [HttpPost(Name = "AddFollowedAccount")]
-        public IActionResult AddFollowedAccount([FromBody] string phoneNumber)
+        [HttpPost(Name = "AddFriendAccount")]
+        public IActionResult AddFriendAccount([FromBody] string phoneNumber)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             Accounts a = _accountRepo.GetById(GetIdByToken(identity));
-            Accounts addAccount = _accountRepo.AddAccountByPhoneNumber(a,phoneNumber);
+            Accounts addAccount = _accountRepo.AddFriendByPhoneNumber(a,phoneNumber);
             if(addAccount == null)
             {
                 return BadRequest(new { message = "Utilisateur Inexistant" });

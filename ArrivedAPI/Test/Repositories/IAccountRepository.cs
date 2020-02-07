@@ -15,7 +15,8 @@ namespace Test.Repositories
         Accounts Authentificate(string email, string password);
 
         Accounts GetAccountByPhoneNumber(string phoneNumber);
-        Accounts AddAccountByPhoneNumber(Accounts account, string phoneNumber);
+        Accounts AddFriendByPhoneNumber(Accounts account, string phoneNumber);
+        void Update(Accounts account);
 
     }
 }

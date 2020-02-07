@@ -14,8 +14,5 @@ namespace Domain
         public virtual Positions PositionPlace { get; set; }
 
 
-        public virtual Accounts AccountPlace { get; set; }
-        public virtual Bracelets BraceletPlace { get; set; }
-        public virtual ICollection<RecurrentTravels> TravelsPlace { get; set; }
     }
 }

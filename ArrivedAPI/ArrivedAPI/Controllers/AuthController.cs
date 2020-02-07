@@ -31,7 +31,8 @@ namespace ArrivedAPI.Controllers
             {
                 return BadRequest(new { message = "Email ou mot de passe incorrect" });
             }
-            return Ok(user);
+            Accounts a = new Accounts(user.IdAccount, user.PhoneNumberAccount, user.EmailAccount, user.NameAccount, user.SurnameAccount, user.InTravel, user.FriendsAccount, user.TravelAccount, user.FollowedTravelsAccount,user.Token);
+            return Ok(a);
         }
         [Route("[action]")]
         [HttpPost]

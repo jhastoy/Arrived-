@@ -36,7 +36,11 @@ namespace Test.Repositories
             else
                 return null;
         }
-
+        public void Update(Accounts account)
+        {
+            Session.SaveOrUpdate(account);
+            Session.Flush();
+        }
         public Accounts Authentificate(string email, string password)
         {
             Accounts account = Session.Query<Accounts>().Where(x => x.EmailAccount == email && x.PasswordAccount == password).SingleOrDefault();
@@ -60,18 +64,28 @@ namespace Test.Repositories
                 return account;
         }
 
-        public Accounts AddAccountByPhoneNumber(Accounts account, string phoneNumber)
+        public Accounts AddFriendByPhoneNumber(Accounts account, string phoneNumber)
         {
             Accounts a = GetAccountByPhoneNumber(phoneNumber);
-            a.Censure();
             if(a==null)
             {
                 return null;
             }
             else
             {
-                account.AccountsFollowed.Add(a);
+                if(account.FriendsAccount == null)
+                {
+                    account.FriendsAccount = new List<Accounts>();
+                }
+                if (a.FriendsAccount == null)
+                {
+                    a.FriendsAccount = new List<Accounts>();
+                }
+                account.FriendsAccount.Add(a);
+                a.FriendsAccount.Add(account);
                 Session.SaveOrUpdate(account);
+                Session.Flush();
+                Session.SaveOrUpdate(a);
                 Session.Flush();
             }
             return a;

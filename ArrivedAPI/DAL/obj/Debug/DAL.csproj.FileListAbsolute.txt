@@ -49,3 +49,30 @@ C:\Users\theka\Google Drive\ENSC\S3\Arrived!\Développement\Arrived\Arrived-\Arr
 C:\Users\theka\Google Drive\ENSC\S3\Arrived!\Développement\Arrived\Arrived-\ArrivedAPI\DAL\obj\Debug\DAL.csproj.CopyComplete
 C:\Users\theka\Google Drive\ENSC\S3\Arrived!\Développement\Arrived\Arrived-\ArrivedAPI\DAL\obj\Debug\DAL.exe
 C:\Users\theka\Google Drive\ENSC\S3\Arrived!\Développement\Arrived\Arrived-\ArrivedAPI\DAL\obj\Debug\DAL.pdb
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\hibernate.cfg.xml
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\MySql.Data.dll
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\DAL.exe.config
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\DAL.exe
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\DAL.pdb
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Antlr3.Runtime.dll
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Domain.exe
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Iesi.Collections.dll
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\NHibernate.dll
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Remotion.Linq.dll
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Remotion.Linq.EagerFetching.dll
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Google.Maps.dll
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Newtonsoft.Json.dll
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Domain.pdb
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Domain.exe.config
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Antlr3.Runtime.xml
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Iesi.Collections.xml
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\NHibernate.xml
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Remotion.Linq.xml
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Remotion.Linq.EagerFetching.xml
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Newtonsoft.Json.xml
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\obj\Debug\DAL.csprojAssemblyReference.cache
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\obj\Debug\Interop.mscoree.dll
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\obj\Debug\DAL.csproj.ResolveComReference.cache
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\obj\Debug\DAL.csproj.CopyComplete
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\obj\Debug\DAL.exe
+C:\Users\theka\Desktop\Arrived-\ArrivedAPI\DAL\obj\Debug\DAL.pdb

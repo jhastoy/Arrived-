@@ -7,7 +7,6 @@
     <id name = "IdTravel" column="id_travel" type="int">
       <generator class ="native"></generator>
     </id>
-    <one-to-one name ="TravellerTravel"  class ="Accounts" cascade="save-update"/>
     <many-to-one name ="StartPlaceTravel" class="Places" column="id_start_place" cascade="all" />
     <many-to-one name ="EndPlaceTravel" class="Places" column="id_end_place" cascade="all" />
     
@@ -26,11 +25,12 @@
       <key column="id_positions_travel" />
       <one-to-many class="Positions" />
     </bag>
+    <set name="UserWarningsTravel" table="user_warnings">
+      <key column="travel_id" />
+      <element column="warning" type="string" />
+    </set>
 
-    <bag name ="FollowerTravel" table ="accounts_travels" cascade="save-update">
-      <key column ="id_follower_account"/>
-      <many-to-many class ="Accounts" column ="id_travel_followed"/>
-    </bag>
+
     <bag name="UserDistanceTravel" table="user_distances">
       <key column="id_travel"/>
       <element column="distance" type="Int32"/>

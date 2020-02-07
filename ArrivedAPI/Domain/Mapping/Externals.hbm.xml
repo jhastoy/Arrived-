@@ -10,7 +10,6 @@
     <property name ="PhoneNumberExternal" column ="phonenumber_external" not-null="false"/>
     <property name ="NameExternal" column ="name_external" not-null="false"/>
     <property name ="SurnameExternal" column ="surname_external" not-null="false"/>
-    <many-to-one name ="AccountsExternal" class="Accounts" column="id_account" cascade="all" />
 
 
 

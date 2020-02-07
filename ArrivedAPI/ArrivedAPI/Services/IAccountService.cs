@@ -54,10 +54,6 @@ namespace ArrivedAPI.Services
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             user.Token = tokenHandler.WriteToken(token);
-
-            // remove password before returning
-            user.PasswordAccount = null;
-
             return user;
         }
     }

@@ -8,7 +8,7 @@ import {
   View,
   ActivityIndicator
 } from "react-native";
-import { deleteToken, getToken } from "../API/Token";
+import { deleteToken, getToken } from "../API/Storage";
 import isTokenValid from "../API/Authentification";
 class LoadPage extends React.Component {
   constructor(props) {

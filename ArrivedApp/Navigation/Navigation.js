@@ -4,8 +4,7 @@ import { createAppContainer } from "react-navigation";
 import LoginPage from "../Components/LoginPage";
 import RegisterPage from "../Components/RegisterPage";
 import LoadPage from "../Components/LoadPage";
-import HomePage from "../Components/HomePage";
-
+import NavigationPage from "../Components/NavigationPage";
 const AuthentificationStackNavigator = createStackNavigator(
   {
     LoadPage: {
@@ -15,7 +14,7 @@ const AuthentificationStackNavigator = createStackNavigator(
       }
     },
     HomePage: {
-      screen: HomePage,
+      screen: NavigationPage,
       navigationOptions: {
         title: "Home"
       }
