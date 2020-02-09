@@ -33,51 +33,7 @@ class PlaceChoicePage extends React.Component {
   }
   componentDidMount() {
     console.log("COmponent did mount");
-    //this._getPlaces();
-    this.setState({
-      placesData: [
-        {
-          idPlace: 1,
-          namePlace: "Maison",
-          position: {
-            latitude: 44.838902,
-            longitude: -0.583996
-          }
-        },
-        {
-          idPlace: 2,
-          namePlace: "Travail",
-          position: {
-            latitude: 44.753418,
-            longitude: -0.744406
-          }
-        },
-        {
-          idPlace: 3,
-          namePlace: "Ecole",
-          position: {
-            latitude: 44.753418,
-            longitude: -0.744406
-          }
-        },
-        {
-          idPlace: 4,
-          namePlace: "Ami 1",
-          position: {
-            latitude: 44.753418,
-            longitude: -0.744406
-          }
-        },
-        {
-          idPlace: 5,
-          namePlace: "Ami 2",
-          position: {
-            latitude: 44.753418,
-            longitude: -0.744406
-          }
-        }
-      ]
-    });
+    this._getPlaces();
   }
 
   _displayButton() {

@@ -37,3 +37,18 @@ export async function getFriends() {
   }
   return friends;
 }
+export async function getPlaces() {
+  try {
+    places = AsyncStorage.getItem("places");
+  } catch (e) {
+    console.log(e.message);
+  }
+  return friends;
+}
+export async function savePlaces(places) {
+  try {
+    AsyncStorage.setItem("places", JSON.stringify(friends));
+  } catch (e) {
+    console.log(e.message);
+  }
+}
