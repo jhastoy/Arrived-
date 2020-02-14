@@ -28,6 +28,10 @@ namespace ArrivedAPI.Controllers
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             Accounts a = _accountRepo.GetById(GetIdByToken(identity));
+            if(a.PlacesAccount == null)
+            {
+                a.PlacesAccount = new List<Places>();
+            }
             a.PlacesAccount.Add(place);
             _accountRepo.Update(a);
             return (Ok(place));

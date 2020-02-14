@@ -9,12 +9,12 @@ import {
   ActivityIndicator,
   Dimensions
 } from "react-native";
-import MapView from "react-native-maps";
+import { connect } from "react-redux";
 
 class TypeChoiceComponent extends React.Component {
   constructor(props) {
     super(props);
-    switch (this.props.type) {
+    switch (this.props.transportType) {
       case "1": {
         this.image = require("../Includes/TravelType/car.png");
         this.text = "Voiture";
@@ -38,11 +38,16 @@ class TypeChoiceComponent extends React.Component {
     }
   }
 
+  _navigate() {
+    const action = { type: "SELECT_TYPE", value: this.props.transportType };
+    this.props.dispatch(action);
+    this.props.navigation.navigate("FriendChoice");
+  }
   render() {
     return (
       <View style={styles.container}>
         <TouchableOpacity
-          onPress={() => this.props.navigation.navigate("FriendChoice")}
+          onPress={() => this._navigate()}
           style={styles.circle}
         >
           <Image style={{ width: 45, height: 45 }} source={this.image}></Image>
@@ -78,4 +83,10 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   }
 });
-export default TypeChoiceComponent;
+const mapStateToProps = state => {
+  return {
+    type: state.selectType.type
+  };
+};
+
+export default connect(mapStateToProps)(TypeChoiceComponent);

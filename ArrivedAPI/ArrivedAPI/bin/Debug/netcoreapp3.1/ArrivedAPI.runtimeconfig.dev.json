@@ -1,10 +1,8 @@
 {
   "runtimeOptions": {
     "additionalProbingPaths": [
-      "C:\\Users\\theka\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\theka\\.nuget\\packages",
-      "C:\\Microsoft\\Xamarin\\NuGet",
-      "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+      "C:\\Users\\j--ea\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\j--ea\\.nuget\\packages"
     ]
   }
 }

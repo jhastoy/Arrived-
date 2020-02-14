@@ -1,37 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj": {}
+    "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj": {}
   },
   "projects": {
-    "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj": {
+    "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj",
+        "projectUniqueName": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj"
+        "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj"
       },
       "frameworks": {
         "net461": {}
       }
     },
-    "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj": {
+    "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj",
+        "projectUniqueName": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj",
         "projectName": "Test",
-        "projectPath": "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj",
-        "packagesPath": "C:\\Users\\theka\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Test\\obj\\",
+        "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj",
+        "packagesPath": "C:\\Users\\j--ea\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Microsoft\\Xamarin\\NuGet\\",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\theka\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Users\\j--ea\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netstandard2.0"
@@ -43,8 +38,8 @@
         "frameworks": {
           "netstandard2.0": {
             "projectReferences": {
-              "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj": {
-                "projectPath": "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj"
+              "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj": {
+                "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj"
               }
             }
           }
@@ -79,7 +74,7 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
         }
       }
     }

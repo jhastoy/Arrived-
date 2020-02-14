@@ -45,8 +45,21 @@ function selectPlace(state = initialStatePlaces, action) {
   }
 }
 
+const initialStateType = { type: 0 };
+
+function selectType(state = initialStateType, action) {
+  let nextState;
+  switch (action.type) {
+    case "SELECT_TYPE":
+      nextState = { type: action.value };
+      return nextState || state;
+    default:
+      return state;
+  }
+}
 const appStore = combineReducers({
   selectFriend,
-  selectPlace
+  selectPlace,
+  selectType
 });
 export default appStore;

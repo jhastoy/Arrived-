@@ -104,6 +104,20 @@ namespace Domain
             InitDistance();
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
         }
+        public Travel(Positions startPosition, Places endPlace, int transportType)
+        {
+            UserPositionsTravel = new List<Positions>();
+            UserDistanceTravel = new List<int>();
+            UserWarningsTravel = new List<string>();
+            UserDistanceTravel = new List<int>();
+
+            StartPositionTravel = startPosition;
+            EndPlaceTravel = endPlace;
+            TransportTypeTravel = transportType;
+            InitDates();
+            InitDistance();
+            GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
+        }
         public virtual void InitDates()
         {
             StartDateTravel = DateTime.Now;
@@ -171,19 +185,23 @@ namespace Domain
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
             var request = new Google.Maps.DistanceMatrix.DistanceMatrixRequest();
             request.AddOrigin(new Location(startPosition));
-            request.AddDestination(new Location(EndPositionTravel.LatitudePosition + " " + EndPositionTravel.LongitudePosition));
-            switch(TransportTypeTravel)
+            if(EndPositionTravel != null)
+                request.AddDestination(new Location(EndPositionTravel.LatitudePosition + " " + EndPositionTravel.LongitudePosition));
+            else
+                request.AddDestination(new Location(EndPlaceTravel.PositionPlace.LatitudePosition + " " + EndPlaceTravel.PositionPlace.LongitudePosition));
+
+            switch (TransportTypeTravel)
             {
-                case 0:
+                case 1:
                     request.Mode = TravelMode.driving;
                     break;
-                case 1:
+                case 2:
                     request.Mode = TravelMode.walking;
                     break;
-                case 2:
+                case 3:
                     request.Mode = TravelMode.bicycling;
                     break;
-                case 3:
+                case 4:
                     request.Mode = TravelMode.transit;
                     break;
             }

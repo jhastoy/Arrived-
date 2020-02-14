@@ -35,7 +35,7 @@ class LoginPage extends React.Component {
   }
   _connect() {
     this.setState({ isLoading: true });
-    Login("shanrio@ensc.fr", "Crunch")
+    Login("mateo@ensc.fr", "Crunch")
       .then(response => {
         initData(response);
         this.setState({ isLoading: false });

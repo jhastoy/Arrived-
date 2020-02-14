@@ -26,7 +26,7 @@ namespace Domain
             InTravel = inTravel;
             TravelAccount = travelAccount;
         }
-        public Accounts(int id, string phoneNumber, string email, string name, string surname, bool inTravel, ICollection<Accounts> friendsAccount,Travel travelAccount, ICollection<Travel> followedTravelsAccount, string token)
+        public Accounts(int id, string phoneNumber, string email, string name, string surname, bool inTravel, ICollection<Accounts> friendsAccount,Travel travelAccount, ICollection<Travel> followedTravelsAccount,ICollection<Places> placesAccount, string token)
         {
             IdAccount = id;
             EmailAccount = email;
@@ -46,6 +46,7 @@ namespace Domain
             TravelAccount = travelAccount;
             InTravel = inTravel;
             FollowedTravelsAccount = followedTravelsAccount;
+            PlacesAccount = placesAccount;
             Token = token;
         }
         public virtual int IdAccount { get; set; }

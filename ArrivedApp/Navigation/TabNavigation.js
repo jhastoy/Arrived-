@@ -7,6 +7,8 @@ import FriendChoicePage from "../Components/FriendChoicePage";
 import PlaceChoicePage from "../Components/PlaceChoicePage";
 import ProfilPage from "../Components/ProfilPage";
 import { createStackNavigator } from "react-navigation-stack";
+import TravelConfirmationPage from "../Components/TravelConfirmationPage";
+import MyTravel from "../Components/MyTravel";
 
 const homeStackNavigator = createStackNavigator(
   {
@@ -29,6 +31,12 @@ const goStackNavigator = createStackNavigator({
   },
   PlaceChoice: {
     screen: PlaceChoicePage
+  },
+  TravelConfirmation: {
+    screen: TravelConfirmationPage
+  },
+  MyTravel: {
+    screen: MyTravel
   }
 });
 
@@ -42,16 +50,21 @@ goStackNavigator.navigationOptions = ({ navigation }) => {
     tabBarVisible
   };
 };
-const bottomTabNavigator = createBottomTabNavigator({
-  Home: {
-    screen: homeStackNavigator
+const bottomTabNavigator = createBottomTabNavigator(
+  {
+    Home: {
+      screen: homeStackNavigator
+    },
+    Go: {
+      screen: goStackNavigator
+    },
+    Profil: {
+      screen: ProfilPage
+    }
   },
-  Go: {
-    screen: goStackNavigator
-  },
-  Profil: {
-    screen: ProfilPage
+  {
+    initialRouteName: "Home"
   }
-});
+);
 
 export default createAppContainer(bottomTabNavigator);

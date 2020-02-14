@@ -5,8 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions,
-  Button
+  Dimensions
 } from "react-native";
 import { getFriends } from "../API/Storage";
 import FriendComponent from "./FriendComponent";
@@ -19,7 +18,6 @@ class FriendChoicePage extends React.Component {
   };
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.state = { friendsData: "", isFetching: false, idsSelected: [] };
   }
   _getFriends() {
@@ -27,7 +25,6 @@ class FriendChoicePage extends React.Component {
     getFriends()
       .then(req => JSON.parse(req))
       .then(json => {
-        console.log(json);
         this.setState({ friendsData: json, isFetching: false });
       });
   }

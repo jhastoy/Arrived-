@@ -24,29 +24,29 @@ class TypeChoicePage extends React.Component {
         <View style={styles.rowContainer}>
           <TypeChoiceComponent
             navigation={this.props.navigation}
-            type="1"
+            transportType="1"
           ></TypeChoiceComponent>
           <TypeChoiceComponent
             navigation={this.props.navigation}
-            type="2"
+            transportType="2"
           ></TypeChoiceComponent>
           <TypeChoiceComponent
             navigation={this.props.navigation}
-            type="3"
+            transportType="3"
           ></TypeChoiceComponent>
         </View>
         <View style={styles.rowContainer}>
           <TypeChoiceComponent
             navigation={this.props.navigation}
-            type="4"
+            transportType="4"
           ></TypeChoiceComponent>
           <TypeChoiceComponent
             navigation={this.props.navigation}
-            type="2"
+            transportType="2"
           ></TypeChoiceComponent>
           <TypeChoiceComponent
             navigation={this.props.navigation}
-            type="3"
+            transportType="3"
           ></TypeChoiceComponent>
         </View>
       </View>

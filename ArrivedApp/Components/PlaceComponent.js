@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     justifyContent: "center",
-    width: 250,
+    width: 300,
     height: 60,
     marginLeft: 20
   },

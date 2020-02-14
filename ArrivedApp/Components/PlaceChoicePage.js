@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import PlaceComponent from "./PlaceComponent";
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
+import { getPlaces } from "../API/Storage";
 
 class PlaceChoicePage extends React.Component {
   static navigationOptions = {
@@ -27,6 +28,7 @@ class PlaceChoicePage extends React.Component {
     getPlaces()
       .then(req => JSON.parse(req))
       .then(json => {
+        console.log("Places:");
         console.log(json);
         this.setState({ placesData: json, isFetching: false });
       });
@@ -35,7 +37,9 @@ class PlaceChoicePage extends React.Component {
     console.log("COmponent did mount");
     this._getPlaces();
   }
-
+  _navigate() {
+    this.props.navigation.navigate("TravelConfirmation");
+  }
   _displayButton() {
     console.log(this.state.placesData);
     if (
@@ -44,7 +48,7 @@ class PlaceChoicePage extends React.Component {
     ) {
       const position = this.state.placesData.find(
         e => e.idPlace == this.props.idSelected
-      ).position;
+      ).positionPlace;
       return (
         <View>
           <View style={styles.mapContainer}>
@@ -52,13 +56,18 @@ class PlaceChoicePage extends React.Component {
               style={styles.map}
               provider="google"
               region={{
-                latitude: position.latitude,
-                longitude: position.longitude,
+                latitude: Number.parseFloat(position.latitudePosition),
+                longitude: Number.parseFloat(position.longitudePosition),
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421
               }}
             >
-              <Marker coordinate={position} />
+              <Marker
+                coordinate={{
+                  latitude: Number.parseFloat(position.latitudePosition),
+                  longitude: Number.parseFloat(position.longitudePosition)
+                }}
+              />
             </MapView>
           </View>
           <TouchableOpacity

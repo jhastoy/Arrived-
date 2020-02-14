@@ -43,11 +43,12 @@ export async function getPlaces() {
   } catch (e) {
     console.log(e.message);
   }
-  return friends;
+  return places;
 }
 export async function savePlaces(places) {
   try {
-    AsyncStorage.setItem("places", JSON.stringify(friends));
+    console.log(places);
+    AsyncStorage.setItem("places", JSON.stringify(places));
   } catch (e) {
     console.log(e.message);
   }

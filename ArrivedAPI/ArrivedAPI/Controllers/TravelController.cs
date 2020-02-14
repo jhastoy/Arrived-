@@ -30,8 +30,18 @@ namespace ArrivedAPI.Controllers
         public IActionResult AddTravel([FromBody] TravelFromBody t)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            Travel travel = new Travel( t.StartPositionTravel, t.EndPositionTravel, t.TransportTypeTravel);
-
+            var user = _accountRepo.GetById(GetIdByToken(identity));
+            
+            Travel travel;
+            if (t.EndPositionTravel == null)
+            {
+                Places endPlace = user.PlacesAccount.Where(x => x.IdPlace == t.EndPlaceId).FirstOrDefault();
+                travel = new Travel(t.StartPositionTravel, endPlace, t.TransportTypeTravel);
+            }
+            else
+            {
+                travel = new Travel(t.StartPositionTravel, t.EndPositionTravel, t.TransportTypeTravel);
+            }
             foreach(int i in t.FollowerAccountsIds)
             {
                 var follower = _accountRepo.GetById(i);
@@ -43,12 +53,11 @@ namespace ArrivedAPI.Controllers
                 _accountRepo.Update(follower);
             }
 
-            var user = _accountRepo.GetById(GetIdByToken(identity));
             user.TravelAccount = travel;
             user.InTravel = true;
             _accountRepo.Update(user);
 
-            return Ok();
+            return Ok(true);
         }
         [Authorize]
         [Route("[action]")]
@@ -68,13 +77,15 @@ namespace ArrivedAPI.Controllers
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var user = _accountRepo.GetById(GetIdByToken(identity));
             List<Accounts> followed = new List<Accounts>();
-            
-            foreach(Accounts a in user.FriendsAccount)
+            if (user.FollowedTravelsAccount != null)
             {
-                if (a.InTravel && user.FollowedTravelsAccount.Where(x => x.IdTravel == a.TravelAccount.IdTravel).FirstOrDefault() != null) 
+                foreach (Accounts a in user.FriendsAccount)
                 {
-                    Accounts account = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel,new Travel(a.TravelAccount.StartDateTravel,a.TravelAccount.EndDateTravel,a.TravelAccount.TransportTypeTravel,a.TravelAccount.ProgressionTravel,a.TravelAccount.UserWarningsTravel));
-                    followed.Add(account);
+                    if (a.InTravel && user.FollowedTravelsAccount.Where(x => x.IdTravel == a.TravelAccount.IdTravel).FirstOrDefault() != null)
+                    {
+                        Accounts account = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel, new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel, a.TravelAccount.UserWarningsTravel));
+                        followed.Add(account);
+                    }
                 }
             }
             return Ok(followed);

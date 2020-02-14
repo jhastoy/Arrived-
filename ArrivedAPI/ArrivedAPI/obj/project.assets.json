@@ -8174,27 +8174,20 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\theka\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\j--ea\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\ArrivedAPI\\ArrivedAPI.csproj",
+      "projectUniqueName": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\ArrivedAPI\\ArrivedAPI.csproj",
       "projectName": "ArrivedAPI",
-      "projectPath": "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\ArrivedAPI\\ArrivedAPI.csproj",
-      "packagesPath": "C:\\Users\\theka\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\ArrivedAPI\\obj\\",
+      "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\ArrivedAPI\\ArrivedAPI.csproj",
+      "packagesPath": "C:\\Users\\j--ea\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\ArrivedAPI\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\",
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-      ],
       "configFilePaths": [
-        "C:\\Users\\theka\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        "C:\\Users\\j--ea\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -8206,11 +8199,11 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj": {
-              "projectPath": "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj"
+            "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj": {
+              "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj"
             },
-            "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj": {
-              "projectPath": "C:\\Users\\theka\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj"
+            "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj": {
+              "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj"
             }
           }
         }
@@ -8291,7 +8284,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.100\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.101\\RuntimeIdentifierGraph.json"
       }
     }
   },

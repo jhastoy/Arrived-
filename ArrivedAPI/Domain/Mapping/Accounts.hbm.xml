@@ -32,7 +32,7 @@
       <key column="id_account" />
       <one-to-many class="Externals" />
     </bag>
-    <bag name="PlacesAccount">
+    <bag name="PlacesAccount" cascade="save-update">
       <key column="id_account" />
       <one-to-many class="Places" />
     </bag>
