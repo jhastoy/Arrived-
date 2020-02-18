@@ -1,21 +1,22 @@
 import React from "react";
-import {
-  TouchableOpacity,
-  TextInput,
-  Image,
-  StyleSheet,
-  Text,
-  View,
-  ActivityIndicator,
-  Dimensions
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import TypeChoiceComponent from "./TypeChoiceComponent";
+import { connect } from "react-redux";
+
 class TypeChoicePage extends React.Component {
   static navigationOptions = {
     title: "Comment te déplaces-tu ?"
   };
   constructor(props) {
     super(props);
+  }
+  componentDidMount() {
+    console.log("componentdimount");
+    console.log(this.props);
+    console.log(this.props.inTravel);
+    if (this.props.inTravel) {
+      this.props.navigation.replace("MyTravel");
+    }
   }
 
   render() {
@@ -69,4 +70,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-around"
   }
 });
-export default TypeChoicePage;
+const mapStateToProps = state => {
+  return {
+    inTravel: state.inTravel.inTravel
+  };
+};
+
+export default connect(mapStateToProps)(TypeChoicePage);

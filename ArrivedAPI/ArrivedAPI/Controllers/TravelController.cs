@@ -36,6 +36,7 @@ namespace ArrivedAPI.Controllers
             if (t.EndPositionTravel == null)
             {
                 Places endPlace = user.PlacesAccount.Where(x => x.IdPlace == t.EndPlaceId).FirstOrDefault();
+                Console.WriteLine(endPlace);
                 travel = new Travel(t.StartPositionTravel, endPlace, t.TransportTypeTravel);
             }
             else
@@ -108,7 +109,7 @@ namespace ArrivedAPI.Controllers
             {
                 return Ok(true);
             }
-            return Ok(t);
+            return Ok();
         }
         public int GetIdByToken(ClaimsIdentity identity)
         {

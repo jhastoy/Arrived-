@@ -22,23 +22,28 @@ const homeStackNavigator = createStackNavigator(
     }
   }
 );
-const goStackNavigator = createStackNavigator({
-  TypeChoice: {
-    screen: TypeChoicePage
+const goStackNavigator = createStackNavigator(
+  {
+    TypeChoice: {
+      screen: TypeChoicePage
+    },
+    FriendChoice: {
+      screen: FriendChoicePage
+    },
+    PlaceChoice: {
+      screen: PlaceChoicePage
+    },
+    TravelConfirmation: {
+      screen: TravelConfirmationPage
+    },
+    MyTravel: {
+      screen: MyTravel
+    }
   },
-  FriendChoice: {
-    screen: FriendChoicePage
-  },
-  PlaceChoice: {
-    screen: PlaceChoicePage
-  },
-  TravelConfirmation: {
-    screen: TravelConfirmationPage
-  },
-  MyTravel: {
-    screen: MyTravel
+  {
+    initialRouteName: "TypeChoice"
   }
-});
+);
 
 goStackNavigator.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;

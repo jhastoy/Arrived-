@@ -53,3 +53,18 @@ export async function savePlaces(places) {
     console.log(e.message);
   }
 }
+export async function getInTravel() {
+  try {
+    places = AsyncStorage.getItem("inTravel");
+  } catch (e) {
+    console.log(e.message);
+  }
+  return places;
+}
+export async function saveInTravel(inTravel) {
+  try {
+    AsyncStorage.setItem("inTravel", JSON.stringify(inTravel));
+  } catch (e) {
+    console.log(e.message);
+  }
+}

@@ -2,11 +2,8 @@ import React from "react";
 import { Text, StyleSheet, View, ActivityIndicator, Image } from "react-native";
 import { connect } from "react-redux";
 import { AddTravel } from "../API/Travels";
-import {
-  StackActions,
-  NavigationActions,
-  CommonActions
-} from "react-navigation";
+
+import { StackActions, NavigationActions } from "react-navigation";
 
 class TravelConfirmationPage extends React.Component {
   static navigationOptions = {
@@ -36,8 +33,15 @@ class TravelConfirmationPage extends React.Component {
   _travelConfirmed() {
     if (this.state.isLoading == false) {
       this.sleep(1500).then(() => {
-        this.props.navigation.popToTop();
+        const action = { type: "CHANGE_TRAVEL_MODE", value: true };
+        this.props.dispatch(action);
+        const navigateAction = StackActions.reset({
+          index: 0,
+          actions: [NavigationActions.navigate({ routeName: "TypeChoice" })]
+        });
+        this.props.navigation.dispatch(navigateAction);
       });
+
       return (
         <View
           style={{
@@ -66,15 +70,12 @@ class TravelConfirmationPage extends React.Component {
           latitudePosition: position.coords.latitude.toString(),
           longitudePosition: position.coords.longitude.toString()
         };
-        console.log(this.props.placeSelected);
-        console.log(this.props.friendsSelected);
-        console.log(this.props.type);
 
         AddTravel(
           this.props.friendsSelected,
           startPosition,
           this.props.placeSelected,
-          this.props.type
+          parseInt(this.props.type)
         ).then(response => {
           this.setState({ isLoading: false });
         });

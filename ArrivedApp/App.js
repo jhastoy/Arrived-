@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import Navigation from "./Navigation/Navigation";
 import { Provider } from "react-redux";
 import Store from "./Store/configureStore";
+import * as TaskManager from "expo-task-manager";
 
 export default class App extends React.Component {
   render() {

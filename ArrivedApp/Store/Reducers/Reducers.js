@@ -1,4 +1,5 @@
 import { combineReducers } from "redux";
+import { getInTravel } from "../../API/Storage";
 
 const initialStateFriends = { idsSelected: [] };
 
@@ -57,9 +58,24 @@ function selectType(state = initialStateType, action) {
       return state;
   }
 }
+
+const initialStateTravel = {
+  inTravel: false
+};
+function inTravel(state = initialStateTravel, action) {
+  let nextState;
+  switch (action.type) {
+    case "CHANGE_TRAVEL_MODE":
+      nextState = { inTravel: action.value };
+      return nextState || state;
+    default:
+      return state;
+  }
+}
 const appStore = combineReducers({
   selectFriend,
   selectPlace,
-  selectType
+  selectType,
+  inTravel
 });
 export default appStore;

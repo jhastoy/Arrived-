@@ -20,7 +20,7 @@ namespace Test.Repositories
 
         public Accounts GetById(int id)
         {
-            Accounts account = Session.Query<Accounts>().Where(x => x.IdAccount == id).FirstOrDefault();
+            Accounts account =  Session.Query<Accounts>().Where(x => x.IdAccount == id).FirstOrDefault();
             return (account);
         }
 

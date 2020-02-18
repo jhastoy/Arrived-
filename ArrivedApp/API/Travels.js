@@ -57,3 +57,14 @@ export function AddTravel(friendsIds, startPosition, EndPlaceId, type) {
     })
   );
 }
+export async function UpdateUserPosition(positions) {
+  const token = await getToken();
+  fetch("https://arrivedapi.conveyor.cloud/api/Travel/UpdateUserPosition", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    },
+    body: JSON.stringify(positions)
+  }).then(response => console.log(response.ok));
+}
