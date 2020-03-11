@@ -31,7 +31,7 @@ namespace ArrivedAPI.Controllers
             {
                 return BadRequest(new { message = "Email ou mot de passe incorrect" });
             }
-            Accounts a = new Accounts(user.IdAccount, user.PhoneNumberAccount, user.EmailAccount, user.NameAccount, user.SurnameAccount, user.InTravel, user.FriendsAccount, user.TravelAccount, user.FollowedTravelsAccount,user.PlacesAccount,user.Token);
+            Accounts a = new Accounts(user.IdAccount, user.PhoneNumberAccount, user.EmailAccount, user.NameAccount, user.SurnameAccount, user.InTravel, user.InDanger,user.LastPositionAccount,user.WarningsAccount,user.FriendsAccount, user.TravelAccount, user.FollowedTravelsAccount,user.PlacesAccount,user.Token, user.AlertChoiceAccount);
             return Ok(a);
         }
         [Route("[action]")]
@@ -39,6 +39,7 @@ namespace ArrivedAPI.Controllers
         public IActionResult Register([FromBody] Accounts userParams)
         {
             IAccountRepository repo = new AccountRepository();
+            userParams.InitPreferences();
             var user = repo.Add(userParams);
             if(user == null)
                 return BadRequest(new { message = "Utilisateur déjà existant" });

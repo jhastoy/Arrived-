@@ -25,10 +25,7 @@
       <key column="id_positions_travel" />
       <one-to-many class="Positions" />
     </bag>
-    <set name="UserWarningsTravel" table="user_warnings">
-      <key column="travel_id" />
-      <element column="warning" type="string" />
-    </set>
+
 
 
     <bag name="UserDistanceTravel" table="user_distances">

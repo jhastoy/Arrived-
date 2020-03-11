@@ -70,3 +70,11 @@ C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Test\obj\Debug\netstandard2.0\Test.As
 C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Test\obj\Debug\netstandard2.0\Test.csproj.CopyComplete
 C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Test\obj\Debug\netstandard2.0\Test.dll
 C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Test\obj\Debug\netstandard2.0\Test.pdb
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Test\bin\Debug\netstandard2.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Test\bin\Debug\netstandard2.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Test\bin\Debug\netstandard2.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Test\bin\Debug\netstandard2.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Test\bin\Debug\netstandard2.0\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Test\bin\Debug\netstandard2.0\Microsoft.IdentityModel.Tokens.xml
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Test\bin\Debug\netstandard2.0\Microsoft.IdentityModel.Logging.xml
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Test\bin\Debug\netstandard2.0\Microsoft.IdentityModel.JsonWebTokens.xml

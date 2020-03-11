@@ -1,0 +1,16 @@
+﻿<?xml version ="1.0" encoding="utf-8"?>
+
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly ="Domain"
+                   namespace="Domain">
+  <class name ="Warnings" table ="warnings">
+    <id name = "IdWarning" column="id_warning" type="int">
+      <generator class ="native"></generator>
+    </id>
+    <property name ="TypeWarning" column ="type_warning" not-null="false"/>
+    <property name ="DateWarning" column ="date_warning" not-null="false"/>
+    <property name ="MessageWarning" column ="message_warning" not-null="false"/>
+
+
+  </class>
+</hibernate-mapping>

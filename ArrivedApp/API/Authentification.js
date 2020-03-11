@@ -56,7 +56,7 @@ export function Register(name, surname, email, password, phoneNumber) {
 
 export async function IsTokenValid() {
   getToken().then(token =>
-    fetch("https://arrivedapi.conveyor.cloud/api/Token", {
+    fetch("https://arrivedapi.conveyor.cloud/api/Token/IsTokenValid", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -73,4 +73,21 @@ export async function IsTokenValid() {
       }
     })
   );
+}
+
+export default async function UpdateExpoToken(expoToken) {
+  console.log("UPDATE TOKEN");
+  let token = await getToken();
+  await fetch("https://arrivedapi.conveyor.cloud/api/Token/UpdateExpoToken", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    },
+    body: JSON.stringify({
+      expoToken: expoToken
+    })
+  }).then(response => {
+    if (!response.ok) throw new Error("Erreur réseau");
+  });
 }

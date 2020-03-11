@@ -103,3 +103,11 @@ C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\DAL\obj\Debug\DAL.csproj.ResolveComRe
 C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\DAL\obj\Debug\DAL.csproj.CopyComplete
 C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\DAL\obj\Debug\DAL.exe
 C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\DAL\obj\Debug\DAL.pdb
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Microsoft.IdentityModel.Tokens.dll
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Microsoft.IdentityModel.Logging.dll
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Microsoft.IdentityModel.Tokens.xml
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Microsoft.IdentityModel.Logging.xml
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\DAL\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.xml

@@ -52,15 +52,31 @@ class HomePage extends React.Component {
           style={{ flex: 1, width: Math.round(Dimensions.get("window").width) }}
           data={this.state.travelsData}
           contentContainerStyle={{ flexGrow: 1, alignItems: "center" }}
-          renderItem={({ item }) => (
-            <TravelComponent
-              surname={item.surnameAccount}
-              progression={item.travelAccount.progressionTravel}
-              warnings={item.travelAccount.userWarningsTravel}
-              startDate={item.travelAccount.startDateTravel}
-              endDate={item.travelAccount.endDateTravel}
-            />
-          )}
+          renderItem={({ item }) => {
+            if (item.travelAccount == null)
+              return (
+                <TravelComponent
+                  surname={item.surnameAccount}
+                  warnings={item.warningsAccount}
+                  style={0}
+                  lastPosition={item.lastPositionAccount}
+                  danger={item.inDanger}
+                />
+              );
+            else
+              return (
+                <TravelComponent
+                  surname={item.surnameAccount}
+                  progression={item.travelAccount.progressionTravel}
+                  warnings={item.warningsAccount}
+                  startDate={item.travelAccount.startDateTravel}
+                  endDate={item.travelAccount.endDateTravel}
+                  danger={item.inDanger}
+                  lastPosition={item.lastPositionAccount}
+                  style={1}
+                />
+              );
+          }}
           keyExtractor={item => item.idAccount.toString()}
         />
       </View>

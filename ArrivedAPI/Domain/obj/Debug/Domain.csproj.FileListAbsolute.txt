@@ -46,3 +46,11 @@ C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Domain\obj\Debug\Domain.csprojAssembl
 C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Domain\obj\Debug\Domain.csproj.CopyComplete
 C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Domain\obj\Debug\Domain.exe
 C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Domain\obj\Debug\Domain.pdb
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\Microsoft.IdentityModel.Logging.dll
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\Microsoft.IdentityModel.Tokens.dll
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\Microsoft.IdentityModel.JsonWebTokens.xml
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\Microsoft.IdentityModel.Logging.xml
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\Microsoft.IdentityModel.Tokens.xml
+C:\Users\j--ea\Desktop\Arrived-\ArrivedAPI\Domain\bin\Debug\System.IdentityModel.Tokens.Jwt.xml

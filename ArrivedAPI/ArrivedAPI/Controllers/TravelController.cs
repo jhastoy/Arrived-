@@ -55,9 +55,8 @@ namespace ArrivedAPI.Controllers
             }
 
             user.TravelAccount = travel;
-            user.InTravel = true;
+            user.LaunchTravel();            
             _accountRepo.Update(user);
-
             return Ok(true);
         }
         [Authorize]
@@ -67,7 +66,7 @@ namespace ArrivedAPI.Controllers
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var a = _accountRepo.GetById(GetIdByToken(identity));
-            Travel t = new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel, a.TravelAccount.UserWarningsTravel);
+            Travel t = new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel);
             return Ok(t);
         }
         [Authorize]
@@ -78,39 +77,53 @@ namespace ArrivedAPI.Controllers
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var user = _accountRepo.GetById(GetIdByToken(identity));
             List<Accounts> followed = new List<Accounts>();
-            if (user.FollowedTravelsAccount != null)
+            
+            foreach (Accounts a in user.FriendsAccount)
             {
-                foreach (Accounts a in user.FriendsAccount)
+                if (a.InTravel || a.InDanger)
                 {
-                    if (a.InTravel && user.FollowedTravelsAccount.Where(x => x.IdTravel == a.TravelAccount.IdTravel).FirstOrDefault() != null)
+                    if (user.FollowedTravelsAccount != null && a.InTravel && user.FollowedTravelsAccount.Where(x => x.IdTravel == a.TravelAccount.IdTravel).FirstOrDefault() != null)
                     {
-                        Accounts account = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel, new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel, a.TravelAccount.UserWarningsTravel));
+                        Accounts account = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel, new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel), a.InDanger, a.WarningsAccount,a.LastPositionAccount);
                         followed.Add(account);
                     }
+                    else
+                    {
+                        if (a.InDanger && a.AlertChoiceAccount > 1)
+                        {
+                            Accounts account = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel, a.InDanger, a.WarningsAccount,a.LastPositionAccount);
+                            followed.Add(account);
+                        }
+                    }
+                                
                 }
             }
+            
             return Ok(followed);
         }
+
         [Authorize]
         [Route("[action]")]
         [HttpPut]
-        
         public IActionResult UpdateUserPosition([FromBody] Positions[] positions)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
-            Travel t = _accountRepo.GetById(GetIdByToken(identity)).TravelAccount;
+            Accounts a = _accountRepo.GetById(GetIdByToken(identity));
             foreach(Positions p in positions)
             {
-                t.UserPositionsTravel.Add(p);
+                a.TravelAccount.UserPositionsTravel.Add(p);
             }
-            t.Update();
-            _travelRepo.AddOrUpdateTravel(t);
-            if (t.IsArrived())
+            a.TravelAccount.Update();
+            a.LastPositionAccount = a.TravelAccount.GetLastPosition();
+            if (a.TravelAccount.IsArrived())
             {
+                a.IsArrived();
                 return Ok(true);
             }
+            _accountRepo.Update(a);
             return Ok();
         }
+
         public int GetIdByToken(ClaimsIdentity identity)
         {
             IEnumerable<Claim> claim = identity.Claims;

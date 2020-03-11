@@ -90,6 +90,13 @@ namespace Test.Repositories
             }
             return a;
         }
+        public Accounts SaveOrUpdateExpoToken(Accounts a,string expoToken)
+        {
+            a.ExpoToken = expoToken;
+            Session.SaveOrUpdate(a);
+            Session.Flush();
+            return a;
+        }
 
 
 

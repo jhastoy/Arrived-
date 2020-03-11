@@ -30,22 +30,19 @@ namespace Domain
         public virtual int BaseDistanceTravel { get; set; }
         public virtual ICollection<int> UserDistanceTravel { get; set; }
         public virtual double ProgressionTravel { get; set; }
-        public virtual ICollection<string> UserWarningsTravel { get; set; }
 
         public Travel() { }
-        public Travel(DateTime startDate,DateTime endDate,int transportType,double progression,ICollection<string> userWarnings)
+        public Travel(DateTime startDate,DateTime endDate,int transportType,double progression)
         {
             StartDateTravel = startDate;
             EndDateTravel = endDate;
             TransportTypeTravel = transportType;
             ProgressionTravel = progression;
-            UserWarningsTravel = userWarnings;
         }
         public Travel(Accounts traveller, ICollection<Accounts> follower, Places startPlace, Places endPlace, int transportType)
         {
             UserPositionsTravel = new List<Positions>();
             UserDistanceTravel = new List<int>();
-            UserWarningsTravel = new List<string>();
             UserDistanceTravel = new List<int>();
 
 
@@ -63,7 +60,6 @@ namespace Domain
         {
             UserPositionsTravel = new List<Positions>();
             UserDistanceTravel = new List<int>();
-            UserWarningsTravel = new List<string>();
             UserDistanceTravel = new List<int>();
 
             StartPositionTravel = startPosition;
@@ -79,7 +75,6 @@ namespace Domain
         {
             UserPositionsTravel = new List<Positions>();
             UserDistanceTravel = new List<int>();
-            UserWarningsTravel = new List<string>();
             UserDistanceTravel = new List<int>();
 
 
@@ -94,7 +89,6 @@ namespace Domain
         {
             UserPositionsTravel = new List<Positions>();
             UserDistanceTravel = new List<int>();
-            UserWarningsTravel = new List<string>();
             UserDistanceTravel = new List<int>();
 
             StartPositionTravel = startPosition;
@@ -108,7 +102,6 @@ namespace Domain
         {
             UserPositionsTravel = new List<Positions>();
             UserDistanceTravel = new List<int>();
-            UserWarningsTravel = new List<string>();
             UserDistanceTravel = new List<int>();
 
             StartPositionTravel = startPosition;
@@ -226,6 +219,11 @@ namespace Domain
             {
                 return false;
             }
+        }
+
+        public virtual Positions GetLastPosition()
+        {
+            return UserPositionsTravel.Last();
         }
 
         

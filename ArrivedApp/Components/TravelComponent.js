@@ -10,9 +10,7 @@ import {
   Dimensions
 } from "react-native";
 import MapView from "react-native-maps";
-import isTokenValid from "../API/Authentification";
-import { getToken } from "../API/Storage";
-import { withOrientation } from "react-navigation";
+import { Marker } from "react-native-maps";
 
 class TravelComponent extends React.Component {
   constructor(props) {
@@ -27,6 +25,8 @@ class TravelComponent extends React.Component {
       (this.eDate = new Date(this.props.endDate));
     this.startDate = this.sDate.getHours() + ":" + this.sDate.getMinutes();
     this.endDate = this.eDate.getHours() + ":" + this.eDate.getMinutes();
+    this.componentStyle = this.props.style;
+    this.lastPosition = this.props.lastPosition;
   }
   containerHeight = 100;
 
@@ -37,13 +37,22 @@ class TravelComponent extends React.Component {
           <MapView
             style={styles.map}
             provider="google"
-            initialRegion={{
-              latitude: 44.836689,
-              longitude: -0.57653,
+            region={{
+              latitude: Number.parseFloat(this.lastPosition.latitudePosition),
+              longitude: Number.parseFloat(this.lastPosition.longitudePosition),
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421
             }}
-          />
+          >
+            <Marker
+              coordinate={{
+                latitude: Number.parseFloat(this.lastPosition.latitudePosition),
+                longitude: Number.parseFloat(
+                  this.lastPosition.longitudePosition
+                )
+              }}
+            />
+          </MapView>
         </View>
       );
   }
@@ -76,15 +85,14 @@ class TravelComponent extends React.Component {
   _displayContact() {
     if (this.danger) {
       return (
-        <View style={styles.iconesContainer}>
-          <Image
-            style={styles.contactImage}
-            source={require("../Includes/call.png")}
-          ></Image>
-          <Image
-            style={styles.contactImage}
-            source={require("../Includes/travel.png")}
-          ></Image>
+        <View style={this._contactContainerStyle()}>
+          <TouchableOpacity style={styles.contactButton}>
+            <Text style={styles.contactText}>Appeler</Text>
+          </TouchableOpacity>
+          <View style={styles.separateBar}></View>
+          <TouchableOpacity style={styles.contactButton}>
+            <Text style={styles.contactText}>Itinéraire</Text>
+          </TouchableOpacity>
         </View>
       );
     }
@@ -99,14 +107,17 @@ class TravelComponent extends React.Component {
           />
         </View>
         <View style={styles.textWarning}>
-          <Text style={{ color: "black" }}>{element.description}</Text>
+          <Text style={{ color: "black" }}>{element.messageWarning}</Text>
         </View>
       </View>
     ));
   }
   _updateContainerHeight() {
+    if (this.componentStyle == 1) {
+      this.containerHeight = 100;
+    } else this.containerHeight = 78;
     if (this.danger) {
-      this.containerHeight += 140 + 30 * this.warnings.length + 5;
+      this.containerHeight += 185 + 30 * this.warnings.length + 5;
     } else this.containerHeight += 30 * this.warnings.length;
   }
   _containerStyle() {
@@ -121,9 +132,9 @@ class TravelComponent extends React.Component {
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
         elevation: 6,
-        width: 0.9 * Math.round(Dimensions.get("window").width),
+        width: 0.95 * Math.round(Dimensions.get("window").width),
         height: this.containerHeight,
-        backgroundColor: "white",
+        backgroundColor: "#EB3B5A",
         borderRadius: 10
       };
     } else {
@@ -144,6 +155,30 @@ class TravelComponent extends React.Component {
       };
     }
   }
+  _contactContainerStyle() {
+    if (this.componentStyle == 0) {
+      return {
+        flexDirection: "row",
+        height: 54,
+        width: "100%",
+        alignItems: "center",
+        backgroundColor: "#D8D8D8",
+        borderBottomStartRadius: 10,
+        borderBottomEndRadius: 10,
+        marginTop: 5
+      };
+    } else
+      return {
+        flexDirection: "row",
+        height: 52,
+        width: "100%",
+        alignItems: "center",
+        backgroundColor: "#D8D8D8",
+        borderBottomWidth: 0.2,
+        borderBottomColor: "white",
+        marginTop: 5
+      };
+  }
   _progressBarActiveStyle() {
     if (this.danger) {
       return {
@@ -151,7 +186,7 @@ class TravelComponent extends React.Component {
         top: this.containerHeight - 23,
         width:
           (this.progression / 100) *
-          0.9 *
+          0.95 *
           Math.round(Dimensions.get("window").width),
         height: 23,
         backgroundColor: "#EB3B5A",
@@ -165,7 +200,7 @@ class TravelComponent extends React.Component {
         top: this.containerHeight - 23,
         width:
           (this.progression / 100) *
-          0.9 *
+          0.95 *
           Math.round(Dimensions.get("window").width),
         height: 23,
         backgroundColor: "#57E976",
@@ -178,7 +213,7 @@ class TravelComponent extends React.Component {
   _progressBarInactiveStyle() {
     if (this.props.warnings != null) {
       return {
-        width: 0.9 * Math.round(Dimensions.get("window").width),
+        width: "100%",
         height: 23,
         position: "absolute",
         top: this.containerHeight - 23,
@@ -188,7 +223,7 @@ class TravelComponent extends React.Component {
       };
     } else {
       return {
-        width: 0.9 * Math.round(Dimensions.get("window").width),
+        width: "100%",
         height: 23,
         position: "absolute",
         top: this.containerHeight - 23,
@@ -198,7 +233,18 @@ class TravelComponent extends React.Component {
       };
     }
   }
-
+  _componentStyle() {
+    if (this.componentStyle == 1) {
+      return (
+        <>
+          <View style={this._progressBarInactiveStyle()}></View>
+          <View style={this._progressBarActiveStyle()}></View>
+          <Text style={this._startDateStyle()}>{this.startDate}</Text>
+          <Text style={this._endDateStyle()}>{this.endDate}</Text>
+        </>
+      );
+    }
+  }
   render() {
     this._updateContainerHeight();
     return (
@@ -214,15 +260,11 @@ class TravelComponent extends React.Component {
           <View style={styles.textContainer}>
             <Text style={styles.text}>{this.surname}</Text>
           </View>
-          {this._displayContact()}
         </View>
         {this._displayMap()}
         {this._displayWarnings()}
-
-        <View style={this._progressBarInactiveStyle()}></View>
-        <View style={this._progressBarActiveStyle()}></View>
-        <Text style={this._startDateStyle()}>{this.startDate}</Text>
-        <Text style={this._endDateStyle()}>{this.endDate}</Text>
+        {this._displayContact()}
+        {this._componentStyle()}
       </View>
     );
   }
@@ -253,14 +295,13 @@ const styles = StyleSheet.create({
     borderRadius: 1,
     borderBottomWidth: 0.2,
     borderStyle: "dotted",
-    borderBottomColor: "grey",
+    borderBottomColor: "black",
     height: 40,
     width: 200
   },
   text: {
     fontSize: 25,
-    color: "black",
-    fontFamily: "Roboto"
+    color: "black"
   },
   progressBarInactive: {
     width: 350,
@@ -287,7 +328,6 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 75
   },
-
   imageWarning: {
     margin: 5,
     marginLeft: 10
@@ -297,7 +337,7 @@ const styles = StyleSheet.create({
   },
   mapContainer: {
     height: 140,
-    width: 0.9 * Math.round(Dimensions.get("window").width),
+    width: "100%",
     backgroundColor: "white",
     marginBottom: 5
   },
@@ -311,6 +351,36 @@ const styles = StyleSheet.create({
     width: 40,
     marginLeft: 8,
     height: 40
+  },
+  contactContainer: {
+    flexDirection: "row",
+    height: 53,
+    width: "100%",
+    alignItems: "center",
+    backgroundColor: "#D8D8D8",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 0.27,
+    shadowRadius: 4.65,
+    elevation: 3,
+    marginTop: 5
+  },
+  contactButton: {
+    flex: 1,
+    height: "80%",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  contactText: {
+    fontSize: 20
+  },
+  separateBar: {
+    height: "80%",
+    backgroundColor: "black",
+    width: 1
   }
 });
 export default TravelComponent;

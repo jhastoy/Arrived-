@@ -60,7 +60,7 @@ function selectType(state = initialStateType, action) {
 }
 
 const initialStateTravel = {
-  inTravel: false
+  inTravel: getInTravel()
 };
 function inTravel(state = initialStateTravel, action) {
   let nextState;

@@ -12,7 +12,7 @@ class MyTravel extends React.Component {
 
   async componentDidMount() {
     console.log("startlocation");
-    await Location.startLocationUpdatesAsync("YO", {
+    await Location.startLocationUpdatesAsync("SENDING_POSITION", {
       accuracy: Location.Accuracy.Highest,
       foregroundService: {
         notificationTitle: "Sécurité en cours",
@@ -22,7 +22,7 @@ class MyTravel extends React.Component {
   }
 
   _stopLocation() {
-    Location.stopLocationUpdatesAsync("YO");
+    Location.stopLocationUpdatesAsync("SENDING_POSITION");
   }
   render() {
     return (

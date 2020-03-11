@@ -17,6 +17,7 @@ namespace Test.Repositories
         Accounts GetAccountByPhoneNumber(string phoneNumber);
         Accounts AddFriendByPhoneNumber(Accounts account, string phoneNumber);
         void Update(Accounts account);
+        Accounts SaveOrUpdateExpoToken(Accounts a, string expoToken);
 
     }
 }

@@ -9,6 +9,8 @@ import ProfilPage from "../Components/ProfilPage";
 import { createStackNavigator } from "react-navigation-stack";
 import TravelConfirmationPage from "../Components/TravelConfirmationPage";
 import MyTravel from "../Components/MyTravel";
+import { fromRight } from "react-navigation-transitions";
+import PlacesPage from "../Components/PlacesPage";
 
 const homeStackNavigator = createStackNavigator(
   {
@@ -20,6 +22,23 @@ const homeStackNavigator = createStackNavigator(
     defaultNavigationOptions: {
       title: "Trajets en cours"
     }
+  }
+);
+const profilStackNavigator = createStackNavigator(
+  {
+    ProfilPage: {
+      screen: ProfilPage
+    },
+    Places: {
+      screen: PlacesPage
+    }
+  },
+  {
+    initialRouteName: "ProfilPage",
+    defaultNavigationOptions: {
+      title: "Mon compte"
+    },
+    transitionConfig: () => fromRight()
   }
 );
 const goStackNavigator = createStackNavigator(
@@ -55,6 +74,16 @@ goStackNavigator.navigationOptions = ({ navigation }) => {
     tabBarVisible
   };
 };
+profilStackNavigator.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+
+  return {
+    tabBarVisible
+  };
+};
 const bottomTabNavigator = createBottomTabNavigator(
   {
     Home: {
@@ -64,7 +93,7 @@ const bottomTabNavigator = createBottomTabNavigator(
       screen: goStackNavigator
     },
     Profil: {
-      screen: ProfilPage
+      screen: profilStackNavigator
     }
   },
   {

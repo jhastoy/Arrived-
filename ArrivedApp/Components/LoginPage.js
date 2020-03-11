@@ -33,22 +33,21 @@ class LoginPage extends React.Component {
   _navigate() {
     this.props.navigation.navigate("RegisterPage");
   }
-  _connect() {
+  async _connect() {
     this.setState({ isLoading: true });
-    Login("mateo@ensc.fr", "Crunch")
-      .then(response => {
-        initData(response);
-        this.setState({ isLoading: false });
-        console.log(response);
-        this.props.navigation.replace("HomePage");
-      })
-      .catch(error => {
+    let loginResponse = await Login("jhastoy@ensc.fr", "Crunch").catch(
+      error => {
         this.setState({ isLoading: false });
         showMessage({
           message: error.message,
           type: "danger"
         });
-      });
+      }
+    );
+    if (loginResponse != null) {
+      await initData(loginResponse);
+      this.props.navigation.replace("HomePage");
+    }
   }
 
   _onEmailChanged(text) {

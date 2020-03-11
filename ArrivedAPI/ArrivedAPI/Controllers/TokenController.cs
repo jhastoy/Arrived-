@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Domain;
+using Test.Repositories;
+using System.Security.Claims;
 
 namespace ArrivedAPI.Controllers
 {
@@ -13,11 +15,33 @@ namespace ArrivedAPI.Controllers
     [ApiController]
     public class TokenController : ControllerBase
     {
+        private IAccountRepository _accountRepo;
+        public TokenController()
+        {
+            _accountRepo = new AccountRepository();
+        }
         [Authorize]
+        [Route("[action]")]
         [HttpPost]
         public IActionResult IsTokenValid([FromBody] Accounts token)
         {
             return Ok("valid");
+        }
+        [Authorize]
+        [Route("[action]")]
+        [HttpPost]
+        public IActionResult UpdateExpoToken([FromBody] Accounts expoToken)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Accounts a = _accountRepo.GetById(GetIdByToken(identity));
+            _accountRepo.SaveOrUpdateExpoToken(a, expoToken.ExpoToken);
+            return Ok();
+        }
+
+        public int GetIdByToken(ClaimsIdentity identity)
+        {
+            IEnumerable<Claim> claim = identity.Claims;
+            return int.Parse(claim.Where(c => c.Type == "Id").Select(c => c.Value).SingleOrDefault());
         }
     }
 }
