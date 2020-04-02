@@ -24,11 +24,11 @@ namespace ArrivedAPI.Controllers
         [Authorize]
         [Route("[action]")]
         [HttpPost]
-        public IActionResult AddFriendAccount([FromBody] AccountFromBody accountFromBody)
+        public IActionResult AddFriendAccount([FromBody] Accounts accountFromBody)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             Accounts a = _accountRepo.GetById(GetIdByToken(identity));
-            Accounts addAccount = _accountRepo.AddFriendByPhoneNumber(a, accountFromBody.PhoneNumber);
+            Accounts addAccount = _accountRepo.AddFriendByPhoneNumber(a, accountFromBody.PhoneNumberAccount);
             if (addAccount == null)
             {
                 return BadRequest(new { message = "Utilisateur Inexistant" });
@@ -47,19 +47,52 @@ namespace ArrivedAPI.Controllers
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             Accounts a = _accountRepo.GetById(GetIdByToken(identity));
-            if(a.FriendsAccount == null)
+            if (a.FriendsAccount == null)
             {
                 return Ok(null);
             }
             else
             {
                 List<Accounts> friends = new List<Accounts>();
-                foreach(Accounts account in a.FriendsAccount)
+                foreach (Accounts account in a.FriendsAccount)
                 {
                     friends.Add(new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel));
                 }
                 return Ok(friends);
             }
+        }
+        [Authorize]
+        [Route("[action]")]
+        [HttpPost]
+        public IActionResult GetAccountByPhoneNumber([FromBody] Accounts userToSearch)
+        {
+            Accounts a = _accountRepo.GetAccountByPhoneNumber(userToSearch.PhoneNumberAccount);
+            if (a != null)
+            {
+                Accounts returnAccount = new Accounts(a.IdAccount,a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel);
+                return Ok(returnAccount);
+            }
+            Accounts returnNull = new Accounts();
+            return Ok(returnNull);
+
+
+
+
+        }
+        [Authorize]
+        [Route("[action]")]
+        [HttpPut]
+        public IActionResult DeleteFriendAccount([FromBody] Accounts friend)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Accounts a = _accountRepo.GetById(GetIdByToken(identity));
+            Accounts friendToRemove = a.FriendsAccount.Where(x => x.IdAccount == friend.IdAccount).FirstOrDefault();
+            a.FriendsAccount.Remove(friendToRemove);
+            _accountRepo.Update(a);
+
+            friendToRemove.FriendsAccount.Remove(a);
+            _accountRepo.Update(friendToRemove);
+            return Ok();
         }
 
         public int GetIdByToken(ClaimsIdentity identity)

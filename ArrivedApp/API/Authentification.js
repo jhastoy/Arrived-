@@ -53,26 +53,40 @@ export function Register(name, surname, email, password, phoneNumber) {
     }
   });
 }
-
-export async function IsTokenValid() {
-  getToken().then(token =>
-    fetch("https://arrivedapi.conveyor.cloud/api/Token/IsTokenValid", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      },
-      body: JSON.stringify({
-        PasswordAccount: "test"
-      })
-    }).then(response => {
-      if (response.ok) {
-        return true;
-      } else {
-        return false;
+export async function RefreshDataUser() {
+  let token = await getToken();
+  return fetch("https://arrivedapi.conveyor.cloud/api/Auth/Refresh", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    }
+  }).then(response => {
+    console.log(response.ok);
+    if (response.ok) {
+      return response.json();
+    } else {
+      if (response.status == 404) {
+        throw new Error("Erreur réseau.");
       }
-    })
-  );
+    }
+  });
+}
+export async function IsTokenValid() {
+  let token = await getToken();
+  return fetch("https://arrivedapi.conveyor.cloud/api/Token/IsTokenValid", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    }
+  }).then(response => {
+    if (response.ok) {
+      return true;
+    } else {
+      return false;
+    }
+  });
 }
 
 export default async function UpdateExpoToken(expoToken) {

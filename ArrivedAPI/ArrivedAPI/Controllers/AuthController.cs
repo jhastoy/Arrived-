@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using ArrivedAPI.Services;
 using Domain;
 using Test.Repositories;
-
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace ArrivedAPI.Controllers
 {
@@ -16,8 +17,10 @@ namespace ArrivedAPI.Controllers
     public class AuthController : ControllerBase
     {
         private IAccountService _userService;
+        private IAccountRepository _accountRepo;
         public AuthController(IAccountService userService)
         {
+            _accountRepo = new AccountRepository();
             _userService = userService;
         }
         // POST: api/Auth
@@ -46,7 +49,21 @@ namespace ArrivedAPI.Controllers
 
             return Ok( _userService.Authenticate(userParams.EmailAccount, userParams.PasswordAccount));
         }
-
+        [Route("[action]")]
+        [Authorize]
+        [HttpGet]
+        public IActionResult Refresh()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Accounts user = _accountRepo.GetById(GetIdByToken(identity));
+            Accounts a = new Accounts(user.IdAccount, user.PhoneNumberAccount, user.EmailAccount, user.NameAccount, user.SurnameAccount, user.InTravel, user.InDanger, user.LastPositionAccount, user.WarningsAccount, user.FriendsAccount, user.TravelAccount, user.FollowedTravelsAccount, user.PlacesAccount, user.Token, user.AlertChoiceAccount);
+            return Ok(a);
+        }
+        public int GetIdByToken(ClaimsIdentity identity)
+        {
+            IEnumerable<Claim> claim = identity.Claims;
+            return int.Parse(claim.Where(c => c.Type == "Id").Select(c => c.Value).SingleOrDefault());
+        }
 
     }
 }

@@ -77,25 +77,27 @@ namespace ArrivedAPI.Controllers
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var user = _accountRepo.GetById(GetIdByToken(identity));
             List<Accounts> followed = new List<Accounts>();
-            
-            foreach (Accounts a in user.FriendsAccount)
+            if (user.FriendsAccount != null)
             {
-                if (a.InTravel || a.InDanger)
+                foreach (Accounts a in user.FriendsAccount)
                 {
-                    if (user.FollowedTravelsAccount != null && a.InTravel && user.FollowedTravelsAccount.Where(x => x.IdTravel == a.TravelAccount.IdTravel).FirstOrDefault() != null)
+                    if (a.InTravel || a.InDanger)
                     {
-                        Accounts account = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel, new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel), a.InDanger, a.WarningsAccount,a.LastPositionAccount);
-                        followed.Add(account);
-                    }
-                    else
-                    {
-                        if (a.InDanger && a.AlertChoiceAccount > 1)
+                        if (user.FollowedTravelsAccount != null && a.InTravel && user.FollowedTravelsAccount.Where(x => x.IdTravel == a.TravelAccount.IdTravel).FirstOrDefault() != null)
                         {
-                            Accounts account = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel, a.InDanger, a.WarningsAccount,a.LastPositionAccount);
+                            Accounts account = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel, new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel), a.InDanger, a.WarningsAccount, a.LastPositionAccount);
                             followed.Add(account);
                         }
+                        else
+                        {
+                            if (a.InDanger && a.AlertChoiceAccount > 1)
+                            {
+                                Accounts account = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel, a.InDanger, a.WarningsAccount, a.LastPositionAccount);
+                                followed.Add(account);
+                            }
+                        }
+
                     }
-                                
                 }
             }
             
@@ -120,6 +122,17 @@ namespace ArrivedAPI.Controllers
                 a.IsArrived();
                 return Ok(true);
             }
+            _accountRepo.Update(a);
+            return Ok();
+        }
+        [Authorize]
+        [Route("[action]")]
+        [HttpPut]
+        public IActionResult StopTravel()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Accounts a = _accountRepo.GetById(GetIdByToken(identity));
+            a.StopTravel();
             _accountRepo.Update(a);
             return Ok();
         }

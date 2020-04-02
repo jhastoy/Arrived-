@@ -22,6 +22,8 @@ namespace Domain
         public virtual Positions LastPositionAccount { get; set; }
         public virtual ICollection<Warnings> WarningsAccount { get; set; }
         public virtual Travel TravelAccount { get; set; }
+
+        public virtual ICollection<Travel> TravelHistoryAccount { get; set; }
         public virtual bool InTravel { get; set; }
         public virtual bool InDanger { get; set; }
         public virtual int AlertChoiceAccount { get; set; }
@@ -177,7 +179,7 @@ namespace Domain
         {
             AlertChoiceAccount = 3;
         }
-        public virtual dynamic SendPushNotification(string ExpoToken,string message)
+        public virtual void SendPushNotification(string ExpoToken,string message)
         {
             dynamic body = new
             {
@@ -194,8 +196,15 @@ namespace Domain
                 client.Headers.Add("Content-Type", "application/json");
                 response = client.UploadString("https://exp.host/--/api/v2/push/send", JsonExtensions.SerializeToJson(body));
             }
-            var json = JsonExtensions.DeserializeFromJson<dynamic>(response);
-            return json;
+            
+        }
+
+        public virtual void StopTravel()
+        {
+            InTravel = false;
+            InDanger = false;
+            TravelAccount = null;
+            WarningsAccount = null;
         }
 
     }

@@ -36,7 +36,19 @@ namespace ArrivedAPI.Controllers
             _accountRepo.Update(a);
             return (Ok(place));
         }
+        [Authorize]
+        [Route("[action]")]
+        [HttpPut]
+        public IActionResult DeletePlaceAccount([FromBody] Places place)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Accounts a = _accountRepo.GetById(GetIdByToken(identity));
 
+            Places placeToRemove = a.PlacesAccount.Where(x => x.IdPlace == place.IdPlace).FirstOrDefault();
+            a.PlacesAccount.Remove(placeToRemove);
+            _accountRepo.Update(a);
+            return Ok();
+        }
 
         public int GetIdByToken(ClaimsIdentity identity)
         {

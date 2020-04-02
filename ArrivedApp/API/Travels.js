@@ -20,7 +20,27 @@ export function Refresh() {
   );
 }
 
-export function AddTravel(friendsIds, startPosition, EndPlaceId, type) {
+export async function GetUserTravel() {
+  let token = await getToken();
+  return fetch("https://arrivedapi.conveyor.cloud/api/Travel/GetUserTravel", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    }
+  }).then(response => {
+    console.log(response.ok);
+    if (response.ok) {
+      return response.json();
+    } else {
+      if (response.status == 404) {
+        throw new Error("Erreur réseau.");
+      }
+    }
+  });
+}
+
+export async function AddTravel(friendsIds, startPosition, EndPlaceId, type) {
   console.log(
     JSON.stringify({
       FollowerAccountsIds: friendsIds,
@@ -67,4 +87,24 @@ export async function UpdateUserPosition(positions) {
     },
     body: JSON.stringify(positions)
   }).then(response => console.log(response.ok));
+}
+
+export async function StopTravel() {
+  const token = await getToken();
+  return fetch("https://arrivedapi.conveyor.cloud/api/Travel/StopTravel", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + token
+    }
+  }).then(response => {
+    console.log(response.ok);
+    if (response.ok) {
+      return response;
+    } else {
+      if (response.status == 404) {
+        throw new Error("Erreur réseau.");
+      }
+    }
+  });
 }

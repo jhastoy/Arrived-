@@ -1,9 +1,9 @@
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
-import LoginPage from "../Components/LoginPage";
-import RegisterPage from "../Components/RegisterPage";
-import LoadPage from "../Components/LoadPage";
-import NavigationPage from "../Components/NavigationPage";
+import LoginPage from "../Domain/Authentification/Pages/LoginPage";
+import RegisterPage from "../Domain/Authentification/Pages/RegisterPage";
+import LoadPage from "../Domain/Authentification/Pages/LoadPage";
+import NavigationPage from "../Domain/Authentification/Pages/NavigationPage";
 const AuthentificationStackNavigator = createStackNavigator(
   {
     LoadPage: {

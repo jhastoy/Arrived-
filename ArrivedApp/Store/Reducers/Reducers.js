@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 import { getInTravel } from "../../API/Storage";
+import { ActionSheetIOS } from "react-native";
+import { createPortal } from "react-dom";
 
 const initialStateFriends = { idsSelected: [] };
 
@@ -60,9 +62,12 @@ function selectType(state = initialStateType, action) {
 }
 
 const initialStateTravel = {
-  inTravel: getInTravel()
+  inTravel: false
 };
-function inTravel(state = initialStateTravel, action) {
+async function inTravel(state = initialStateTravel, action) {
+  getInTravel().then(inTravel => {
+    state.inTravel = inTravel;
+  });
   let nextState;
   switch (action.type) {
     case "CHANGE_TRAVEL_MODE":
@@ -72,10 +77,28 @@ function inTravel(state = initialStateTravel, action) {
       return state;
   }
 }
+const initialPlaceDetailled = { idPlaceDetailled: "" };
+
+function selectDetailledPlace(state = initialPlaceDetailled, action) {
+  let nextState;
+  switch (action.type) {
+    case "DETAIL_PLACE":
+      if (state.idPlaceDetailled == action.value) {
+        nextState = { idPlaceDetailled: "" };
+      } else {
+        nextState = { idPlaceDetailled: action.value };
+      }
+      return nextState || state;
+    default:
+      return state;
+  }
+}
+
 const appStore = combineReducers({
   selectFriend,
   selectPlace,
   selectType,
-  inTravel
+  inTravel,
+  selectDetailledPlace
 });
 export default appStore;

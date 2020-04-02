@@ -22,8 +22,8 @@ namespace ArrivedAPI.Controllers
         }
         [Authorize]
         [Route("[action]")]
-        [HttpPost]
-        public IActionResult IsTokenValid([FromBody] Accounts token)
+        [HttpGet]
+        public IActionResult IsTokenValid()
         {
             return Ok("valid");
         }

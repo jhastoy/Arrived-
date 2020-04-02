@@ -22,6 +22,9 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
+      "infoPlist": {
+        "UIBackgroundModes": ["location", "fetch"]
+      },
       "supportsTablet": true
     },
     "android": {

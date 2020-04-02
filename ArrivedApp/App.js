@@ -24,3 +24,24 @@ const styles = StyleSheet.create({
     borderRadius: 10
   }
 });
+TaskManager.defineTask("SENDING_POSITION", ({ data, error }) => {
+  if (error) {
+    console.log(error.message);
+  }
+  if (data) {
+    const { locations } = data;
+    positions = [
+      ...positions,
+      {
+        latitudePosition: locations[0].coords.latitude.toString(),
+        longitudePosition: locations[0].coords.longitude.toString(),
+        dateTimePosition: new Date(locations[0].timestamp)
+      }
+    ];
+    console.log(locations);
+    if (positions.length == 10) {
+      UpdateUserPosition(positions);
+      positions = [];
+    }
+  }
+});

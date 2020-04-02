@@ -55,7 +55,7 @@ export async function savePlaces(places) {
 }
 export async function getInTravel() {
   try {
-    places = AsyncStorage.getItem("inTravel");
+    places = await AsyncStorage.getItem("inTravel");
   } catch (e) {
     console.log(e.message);
   }

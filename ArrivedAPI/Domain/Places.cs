@@ -11,6 +11,7 @@ namespace Domain
 
         public virtual int IdPlace { get; set; }
         public virtual string NamePlace { get; set; }
+        public virtual string AdressePlace { get; set; }
         public virtual Positions PositionPlace { get; set; }
 
 
