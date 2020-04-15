@@ -5,25 +5,39 @@ import {
   Text,
   TouchableOpacity,
   ActivityIndicator,
-  Alert
+  Alert,
 } from "react-native";
 import { Icon } from "react-native-elements";
 import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
-import { StopTravel } from "../../../API/Travels";
+import { StopTravel, PauseOrStartTravel } from "../../../API/Travels";
 import { saveInTravel } from "../../../API/Storage";
+import { min } from "moment";
 
 class MyTravelComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { paused: false, isStopTravelFetching: false };
+    this.state = {
+      paused: this.props.travel.isPaused,
+      isPlayPauseTravelFetching: false,
+      isStopTravelFetching: false,
+    };
+  }
+  componentDidMount() {
+    console.log("COMPONENT DID MOUNT");
+    this.setState({ paused: this.props.travel.isPaused });
   }
 
   _display() {
+    console.log("ispaaaaaaaused");
+    console.log(this.props.travel.isPaused);
     if (this.props.inTravel) {
       if (this.props.isFetching) {
         return this._displayGeneralLoading();
+      }
+      if (this.props.travel.isFinished) {
+        return this._displayTravelFinished();
       }
       return this._displayInTravel();
     } else {
@@ -34,16 +48,20 @@ class MyTravelComponent extends React.Component {
   _displayGeneralLoading() {
     return <ActivityIndicator size="small" color="black" />;
   }
+
   _displayPlayPauseText() {
     if (this.state.paused) {
       return "Continuer";
     } else return "Pause";
   }
-  _playPauseTravel() {
+  async _playPauseTravel() {
+    this.setState({ isPlayPauseTravelFetching: true });
+    await PauseOrStartTravel();
+    Location.stopLocationUpdatesAsync("SENDING_POSITION");
     if (this.state.paused) {
-      this.setState({ paused: false });
+      this.setState({ paused: false, isPlayPauseTravelFetching: false });
     } else {
-      this.setState({ paused: true });
+      this.setState({ paused: true, isPlayPauseTravelFetching: false });
     }
   }
   _displayPlayPauseStyle() {
@@ -54,7 +72,7 @@ class MyTravelComponent extends React.Component {
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 10,
-        height: "50%"
+        height: "50%",
       };
     } else {
       return {
@@ -63,7 +81,7 @@ class MyTravelComponent extends React.Component {
         alignItems: "center",
         justifyContent: "center",
         borderRadius: 10,
-        height: "50%"
+        height: "50%",
       };
     }
   }
@@ -85,6 +103,23 @@ class MyTravelComponent extends React.Component {
       </View>
     );
   }
+  _displayTravelFinished() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Vous êtes arrivé à destination.</Text>
+        <View style={styles.startTravelContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              this._stopLocation();
+            }}
+            style={styles.startTravelButton}
+          >
+            <Text style={styles.buttonText}>VALIDER</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
   _displayStartPauseIcon() {
     if (this.state.paused) {
       return "play-arrow";
@@ -92,7 +127,12 @@ class MyTravelComponent extends React.Component {
   }
   _displayEndHour() {
     let date = new Date(this.props.travel.endDateTravel);
-    let hour = date.getHours() + "h" + date.getMinutes();
+    let minutes = date.getMinutes().toString();
+    console.log(date);
+    if (minutes.length == 1) {
+      let minutes = "0" + minutes;
+    }
+    let hour = date.getUTCHours() + "h" + minutes;
     return hour;
   }
   _displayStopButtonLoading() {
@@ -100,6 +140,19 @@ class MyTravelComponent extends React.Component {
       return <ActivityIndicator size="small" color="white" />;
     } else
       return <Icon name="stop" size={60} color="white" type="MaterialIcons" />;
+  }
+  _displayPlayPauseButtonLoading() {
+    if (this.state.isPlayPauseTravelFetching) {
+      return <ActivityIndicator size="small" color="white" />;
+    } else
+      return (
+        <Icon
+          name={this._displayStartPauseIcon()}
+          size={60}
+          color="white"
+          type="MaterialIcons"
+        />
+      );
   }
   _displayInTravel() {
     return (
@@ -128,12 +181,7 @@ class MyTravelComponent extends React.Component {
               onPress={() => this._playPauseTravel()}
               style={this._displayPlayPauseStyle()}
             >
-              <Icon
-                name={this._displayStartPauseIcon()}
-                size={60}
-                color="white"
-                type="MaterialIcons"
-              />
+              {this._displayPlayPauseButtonLoading()}
             </TouchableOpacity>
             <Text>{this._displayPlayPauseText()}</Text>
           </View>
@@ -161,29 +209,33 @@ class MyTravelComponent extends React.Component {
       </View>
     );
   }
-  async componentDidMount() {
-    //this._startLocation();
-  }
+
   async _startLocation() {
-    if (this.props.inTravel) {
+    if (
+      this.props.inTravel &&
+      !this.state.paused &&
+      !this.props.travel.isFinished
+    ) {
       console.log("startlocation");
       let taskRegistered = await TaskManager.isTaskRegisteredAsync(
         "SENDING_POSITION"
       );
+      console.log("is task registered");
       console.log(taskRegistered);
-      const { status, permissions } = await Permissions.askAsync(
-        Permissions.LOCATION
-      );
+      if (!taskRegistered) {
+        const { status, permissions } = await Permissions.askAsync(
+          Permissions.LOCATION
+        );
 
-      console.log(status);
-      if (status === "granted") {
-        await Location.startLocationUpdatesAsync("SENDING_POSITION", {
-          accuracy: Location.Accuracy.Highest,
-          foregroundService: {
-            notificationTitle: "Sécurité en cours",
-            notificationBody: "tracking..."
-          }
-        });
+        if (status === "granted") {
+          await Location.startLocationUpdatesAsync("SENDING_POSITION", {
+            accuracy: Location.Accuracy.Highest,
+            foregroundService: {
+              notificationTitle: "Sécurité en cours",
+              notificationBody: "tracking...",
+            },
+          });
+        }
       }
     }
   }
@@ -195,22 +247,22 @@ class MyTravelComponent extends React.Component {
         {
           text: "Annuler",
           onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
+          style: "cancel",
         },
-        { text: "Oui", onPress: () => this._stopLocation() }
+        { text: "Oui", onPress: () => this._stopLocation() },
       ],
       { cancelable: false }
     );
   }
-  async _stopLocation() {
-    this.setState({ isStopTravelFetching: true });
-    //await Location.stopLocationUpdatesAsync("SENDING_POSITION");
-    await StopTravel();
-    await saveInTravel(false);
-    console.log(this.props.stopTravel);
-    await this.props.stopTravel();
+  _stopLocation() {
+    saveInTravel(false);
+    this.props.stopTravel();
+    Location.stopLocationUpdatesAsync("SENDING_POSITION");
+    StopTravel();
   }
   render() {
+    this._startLocation();
+
     return this._display();
   }
 }
@@ -224,24 +276,24 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     shadowOpacity: 0.15,
     shadowRadius: 4,
     elevation: 1,
     borderRadius: 10,
     alignItems: "center",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   title: {
     fontSize: 20,
     marginTop: 10,
-    fontWeight: "500"
+    fontWeight: "500",
   },
   startTravelContainer: {
     width: "96%",
     height: "50%",
-    marginTop: 5
+    marginTop: 5,
   },
   startTravelButton: {
     width: "100%",
@@ -249,30 +301,30 @@ const styles = StyleSheet.create({
     backgroundColor: "#57E976",
     borderRadius: 10,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   description: {
     fontSize: 15,
     textAlign: "center",
     marginTop: 5,
-    marginBottom: 5
+    marginBottom: 5,
   },
   buttonText: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "white"
+    color: "white",
   },
   infoRowContainer: {
     marginTop: 15,
     width: "100%",
     flexDirection: "row",
     justifyContent: "center",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   infoContainer: {
     width: "25%",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   info: {
     marginTop: 3,
@@ -280,12 +332,12 @@ const styles = StyleSheet.create({
     padding: 3,
     paddingLeft: 10,
     paddingRight: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
   infoText: {
     color: "white",
     fontSize: 20,
-    fontWeight: "bold"
+    fontWeight: "bold",
   },
   button: {
     backgroundColor: "#4B6584",
@@ -293,19 +345,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
-    height: "50%"
+    height: "50%",
   },
   buttonsRowContainer: {
     flexDirection: "row",
     justifyContent: "center",
 
     width: "100%",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   buttonsInfosContainer: {
     width: "25%",
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
 export default MyTravelComponent;

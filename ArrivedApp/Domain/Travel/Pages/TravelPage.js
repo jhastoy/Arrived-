@@ -10,7 +10,7 @@ import {
   FlatList,
   Dimensions,
   StatusBar,
-  RefreshControl
+  RefreshControl,
 } from "react-native";
 import TravelComponent from "../Components/TravelComponent";
 import { Refresh } from "../../../API/Travels";
@@ -21,10 +21,13 @@ class TravelPage extends React.Component {
     super(props);
     this.state = { travelsData: "", isFetching: false };
   }
+  static navigationOptions = {
+    title: "Trajets en cours",
+  };
 
   _refreshTravels() {
     this.setState({ isFetching: true });
-    Refresh().then(response => {
+    Refresh().then((response) => {
       console.log(response);
       this.setState({ travelsData: response, isFetching: false });
     });
@@ -61,24 +64,27 @@ class TravelPage extends React.Component {
                   style={0}
                   lastPosition={item.lastPositionAccount}
                   danger={item.inDanger}
+                  phoneNumber={item.phoneNumberAccount}
                 />
               );
             else
               return (
                 <TravelComponent
                   key={item.idAccount}
+                  phoneNumber={item.phoneNumberAccount}
                   surname={item.surnameAccount}
                   progression={item.travelAccount.progressionTravel}
                   warnings={item.warningsAccount}
                   startDate={item.travelAccount.startDateTravel}
                   endDate={item.travelAccount.endDateTravel}
                   danger={item.inDanger}
+                  isFinished={item.travelAccount.isFinished}
                   lastPosition={item.lastPositionAccount}
                   style={1}
                 />
               );
           }}
-          keyExtractor={item => item.idAccount.toString()}
+          keyExtractor={(item) => item.idAccount.toString()}
         />
       </View>
     );
@@ -89,12 +95,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "white",
-    alignItems: "center"
+    alignItems: "center",
   },
   mapcontainer: {
     flex: 1,
     width: 400,
-    height: 400
-  }
+    height: 400,
+  },
 });
 export default TravelPage;

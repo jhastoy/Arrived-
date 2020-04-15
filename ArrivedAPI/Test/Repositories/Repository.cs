@@ -12,7 +12,7 @@ namespace Test.Repositories
         private static ISessionFactory sessionFactory;
         private static ISession session;
 
-        private static ISessionFactory SessionFactory
+        protected static ISessionFactory SessionFactory
         {
             get
             {

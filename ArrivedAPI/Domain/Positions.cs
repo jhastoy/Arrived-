@@ -14,5 +14,19 @@ namespace Domain
         public Positions()
         {
         }
+
+        public Positions(string latitudePosition, string longitudePosition,DateTime dateTimePosition)
+        {
+            LatitudePosition = latitudePosition;
+            LongitudePosition = longitudePosition;
+            DateTimePosition = dateTimePosition;
+
+        }
+        public Positions(string latitudePosition, string longitudePosition)
+        {
+            LatitudePosition = latitudePosition;
+            LongitudePosition = longitudePosition;
+
+        }
     }
 }

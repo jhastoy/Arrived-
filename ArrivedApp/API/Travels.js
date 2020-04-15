@@ -1,14 +1,14 @@
 import { getToken } from "./Storage";
 
 export function Refresh() {
-  return getToken().then(token =>
+  return getToken().then((token) =>
     fetch("https://arrivedapi.conveyor.cloud/api/Travel/GetFollowedTravels", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      }
-    }).then(response => {
+        Authorization: "Bearer " + token,
+      },
+    }).then((response) => {
       if (response.ok) {
         return response.json();
       } else {
@@ -26,9 +26,9 @@ export async function GetUserTravel() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    }
-  }).then(response => {
+      Authorization: "Bearer " + token,
+    },
+  }).then((response) => {
     console.log(response.ok);
     if (response.ok) {
       return response.json();
@@ -46,23 +46,23 @@ export async function AddTravel(friendsIds, startPosition, EndPlaceId, type) {
       FollowerAccountsIds: friendsIds,
       StartPositionTravel: startPosition,
       EndPlaceId: EndPlaceId,
-      TransportTypeTravel: type
+      TransportTypeTravel: type,
     })
   );
-  return getToken().then(token =>
+  return getToken().then((token) =>
     fetch("https://arrivedapi.conveyor.cloud/api/Travel/AddTravel", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
         FollowerAccountsIds: friendsIds,
         StartPositionTravel: startPosition,
         EndPlaceId: EndPlaceId,
-        TransportTypeTravel: parseInt(type)
-      })
-    }).then(response => {
+        TransportTypeTravel: parseInt(type),
+      }),
+    }).then((response) => {
       if (response.ok) {
         return response.json();
       } else {
@@ -79,14 +79,25 @@ export async function AddTravel(friendsIds, startPosition, EndPlaceId, type) {
 }
 export async function UpdateUserPosition(positions) {
   const token = await getToken();
-  fetch("https://arrivedapi.conveyor.cloud/api/Travel/UpdateUserPosition", {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    },
-    body: JSON.stringify(positions)
-  }).then(response => console.log(response.ok));
+  return fetch(
+    "https://arrivedapi.conveyor.cloud/api/Travel/UpdateUserPosition",
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+      body: JSON.stringify(positions),
+    }
+  ).then((response) => {
+    if (response.ok) {
+      return response.json();
+    } else {
+      if (response.status == 404) {
+        throw new Error("Erreur réseau.");
+      }
+    }
+  });
 }
 
 export async function StopTravel() {
@@ -95,9 +106,32 @@ export async function StopTravel() {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token
+      Authorization: "Bearer " + token,
+    },
+  }).then((response) => {
+    console.log(response.ok);
+    if (response.ok) {
+      return response;
+    } else {
+      if (response.status == 404) {
+        throw new Error("Erreur réseau.");
+      }
     }
-  }).then(response => {
+  });
+}
+
+export async function PauseOrStartTravel() {
+  const token = await getToken();
+  return fetch(
+    "https://arrivedapi.conveyor.cloud/api/Travel/PauseOrStartTravel",
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    }
+  ).then((response) => {
     console.log(response.ok);
     if (response.ok) {
       return response;

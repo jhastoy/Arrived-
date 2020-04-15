@@ -37,7 +37,7 @@ namespace ArrivedAPI.Controllers
             {
                 Places endPlace = user.PlacesAccount.Where(x => x.IdPlace == t.EndPlaceId).FirstOrDefault();
                 Console.WriteLine(endPlace);
-                travel = new Travel(t.StartPositionTravel, endPlace, t.TransportTypeTravel);
+                travel = new Travel(t.StartPositionTravel, new Places(endPlace.NamePlace,endPlace.AdressePlace,new Positions(endPlace.PositionPlace.LatitudePosition, endPlace.PositionPlace.LongitudePosition)), t.TransportTypeTravel);
             }
             else
             {
@@ -66,7 +66,8 @@ namespace ArrivedAPI.Controllers
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var a = _accountRepo.GetById(GetIdByToken(identity));
-            Travel t = new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel);
+            
+            Travel t = new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel,a.TravelAccount.IsPaused,a.TravelAccount.IsFinished);
             return Ok(t);
         }
         [Authorize]
@@ -85,7 +86,7 @@ namespace ArrivedAPI.Controllers
                     {
                         if (user.FollowedTravelsAccount != null && a.InTravel && user.FollowedTravelsAccount.Where(x => x.IdTravel == a.TravelAccount.IdTravel).FirstOrDefault() != null)
                         {
-                            Accounts account = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel, new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel), a.InDanger, a.WarningsAccount, a.LastPositionAccount);
+                            Accounts account = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel, new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel,a.TravelAccount.IsPaused,a.TravelAccount.IsFinished), a.InDanger, a.WarningsAccount, a.LastPositionAccount);
                             followed.Add(account);
                         }
                         else
@@ -111,20 +112,22 @@ namespace ArrivedAPI.Controllers
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             Accounts a = _accountRepo.GetById(GetIdByToken(identity));
-            foreach(Positions p in positions)
+            if (a.TravelAccount != null)
             {
-                a.TravelAccount.UserPositionsTravel.Add(p);
-            }
-            a.TravelAccount.Update();
-            a.LastPositionAccount = a.TravelAccount.GetLastPosition();
-            if (a.TravelAccount.IsArrived())
-            {
+                foreach (Positions p in positions)
+                {
+                    a.TravelAccount.UserPositionsTravel.Add(p);
+                }
+                a.TravelAccount.Update();
+                a.LastPositionAccount = a.TravelAccount.GetLastPosition();
                 a.IsArrived();
-                return Ok(true);
+                _accountRepo.Update(a);
+                Travel t = new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel, a.TravelAccount.IsPaused, a.TravelAccount.IsFinished);
+                return Ok(t);
             }
-            _accountRepo.Update(a);
             return Ok();
         }
+
         [Authorize]
         [Route("[action]")]
         [HttpPut]
@@ -136,6 +139,18 @@ namespace ArrivedAPI.Controllers
             _accountRepo.Update(a);
             return Ok();
         }
+        [Authorize]
+        [Route("[action]")]
+        [HttpPut]
+        public IActionResult PauseOrStartTravel()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Accounts a = _accountRepo.GetById(GetIdByToken(identity));
+            a.TravelAccount.PauseOrStart();
+            _accountRepo.Update(a);
+            return Ok();
+        }
+
 
         public int GetIdByToken(ClaimsIdentity identity)
         {

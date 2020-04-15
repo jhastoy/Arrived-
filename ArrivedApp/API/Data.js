@@ -1,4 +1,10 @@
-import { saveFriends, saveToken, savePlaces, saveInTravel } from "./Storage";
+import {
+  saveFriends,
+  saveToken,
+  savePlaces,
+  saveInTravel,
+  saveInDanger,
+} from "./Storage";
 import { Notifications } from "expo";
 import * as Permissions from "expo-permissions";
 import UpdateExpoToken, { IsTokenValid } from "./Authentification";
@@ -10,7 +16,8 @@ export default async function initData(response) {
   await savePlaces(response.placesAccount);
   console.log("Intravel :" + response.inTravel);
   await saveInTravel(response.inTravel);
-  await registerForPushNotificationsAsync();
+  await saveInDanger(response.inDanger);
+  //await registerForPushNotificationsAsync();
 }
 
 export async function RefreshData() {

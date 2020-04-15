@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "react-navigation-tabs";
 import { createAppContainer } from "react-navigation";
 import { Icon } from "react-native-elements";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, Image } from "react-native";
 import React from "react";
 import HomePage from "../Domain/Home/Pages/HomePage";
 import TravelPage from "../Domain/Travel/Pages/TravelPage";
@@ -16,36 +16,58 @@ import PlacesPage from "../Domain/Profil/Pages/PlacesPage";
 import AddPlacePage from "../Domain/Profil/Pages/AddPlacePage";
 import FriendsPage from "../Domain/Profil/Pages/FriendsPage";
 import AddFriendPage from "../Domain/Profil/Pages/AddFriendPage";
+import AlertPage from "../Domain/Home/Pages/AlertPage";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 const travelStackNavigator = createStackNavigator(
   {
     Travel: {
-      screen: TravelPage
-    }
+      screen: TravelPage,
+    },
   },
   {
     defaultNavigationOptions: {
-      title: "Trajets en cours"
-    }
+      title: "Trajets en cours",
+      headerStyle: {
+        borderRadius: 0,
+        shadowRadius: 0,
+        shadowOffset: {
+          height: 0,
+        },
+      },
+      headerBackTitleVisible: false,
+      headerBackImage: () => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate("AddFriends")}
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+            marginLeft: 15,
+          }}
+        >
+          <Icon name="ios-arrow-back" size={35} type="ionicon" />
+        </TouchableOpacity>
+      ),
+    },
   }
 );
 const profilStackNavigator = createStackNavigator(
   {
     ProfilPage: {
-      screen: ProfilPage
+      screen: ProfilPage,
     },
     Places: {
-      screen: PlacesPage
+      screen: PlacesPage,
     },
     AddPlaces: {
-      screen: AddPlacePage
+      screen: AddPlacePage,
     },
     Friends: {
-      screen: FriendsPage
+      screen: FriendsPage,
     },
     AddFriends: {
-      screen: AddFriendPage
-    }
+      screen: AddFriendPage,
+    },
   },
   {
     initialRouteName: "ProfilPage",
@@ -55,8 +77,8 @@ const profilStackNavigator = createStackNavigator(
         borderRadius: 0,
         shadowRadius: 0,
         shadowOffset: {
-          height: 0
-        }
+          height: 0,
+        },
       },
       headerBackTitleVisible: false,
       headerBackImage: () => (
@@ -65,35 +87,38 @@ const profilStackNavigator = createStackNavigator(
           style={{
             alignItems: "center",
             justifyContent: "center",
-            marginLeft: 15
+            marginLeft: 15,
           }}
         >
           <Icon name="ios-arrow-back" size={35} type="ionicon" />
         </TouchableOpacity>
-      )
-    }
+      ),
+    },
   }
 );
 const homeStackNavigator = createStackNavigator(
   {
     Home: {
-      screen: HomePage
+      screen: HomePage,
     },
     TypeChoice: {
-      screen: TypeChoicePage
+      screen: TypeChoicePage,
     },
     FriendChoice: {
-      screen: FriendChoicePage
+      screen: FriendChoicePage,
     },
     PlaceChoice: {
-      screen: PlaceChoicePage
+      screen: PlaceChoicePage,
     },
     TravelConfirmation: {
-      screen: TravelConfirmationPage
+      screen: TravelConfirmationPage,
     },
     MyTravel: {
-      screen: MyTravel
-    }
+      screen: MyTravel,
+    },
+    Alert: {
+      screen: AlertPage,
+    },
   },
   {
     initialRouteName: "Home",
@@ -102,8 +127,8 @@ const homeStackNavigator = createStackNavigator(
         borderRadius: 0,
         shadowRadius: 0,
         shadowOffset: {
-          height: 0
-        }
+          height: 0,
+        },
       },
       headerBackTitleVisible: false,
       headerBackImage: () => (
@@ -112,13 +137,13 @@ const homeStackNavigator = createStackNavigator(
           style={{
             alignItems: "center",
             justifyContent: "center",
-            marginLeft: 15
+            marginLeft: 15,
           }}
         >
           <Icon name="ios-arrow-back" size={35} type="ionicon" />
         </TouchableOpacity>
-      )
-    }
+      ),
+    },
   }
 );
 
@@ -129,7 +154,7 @@ homeStackNavigator.navigationOptions = ({ navigation }) => {
   }
 
   return {
-    tabBarVisible
+    tabBarVisible,
   };
 };
 profilStackNavigator.navigationOptions = ({ navigation }) => {
@@ -139,45 +164,71 @@ profilStackNavigator.navigationOptions = ({ navigation }) => {
   }
 
   return {
-    tabBarVisible
+    tabBarVisible,
   };
 };
 const bottomTabNavigator = createBottomTabNavigator(
   {
     Travel: {
-      screen: travelStackNavigator
+      screen: travelStackNavigator,
+      navigationOptions: {
+        tabBarLabel: "Trajets",
+        tabBarIcon: ({ tintColor }) => {
+          if (tintColor == "black")
+            return (
+              <Image
+                style={{ height: 40, width: 40 }}
+                source={require("../Includes/distance.png")}
+              />
+            );
+          else
+            return (
+              <Image
+                style={{ height: 40, width: 40 }}
+                source={require("../Includes/distance_selected.png")}
+              />
+            );
+        },
+      },
     },
     Home: {
-      screen: homeStackNavigator
+      screen: homeStackNavigator,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <MaterialCommunityIcons
+            name="chevron-double-up"
+            size={40}
+            color={tintColor}
+          />
+        ),
+      },
     },
     Profil: {
-      screen: profilStackNavigator
-    }
+      screen: profilStackNavigator,
+      navigationOptions: {
+        tabBarIcon: ({ tintColor }) => (
+          <Image
+            style={{
+              resizeMode: "cover",
+              width: 40,
+              height: 40,
+              borderRadius: 20,
+              borderColor: tintColor == "black" ? "white" : tintColor,
+              borderWidth: 2,
+            }}
+            source={require("../Includes/profil_test.jpg")}
+          ></Image>
+        ),
+      },
+    },
   },
   {
+    tabBarOptions: {
+      showLabel: false,
+      activeTintColor: "#4B6584",
+      inactiveTintColor: "black",
+    },
     initialRouteName: "Home",
-    defaultNavigationOptions: {
-      headerStyle: {
-        borderRadius: 0,
-        shadowRadius: 0,
-        shadowOffset: {
-          height: 0
-        }
-      },
-      headerBackTitleVisible: false,
-      headerBackImage: () => (
-        <TouchableOpacity
-          onPress={() => navigation.navigate("AddFriends")}
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-            marginLeft: 15
-          }}
-        >
-          <Icon name="ios-arrow-back" size={35} type="ionicon" />
-        </TouchableOpacity>
-      )
-    }
   }
 );
 

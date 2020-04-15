@@ -22,19 +22,39 @@ namespace ArrivedAPI.Controllers
         }
         [Authorize]
         [Route("[action]")]
-        [HttpPost]
-        public IActionResult UserAlert([FromBody] Positions position)
+        [HttpPut]
+        public IActionResult UserAlert()
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             Accounts a = _accountRepo.GetById(GetIdByToken(identity));
-            if(position != null)
-            {
-                a.LastPositionAccount = position;
-            }
             a.UserAlert();
             _accountRepo.Update(a);
             return Ok();
            
+        }
+        [Authorize]
+        [Route("[action]")]
+        [HttpPut]
+        public IActionResult UpdateUserPositionAlert([FromBody] Positions position)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Accounts a = _accountRepo.GetById(GetIdByToken(identity));
+            Positions p = new Positions(position.LatitudePosition, position.LongitudePosition, position.DateTimePosition);
+            a.LastPositionAccount = p;
+            _accountRepo.Update(a);
+            return Ok();
+        }
+        [Authorize]
+        [Route("[action]")]
+        [HttpPut]
+        public IActionResult StopAlert()
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            Accounts a = _accountRepo.GetById(GetIdByToken(identity));
+
+            a.StopAlert();
+            _accountRepo.Update(a);
+            return Ok();
         }
         public int GetIdByToken(ClaimsIdentity identity)
         {

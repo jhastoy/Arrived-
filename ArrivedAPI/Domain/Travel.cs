@@ -30,14 +30,19 @@ namespace Domain
         public virtual int BaseDistanceTravel { get; set; }
         public virtual ICollection<int> UserDistanceTravel { get; set; }
         public virtual double ProgressionTravel { get; set; }
+        public virtual bool IsPaused { get; set; }
+        public virtual bool IsFinished { get; set; }
 
         public Travel() { }
-        public Travel(DateTime startDate,DateTime endDate,int transportType,double progression)
+        public Travel(DateTime startDate,DateTime endDate,int transportType,double progression,bool isPauded,bool isFinished)
         {
             StartDateTravel = startDate;
             EndDateTravel = endDate;
             TransportTypeTravel = transportType;
             ProgressionTravel = progression;
+            IsPaused = isPauded;
+            IsFinished = isFinished;
+
         }
         public Travel(Accounts traveller, ICollection<Accounts> follower, Places startPlace, Places endPlace, int transportType)
         {
@@ -52,8 +57,7 @@ namespace Domain
             EndPositionTravel = EndPlaceTravel.PositionPlace;
 
             TransportTypeTravel = transportType;
-            InitDates();
-            InitDistance();
+            InitTravel();
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
         }
         public Travel(Accounts traveller, ICollection<Accounts> follower, Positions startPosition, Places endPlace, int transportType)
@@ -67,8 +71,7 @@ namespace Domain
             EndPositionTravel = EndPlaceTravel.PositionPlace;
 
             TransportTypeTravel = transportType;
-            InitDates();
-            InitDistance();
+            InitTravel();
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
         }
         public Travel(Accounts traveller, ICollection<Accounts> follower, Positions startPosition, Positions endPosition, int transportType)
@@ -81,8 +84,7 @@ namespace Domain
             StartPositionTravel = startPosition;
             EndPositionTravel = endPosition;
             TransportTypeTravel = transportType;
-            InitDates();
-            InitDistance();
+            InitTravel();
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
         }
         public Travel(Positions startPosition, Positions endPosition, int transportType)
@@ -90,12 +92,12 @@ namespace Domain
             UserPositionsTravel = new List<Positions>();
             UserDistanceTravel = new List<int>();
             UserDistanceTravel = new List<int>();
-
+            IsFinished = false;
+            IsPaused = false;
             StartPositionTravel = startPosition;
             EndPositionTravel = endPosition;
             TransportTypeTravel = transportType;
-            InitDates();
-            InitDistance();
+            InitTravel();
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
         }
         public Travel(Positions startPosition, Places endPlace, int transportType)
@@ -103,75 +105,30 @@ namespace Domain
             UserPositionsTravel = new List<Positions>();
             UserDistanceTravel = new List<int>();
             UserDistanceTravel = new List<int>();
-
+            IsFinished = false;
+            IsPaused = false;
             StartPositionTravel = startPosition;
             EndPlaceTravel = endPlace;
             TransportTypeTravel = transportType;
-            InitDates();
-            InitDistance();
+
+            InitTravel();
             GoogleSigned.AssignAllServices(new GoogleSigned("AIzaSyAxS27KCAmfu2v3TAvQmCIek9HA2efvu7I"));
         }
-        public virtual void InitDates()
+        public virtual void InitTravel()
         {
+            var request = MatrixRequest(StartPositionTravel.LatitudePosition + " " + StartPositionTravel.LongitudePosition);
+            var response = new Google.Maps.DistanceMatrix.DistanceMatrixService();
+            var data = response.GetResponseAsync(request).Result.Rows[0].Elements[0];
+            var duration = data.duration.Value;
+            var distance = data.distance.Value;
             StartDateTravel = DateTime.Now;
-            DateTime duration = CalculateDuration();
-            EndDateTravel = StartDateTravel.AddHours(duration.Hour).AddMinutes(duration.Minute);
-        }
-        public virtual void InitDistance()
-        {
-            BaseDistanceTravel = CalculateDistance();
-        }
-        public virtual int CalculateDistance()
-        {
-            var request = MatrixRequest(StartPositionTravel.LatitudePosition + " " + StartPositionTravel.LongitudePosition);
-            var response = new Google.Maps.DistanceMatrix.DistanceMatrixService();
-            var distance = response.GetResponseAsync(request).Result.Rows[0].Elements[0].distance;
-            return FormatDistance(distance.ToString());
-        }
-        public virtual DateTime  CalculateDuration()
-        {
-            var request = MatrixRequest(StartPositionTravel.LatitudePosition + " " + StartPositionTravel.LongitudePosition);
-            var response = new Google.Maps.DistanceMatrix.DistanceMatrixService();
-            var duration = response.GetResponseAsync(request).Result.Rows[0].Elements[0].duration;
-            return FormatDuration(duration.ToString());
+            EndDateTravel = StartDateTravel.AddSeconds(duration);
+            BaseDistanceTravel = (int)distance;
+            Console.WriteLine("Duration : " + duration);
+            Console.WriteLine("Distance : " + distance);
         }
 
-        public virtual DateTime FormatDuration(string googleDuration)
-        {
-            var format = googleDuration;
-            Console.WriteLine(format.IndexOf("hour"));
-            Console.WriteLine(format.IndexOf("hours"));
 
-            if (format.IndexOf("hour") == -1 && format.IndexOf("hours") == -1)
-            {
-                format = "00:" + format.Replace(" mins ", "");
-            }
-            else
-            {
-                format = format.Replace(" mins ", "").Replace(" hours ", ":").Replace(" hour ", ":");
-            }
-            int index = format.IndexOf("(");
-            format = format.Remove(index, 6);
-            DateTime date = Convert.ToDateTime(format);
-            return date;
-        }
-        public virtual int FormatDistance(string googleDistance)
-        {
-            googleDistance = googleDistance.Replace('.', ',');
-            int indexKM = googleDistance.IndexOf("k");
-            if (indexKM == -1)
-            {
-                int indexM = googleDistance.IndexOf("m");
-                string distance = googleDistance.Remove(indexM, googleDistance.Length - indexM);
-                return int.Parse(distance);
-            }
-            else
-            {
-                string distance = googleDistance.Remove(indexKM, googleDistance.Length - indexKM);
-                double distanceM = double.Parse(distance) * 1000;
-                return(int)Math.Round(distanceM);
-            }
-        }
 
         public virtual Google.Maps.DistanceMatrix.DistanceMatrixRequest MatrixRequest(string startPosition)
         {
@@ -204,21 +161,18 @@ namespace Domain
         {
             var request = MatrixRequest(UserPositionsTravel.Last().LatitudePosition + " " + UserPositionsTravel.Last().LongitudePosition);
             var response = new Google.Maps.DistanceMatrix.DistanceMatrixService().GetResponseAsync(request).Result.Rows[0].Elements[0];
-            var duration = FormatDuration(response.duration.ToString());
-            EndDateTravel = StartDateTravel.AddHours(duration.Hour).AddMinutes(duration.Minute);
-            UserDistanceTravel.Add( FormatDistance(response.distance.ToString()));
+            EndDateTravel = StartDateTravel.AddSeconds(response.duration.Value);
+            UserDistanceTravel.Add( (int)response.distance.Value);
             ProgressionTravel = 100 - ((double)UserDistanceTravel.Last() / (double)BaseDistanceTravel) * 100;
         }
         public virtual bool IsArrived()
         {
-            if(ProgressionTravel >= 98)
+            if(ProgressionTravel >= 95)
             {
+                IsFinished = true;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public virtual Positions GetLastPosition()
@@ -226,6 +180,17 @@ namespace Domain
             return UserPositionsTravel.Last();
         }
 
+        public virtual void PauseOrStart()
+        {
+            if(IsPaused)
+            {
+                IsPaused = false;
+            }
+            else
+            {
+                IsPaused = true;
+            }
+        }
         
     }
 }

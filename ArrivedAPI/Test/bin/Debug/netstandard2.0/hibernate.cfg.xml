@@ -10,12 +10,13 @@
 	<property name="connection.driver_class">
   	NHibernate.Driver.MySqlDataDriver
 	</property>
-	<property name="connection.connection_string">
+    <property name="current_session_context_class">thread_static</property>
+    <property name="connection.connection_string">
   	Server=localhost;Database=arrived;User ID=admin;Password=test;
 	</property>
-	<property name="dialect">
-  	NHibernate.Dialect.MySQL5Dialect
-	</property>
+    <property name="dialect">
+      NHibernate.Dialect.MySQL5Dialect
+    </property>
 	<!-- mapping files -->
 	<mapping assembly="Domain" />
   </session-factory>

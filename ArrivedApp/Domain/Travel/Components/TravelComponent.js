@@ -6,50 +6,55 @@ import {
   StyleSheet,
   Text,
   View,
-  ActivityIndicator,
-  Dimensions
+  Linking,
+  Dimensions,
 } from "react-native";
 import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
+import OpenMap from "react-native-open-map";
 
 class TravelComponent extends React.Component {
   constructor(props) {
     super(props);
-    this.name = this.props.name;
-    this.surname = this.props.surname;
-    this.progression = Math.round(this.props.progression);
-    this.warnings = this.props.warnings;
-    this.arrived = this.props.arrived;
-    this.danger = this.props.danger;
-    (this.sDate = new Date(this.props.startDate)),
-      (this.eDate = new Date(this.props.endDate));
-    this.startDate = this.sDate.getHours() + ":" + this.sDate.getMinutes();
-    this.endDate = this.eDate.getHours() + ":" + this.eDate.getMinutes();
-    this.componentStyle = this.props.style;
-    this.lastPosition = this.props.lastPosition;
   }
   containerHeight = 100;
 
+  _formatTime(time) {
+    let date = new Date(time);
+    let minutes = date.getMinutes().toString();
+    console.log(date);
+    if (minutes.length == 1) {
+      minutes = "0" + minutes;
+    }
+    let timeOut = date.getUTCHours() + "h" + minutes;
+    return timeOut;
+  }
   _displayMap() {
-    if (this.danger)
+    if (this.props.danger)
       return (
         <View style={styles.mapContainer}>
           <MapView
             style={styles.map}
             provider={null}
             region={{
-              latitude: Number.parseFloat(this.lastPosition.latitudePosition),
-              longitude: Number.parseFloat(this.lastPosition.longitudePosition),
+              latitude: Number.parseFloat(
+                this.props.lastPosition.latitudePosition
+              ),
+              longitude: Number.parseFloat(
+                this.props.lastPosition.longitudePosition
+              ),
               latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421
+              longitudeDelta: 0.0421,
             }}
           >
             <Marker
               coordinate={{
-                latitude: Number.parseFloat(this.lastPosition.latitudePosition),
+                latitude: Number.parseFloat(
+                  this.props.lastPosition.latitudePosition
+                ),
                 longitude: Number.parseFloat(
-                  this.lastPosition.longitudePosition
-                )
+                  this.props.lastPosition.longitudePosition
+                ),
               }}
             />
           </MapView>
@@ -58,7 +63,7 @@ class TravelComponent extends React.Component {
   }
   _warningContainerStyle() {
     return {
-      flexDirection: "row"
+      flexDirection: "row",
     };
   }
   _startDateStyle() {
@@ -68,7 +73,7 @@ class TravelComponent extends React.Component {
       bottom: 3,
       left: 4,
       color: "black",
-      fontSize: 12
+      fontSize: 12,
     };
   }
   _endDateStyle() {
@@ -79,18 +84,24 @@ class TravelComponent extends React.Component {
       right: 4,
       color: "black",
       fontSize: 12,
-      fontWeight: "bold"
+      fontWeight: "bold",
     };
   }
   _displayContact() {
-    if (this.danger) {
+    if (this.props.danger) {
       return (
         <View style={this._contactContainerStyle()}>
-          <TouchableOpacity style={styles.contactButton}>
+          <TouchableOpacity
+            onPress={() => this._openPhoneCall()}
+            style={styles.contactButton}
+          >
             <Text style={styles.contactText}>Appeler</Text>
           </TouchableOpacity>
           <View style={styles.separateBar}></View>
-          <TouchableOpacity style={styles.contactButton}>
+          <TouchableOpacity
+            onPress={() => this._openMap()}
+            style={styles.contactButton}
+          >
             <Text style={styles.contactText}>Itinéraire</Text>
           </TouchableOpacity>
         </View>
@@ -98,7 +109,7 @@ class TravelComponent extends React.Component {
     }
   }
   _displayWarnings() {
-    return this.warnings.map(element => (
+    return this.props.warnings.map((element) => (
       <View key={element.id} style={this._warningContainerStyle()}>
         <View style={styles.imageWarning}>
           <Image
@@ -113,20 +124,20 @@ class TravelComponent extends React.Component {
     ));
   }
   _updateContainerHeight() {
-    if (this.componentStyle == 1) {
+    if (this.props.style == 1) {
       this.containerHeight = 100;
     } else this.containerHeight = 78;
-    if (this.danger) {
-      this.containerHeight += 185 + 30 * this.warnings.length + 5;
-    } else this.containerHeight += 30 * this.warnings.length;
+    if (this.props.danger) {
+      this.containerHeight += 185 + 30 * this.props.warnings.length + 5;
+    } else this.containerHeight += 30 * this.props.warnings.length;
   }
   _containerStyle() {
-    if (this.danger) {
+    if (this.props.danger) {
       return {
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
-          height: 3
+          height: 3,
         },
         marginTop: 20,
         shadowOpacity: 0.27,
@@ -135,7 +146,24 @@ class TravelComponent extends React.Component {
         width: 0.95 * Math.round(Dimensions.get("window").width),
         height: this.containerHeight,
         backgroundColor: "#EB3B5A",
-        borderRadius: 10
+        borderRadius: 10,
+      };
+    }
+    if (this.props.isFinished) {
+      return {
+        marginTop: 20,
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 3,
+        },
+        shadowOpacity: 0.27,
+        shadowRadius: 4.65,
+        elevation: 6,
+        width: 0.9 * Math.round(Dimensions.get("window").width),
+        height: this.containerHeight,
+        backgroundColor: "#57E976",
+        borderRadius: 10,
       };
     } else {
       return {
@@ -143,7 +171,7 @@ class TravelComponent extends React.Component {
         shadowColor: "#000",
         shadowOffset: {
           width: 0,
-          height: 3
+          height: 3,
         },
         shadowOpacity: 0.27,
         shadowRadius: 4.65,
@@ -151,12 +179,12 @@ class TravelComponent extends React.Component {
         width: 0.9 * Math.round(Dimensions.get("window").width),
         height: this.containerHeight,
         backgroundColor: "white",
-        borderRadius: 10
+        borderRadius: 10,
       };
     }
   }
   _contactContainerStyle() {
-    if (this.componentStyle == 0) {
+    if (this.props.style == 0) {
       return {
         flexDirection: "row",
         height: 54,
@@ -165,7 +193,7 @@ class TravelComponent extends React.Component {
         backgroundColor: "#D8D8D8",
         borderBottomStartRadius: 10,
         borderBottomEndRadius: 10,
-        marginTop: 5
+        marginTop: 5,
       };
     } else
       return {
@@ -176,71 +204,110 @@ class TravelComponent extends React.Component {
         backgroundColor: "#D8D8D8",
         borderBottomWidth: 0.2,
         borderBottomColor: "white",
-        marginTop: 5
+        marginTop: 5,
       };
   }
+  _openPhoneCall() {
+    {
+      let phone = this.props.phoneNumber;
+      console.log(phone);
+      let phoneNumber;
+      if (Platform.OS !== "android") {
+        phoneNumber = `telprompt:${phone}`;
+      } else {
+        phoneNumber = `tel:${phone}`;
+      }
+      Linking.canOpenURL(phoneNumber)
+        .then((supported) => {
+          if (!supported) {
+            Alert.alert("Numéro de téléphone non disponible");
+          } else {
+            return Linking.openURL(phoneNumber);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+  }
+  _openMap() {
+    OpenMap.show({
+      latitude: Number.parseFloat(this.props.lastPosition.latitudePosition),
+      longitude: Number.parseFloat(this.props.lastPosition.longitudePosition),
+      title: this.props.surname,
+      cancelText: "Fermer",
+      actionSheetTitle: "Choisir une application",
+      actionSheetMessage: "Applications disponibles ",
+    });
+  }
   _progressBarActiveStyle() {
-    if (this.danger) {
+    if (this.props.danger) {
       return {
         position: "absolute",
         top: this.containerHeight - 23,
         width:
-          (this.progression / 100) *
+          (Math.round(this.props.progression) / 100) *
           0.95 *
           Math.round(Dimensions.get("window").width),
         height: 23,
         backgroundColor: "#EB3B5A",
         borderTopRightRadius: 10,
         borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10
+        borderBottomRightRadius: 10,
       };
+    }
+    if (this.props.isFinished) {
+      return {};
     } else {
       return {
         position: "absolute",
         top: this.containerHeight - 23,
         width:
-          (this.progression / 100) *
-          0.95 *
-          Math.round(Dimensions.get("window").width),
+          (Math.round(this.props.progression) / 100) *
+            0.95 *
+            Math.round(Dimensions.get("window").width) -
+          10,
         height: 23,
         backgroundColor: "#57E976",
         borderTopRightRadius: 10,
         borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10
+        borderBottomRightRadius: 10,
       };
     }
   }
   _progressBarInactiveStyle() {
-    if (this.props.warnings != null) {
+    if (this.props.isFinished) {
       return {
         width: "100%",
         height: 23,
         position: "absolute",
-        top: this.containerHeight - 23,
-        backgroundColor: "#D8D8D8",
+        top: this.containerHeight - 21,
+        backgroundColor: "#57E976",
         borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10
+        borderBottomRightRadius: 10,
       };
     } else {
       return {
         width: "100%",
         height: 23,
         position: "absolute",
-        top: this.containerHeight - 23,
+        top: this.containerHeight - 21,
         backgroundColor: "#D8D8D8",
         borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10
+        borderBottomRightRadius: 10,
       };
     }
   }
   _componentStyle() {
-    if (this.componentStyle == 1) {
+    if (this.props.style == 1) {
       return (
         <>
           <View style={this._progressBarInactiveStyle()}></View>
           <View style={this._progressBarActiveStyle()}></View>
-          <Text style={this._startDateStyle()}>{this.startDate}</Text>
-          <Text style={this._endDateStyle()}>{this.endDate}</Text>
+          <Text style={this._startDateStyle()}>
+            {this._formatTime(this.props.startDate)}
+          </Text>
+          <Text style={this._endDateStyle()}>
+            {this._formatTime(this.props.endDate)}
+          </Text>
         </>
       );
     }
@@ -258,7 +325,7 @@ class TravelComponent extends React.Component {
           </View>
 
           <View style={styles.textContainer}>
-            <Text style={styles.text}>{this.surname}</Text>
+            <Text style={styles.text}>{this.props.surname}</Text>
           </View>
         </View>
         {this._displayMap()}
@@ -275,20 +342,20 @@ const styles = StyleSheet.create({
     width: 350,
     height: 100,
     backgroundColor: "#4B6584",
-    borderRadius: 10
+    borderRadius: 10,
   },
   circle: {
     width: 50,
     height: 50,
     borderRadius: 50 / 2,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   rowContainer: {
     flexDirection: "row",
     alignItems: "center",
     marginTop: 10,
     marginLeft: 10,
-    marginBottom: 5
+    marginBottom: 5,
   },
   textContainer: {
     marginLeft: 10,
@@ -297,11 +364,11 @@ const styles = StyleSheet.create({
     borderStyle: "dotted",
     borderBottomColor: "black",
     height: 40,
-    width: 200
+    width: 200,
   },
   text: {
     fontSize: 25,
-    color: "black"
+    color: "black",
   },
   progressBarInactive: {
     width: 350,
@@ -309,7 +376,7 @@ const styles = StyleSheet.create({
     marginTop: 17,
     backgroundColor: "#D8D8D8",
     borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10
+    borderBottomRightRadius: 10,
   },
   progressBarActive: {
     position: "absolute",
@@ -320,37 +387,37 @@ const styles = StyleSheet.create({
     backgroundColor: "#57E976",
     borderTopRightRadius: 10,
     borderBottomLeftRadius: 10,
-    borderBottomRightRadius: 10
+    borderBottomRightRadius: 10,
   },
   profilImage: {
     resizeMode: "cover",
     width: 50,
     height: 50,
-    borderRadius: 75
+    borderRadius: 75,
   },
   imageWarning: {
     margin: 5,
-    marginLeft: 10
+    marginLeft: 10,
   },
   textWarning: {
-    margin: 5
+    margin: 5,
   },
   mapContainer: {
     height: 140,
     width: "100%",
     backgroundColor: "white",
-    marginBottom: 5
+    marginBottom: 5,
   },
   map: {
-    flex: 1
+    flex: 1,
   },
   iconesContainer: {
-    flexDirection: "row"
+    flexDirection: "row",
   },
   contactImage: {
     width: 40,
     marginLeft: 8,
-    height: 40
+    height: 40,
   },
   contactContainer: {
     flexDirection: "row",
@@ -361,26 +428,26 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
     elevation: 3,
-    marginTop: 5
+    marginTop: 5,
   },
   contactButton: {
     flex: 1,
     height: "80%",
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   contactText: {
-    fontSize: 20
+    fontSize: 20,
   },
   separateBar: {
     height: "80%",
     backgroundColor: "black",
-    width: 1
-  }
+    width: 1,
+  },
 });
 export default TravelComponent;

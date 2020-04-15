@@ -7,11 +7,14 @@ import {
   StyleSheet,
   Text,
   View,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
+import * as Location from "expo-location";
+import * as Permissions from "expo-permissions";
 import { Login } from "../../../API/Authentification";
 import FlashMessage from "react-native-flash-message";
 import { showMessage } from "react-native-flash-message";
+import * as TaskManager from "expo-task-manager";
 
 class LoginPage extends React.Component {
   password = "";
@@ -29,18 +32,20 @@ class LoginPage extends React.Component {
       );
     }
   }
-
   _navigate() {
     this.props.navigation.navigate("RegisterPage");
   }
+  componentDidMount() {
+    TaskManager.unregisterAllTasksAsync();
+  }
   async _connect() {
     this.setState({ isLoading: true });
-    let loginResponse = await Login("jhastoy@ensc.fr", "Crunch").catch(
-      error => {
+    let loginResponse = await Login(this.email, this.password).catch(
+      (error) => {
         this.setState({ isLoading: false });
         showMessage({
           message: error.message,
-          type: "danger"
+          type: "danger",
         });
       }
     );
@@ -69,14 +74,14 @@ class LoginPage extends React.Component {
             <Image
               style={{ width: 25, height: 25 }}
               source={{
-                uri: "https://img.icons8.com/nolan/64/email.png"
+                uri: "https://img.icons8.com/nolan/64/email.png",
               }}
             />
           </View>
           <View style={styles.textInput}>
             <TextInput
               style={{ width: 200 }}
-              onChangeText={text => this._onEmailChanged(text)}
+              onChangeText={(text) => this._onEmailChanged(text)}
               type="username"
               placeholder="Email"
               defaultValue={this.props.navigation.getParam("email", "")}
@@ -88,7 +93,7 @@ class LoginPage extends React.Component {
             <Image
               style={{ width: 25, height: 25 }}
               source={{
-                uri: "https://img.icons8.com/nolan/64/password.png"
+                uri: "https://img.icons8.com/nolan/64/password.png",
               }}
             />
           </View>
@@ -96,7 +101,7 @@ class LoginPage extends React.Component {
             <TextInput
               style={{ width: 200 }}
               secureTextEntry={true}
-              onChangeText={text => this._onPasswordChanged(text)}
+              onChangeText={(text) => this._onPasswordChanged(text)}
               type="password"
               placeholder="Mot de passe"
             ></TextInput>
@@ -128,7 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "black"
+    backgroundColor: "black",
   },
   input: {
     margin: 10,
@@ -138,12 +143,12 @@ const styles = StyleSheet.create({
     width: 300,
     justifyContent: "flex-start",
     alignItems: "center",
-    borderRadius: 30
+    borderRadius: 30,
   },
   textInput: {},
   imageInput: {
     marginLeft: 20,
-    marginRight: 20
+    marginRight: 20,
   },
   button: {
     margin: 10,
@@ -153,15 +158,15 @@ const styles = StyleSheet.create({
     width: 300,
     borderRadius: 30,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   loginButton: {
     margin: 0,
     marginTop: 30,
-    backgroundColor: "#6cb3de"
+    backgroundColor: "#6cb3de",
   },
   registerButton: {
-    margin: 20
-  }
+    margin: 20,
+  },
 });
 export default LoginPage;

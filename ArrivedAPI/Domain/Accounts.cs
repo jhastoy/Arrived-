@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 
@@ -75,6 +76,7 @@ namespace Domain
             LastPositionAccount = lastPositionAccount;
             WarningsAccount = warningsAccount;
             AlertChoiceAccount = alertChoiceAccount;
+            
             if (friendsAccount != null)
             {
                 foreach (Accounts a in friendsAccount)
@@ -82,7 +84,6 @@ namespace Domain
                     FriendsAccount.Add(new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel));
                 }
             }
-            
             TravelAccount = travelAccount;
             InTravel = inTravel;
             FollowedTravelsAccount = followedTravelsAccount;
@@ -136,42 +137,66 @@ namespace Domain
                 }
             }
         }
-        public virtual void IsArrived()
+        public virtual bool IsArrived()
         {
-            InTravel = false;
-            foreach(Accounts friend in FriendsAccount)
+            if (TravelAccount.IsArrived())
             {
-                foreach(Travel followedTravel in friend.FollowedTravelsAccount)
+                AddTravelToHistory();
+                WarningsAccount.Clear();
+                WarningsAccount.Add(new Warnings(1));
+                foreach (Accounts friend in FriendsAccount)
                 {
-                    if(followedTravel.IdTravel == TravelAccount.IdTravel)
+                    foreach (Travel followedTravel in friend.FollowedTravelsAccount)
                     {
-                        SendPushNotification(friend.ExpoToken," est arrivé(e) à destination.");
+                        if (followedTravel.IdTravel == TravelAccount.IdTravel)
+                        {
+                            SendPushNotification(friend.ExpoToken, " est arrivé(e) à destination.");
+                        }
                     }
                 }
+                return true;
             }
+            return false;
+         
+        }
+        public virtual void ValidateArrived()
+        {
+            InTravel = false;
+            TravelAccount = null;
         }
         public virtual void UserAlert()
         {
+            if (InTravel)
+            {
+                TravelAccount.PauseOrStart();
+            }
             InDanger = true;
             if (WarningsAccount == null)
             {
                 WarningsAccount = new List<Warnings>();
             }
-            WarningsAccount.Add(new Warnings(3));
+            Warnings warning = new Warnings(3);
+            WarningsAccount.Add(warning);
 
-            foreach (Accounts friend in FriendsAccount)
+            if (FriendsAccount != null)
             {
-                if(AlertChoiceAccount ==1)
-                foreach (Travel followedTravel in friend.FollowedTravelsAccount)
+                foreach (Accounts friend in FriendsAccount)
                 {
-                    if (followedTravel.IdTravel == TravelAccount.IdTravel)
+                    if (friend.ExpoToken != null)
                     {
-                        SendPushNotification(friend.ExpoToken, " est en danger !");
+                        if (AlertChoiceAccount == 1)
+                            foreach (Travel followedTravel in friend.FollowedTravelsAccount)
+                            {
+                                if (followedTravel.IdTravel == TravelAccount.IdTravel)
+                                {
+                                    SendPushNotification(friend.ExpoToken, " est en danger !");
+                                }
+                            }
+                        else
+                        {
+                            SendPushNotification(friend.ExpoToken, " est en danger !");
+                        }
                     }
-                }
-                else
-                {
-                    SendPushNotification(friend.ExpoToken, " est en danger !");
                 }
             }
         }
@@ -194,16 +219,45 @@ namespace Domain
                 client.Headers.Add("accept", "application/json");
                 client.Headers.Add("accept-encoding", "gzip, deflate");
                 client.Headers.Add("Content-Type", "application/json");
-                response = client.UploadString("https://exp.host/--/api/v2/push/send", JsonExtensions.SerializeToJson(body));
+                  try
+                {
+                    response = client.UploadString("https://exp.host/--/api/v2/push/send", JsonExtensions.SerializeToJson(body));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("{0} Exception caught.", e);
+                }
             }
             
         }
 
         public virtual void StopTravel()
         {
+            if (this.InTravel)
+            {
+                TravelAccount.PauseOrStart();
+            }
             InTravel = false;
             InDanger = false;
             TravelAccount = null;
+            WarningsAccount = null;
+        }
+
+        public virtual void AddTravelToHistory()
+        {
+            if (TravelHistoryAccount == null)
+            {
+                TravelHistoryAccount = new List<Travel>();
+            }
+            TravelHistoryAccount.Add(TravelAccount);
+        }
+        public virtual void StopAlert()
+        {
+            if (InTravel)
+            {
+                TravelAccount.PauseOrStart();
+            }
+            InDanger = false;
             WarningsAccount = null;
         }
 

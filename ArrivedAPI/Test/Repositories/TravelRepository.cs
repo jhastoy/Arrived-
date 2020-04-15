@@ -10,18 +10,33 @@ namespace Test.Repositories
     {
         public void AddOrUpdateTravel(Travel travel)
         {
-            Session.SaveOrUpdate(travel);
-            Session.Flush();
+            using(var session = SessionFactory.OpenSession())
+            {
+                session.SaveOrUpdate(travel);
+                session.Flush();
+                session.Close();
+            }
+           
         }
 
         public Travel GetTravelByIdAcount(int id)
         {
-            Accounts travel = Session.Query<Accounts>().Where(x => x.IdAccount == id).FirstOrDefault();
+            Accounts travel;
+            using (var session = SessionFactory.OpenSession())
+            {
+                 travel = session.Query<Accounts>().Where(x => x.IdAccount == id).FirstOrDefault();
+                session.Close();
+            }
+            
             return travel.TravelAccount;
         }
         public ICollection<Travel> GetFollowedTravelsByIdAcount(int id)
         {
-            Accounts travel = Session.Query<Accounts>().Where(x => x.IdAccount == id).FirstOrDefault();
+            Accounts travel;
+            using(var session = SessionFactory.OpenSession()) {
+                travel = session.Query<Accounts>().Where(x => x.IdAccount == id).FirstOrDefault();
+                session.Close();
+            }
             return travel.FollowedTravelsAccount;
         }
 

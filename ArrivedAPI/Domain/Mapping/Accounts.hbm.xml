@@ -3,7 +3,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly ="Domain"
                    namespace="Domain">
-  <class name ="Accounts" table ="accounts">
+  <class lazy="false" name ="Accounts" table ="accounts">
     <id name = "IdAccount" column="id_account" type="int">
       <generator class ="native"></generator>
     </id>
@@ -28,35 +28,38 @@
             column="last_position__account"
             class="Positions"
             cascade="save-update" />
-    <bag name ="FriendsAccount" table ="accounts_accounts" cascade="save-update">
+    <bag lazy="false" name ="FriendsAccount" table ="accounts_accounts" cascade="save-update">
       <key column ="id_account_friend"/>
       <many-to-many class ="Accounts" column ="id_account"/>
     </bag>
    
-    <bag name ="BraceletsAccount" table ="accounts_bracelets" cascade="save-update">
+    <bag lazy="false" name ="BraceletsAccount" table ="accounts_bracelets" cascade="save-update">
       <key column ="id_account"/>
       <many-to-many class ="Bracelets" column ="id_bracelet"/>
     </bag>
 
-    <bag name="ExternalsAccount">
+    <bag lazy="false" name="ExternalsAccount">
       <key column="id_account" />
       <one-to-many class="Externals" />
     </bag>
-    <bag name="PlacesAccount" cascade="save-update">
+    <bag lazy="false" name="PlacesAccount" cascade="save-update">
       <key column="id_account" />
       <one-to-many class="Places" />
     </bag>
-    <bag name="WarningsAccount" cascade="save-update">
-      <key column="id_warning" />
-      <one-to-many class="Warnings" />
+    <bag lazy="false" name="WarningsAccount" cascade="save-update">
+      <key column="id_account" />
+      <one-to-many class="Warnings"  />
     </bag>
 
 
-    <bag name ="FollowedTravelsAccount" table ="accounts_followedtravels" cascade="save-update">
+    <bag lazy="false" name ="FollowedTravelsAccount" table ="accounts_followedtravels" cascade="save-update">
       <key column ="id_account"/>
       <many-to-many class ="Travel" column ="id_travel"/>
     </bag>
-
+    <bag lazy="false" name ="TravelHistoryAccount" table ="accounts_historytravel" cascade="save-update">
+      <key column ="id_account"/>
+      <many-to-many class ="Travel" column ="id_travel"/>
+    </bag>
 
   </class>
 </hibernate-mapping>

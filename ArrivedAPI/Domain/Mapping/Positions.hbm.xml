@@ -3,7 +3,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly ="Domain"
                    namespace="Domain">
-  <class name ="Positions" table ="positions">
+  <class lazy="false" name ="Positions" table ="positions">
     <id name = "IdPosition" column="id_position" type="int">
       <generator class ="native"></generator>
     </id>

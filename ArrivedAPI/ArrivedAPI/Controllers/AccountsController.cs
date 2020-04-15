@@ -47,22 +47,7 @@ namespace ArrivedAPI.Controllers
             return Ok(_accountRepo.Get());
         }
 
-        [HttpPost(Name = "AddFriendAccount")]
-        public IActionResult AddFriendAccount([FromBody] string phoneNumber)
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            Accounts a = _accountRepo.GetById(GetIdByToken(identity));
-            Accounts addAccount = _accountRepo.AddFriendByPhoneNumber(a,phoneNumber);
-            if(addAccount == null)
-            {
-                return BadRequest(new { message = "Utilisateur Inexistant" });
-            }
-            else
-            {
-                return (Ok(addAccount));
-            }
 
-        }
 
         public int GetIdByToken(ClaimsIdentity identity)
         {

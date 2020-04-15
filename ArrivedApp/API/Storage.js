@@ -68,3 +68,18 @@ export async function saveInTravel(inTravel) {
     console.log(e.message);
   }
 }
+export async function getInDanger() {
+  try {
+    inDanger = await AsyncStorage.getItem("inDanger");
+  } catch (e) {
+    console.log(e.message);
+  }
+  return inDanger;
+}
+export async function saveInDanger(inDanger) {
+  try {
+    AsyncStorage.setItem("inDanger", JSON.stringify(inDanger));
+  } catch (e) {
+    console.log(e.message);
+  }
+}

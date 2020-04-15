@@ -28,13 +28,18 @@ namespace ArrivedAPI.Controllers
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             Accounts a = _accountRepo.GetById(GetIdByToken(identity));
-            Accounts addAccount = _accountRepo.AddFriendByPhoneNumber(a, accountFromBody.PhoneNumberAccount);
+            Accounts addAccount = _accountRepo.GetAccountByPhoneNumber(accountFromBody.PhoneNumberAccount);
+
             if (addAccount == null)
             {
                 return BadRequest(new { message = "Utilisateur Inexistant" });
             }
             else
             {
+                a.FriendsAccount.Add(addAccount);
+                addAccount.FriendsAccount.Add(a);
+                _accountRepo.Update(a);
+                _accountRepo.Update(addAccount);
                 Accounts result = new Accounts(a.IdAccount, a.PhoneNumberAccount, a.NameAccount, a.SurnameAccount, a.InTravel);
                 return (Ok(result));
             }

@@ -20,30 +20,47 @@ namespace Test.Repositories
 
         public Accounts GetById(int id)
         {
-            Accounts account =  Session.Query<Accounts>().Where(x => x.IdAccount == id).FirstOrDefault();
+            Accounts account;
+            using (var session = SessionFactory.OpenSession())
+            {
+                account= session.Query<Accounts>().Where(x => x.IdAccount == id).FirstOrDefault();
+                session.Close();
+            }
             return (account);
         }
 
         public Accounts Add(Accounts account)
         {
-            Accounts baseAccount = Session.Query<Accounts>().Where(x => x.PhoneNumberAccount == account.PhoneNumberAccount).FirstOrDefault();
-            if (baseAccount == null)
+            using (var session = SessionFactory.OpenSession())
             {
-                Session.SaveOrUpdate(account);
-                Session.Flush();
-                return account;
+                Accounts baseAccount = session.Query<Accounts>().Where(x => x.PhoneNumberAccount == account.PhoneNumberAccount).FirstOrDefault();
+                if (baseAccount == null)
+                {
+                    session.SaveOrUpdate(account);
+                    session.Flush();
+                    return account;
+                }
+                else
+                    return null;
             }
-            else
-                return null;
         }
         public void Update(Accounts account)
         {
-            Session.SaveOrUpdate(account);
-            Session.Flush();
+            using (var session = SessionFactory.OpenSession())
+            {
+                session.SaveOrUpdate(account);
+                session.Flush();
+                session.Close();
+            }
         }
         public Accounts Authentificate(string email, string password)
         {
-            Accounts account = Session.Query<Accounts>().Where(x => x.EmailAccount == email && x.PasswordAccount == password).SingleOrDefault();
+
+            Accounts account;
+            using (var session = SessionFactory.OpenSession())
+                 { account = session.Query<Accounts>().Where(x => x.EmailAccount == email && x.PasswordAccount == password).SingleOrDefault();
+                session.Close();
+            }
             if (account == null)
             {
                 return null;
@@ -53,9 +70,14 @@ namespace Test.Repositories
 
         }
 
-        public Accounts GetAccountByPhoneNumber(string phoneNumber)
+        public  Accounts GetAccountByPhoneNumber(string phoneNumber)
         {
-            Accounts account = Session.Query<Accounts>().Where(x => x.PhoneNumberAccount == phoneNumber).SingleOrDefault();
+            Accounts account;
+            using (var session = SessionFactory.OpenSession())
+            {
+                account = session.Query<Accounts>().Where(x => x.PhoneNumberAccount == phoneNumber).SingleOrDefault();
+                session.Close();
+            }
             if (account == null)
             {
                 return null;
@@ -64,37 +86,17 @@ namespace Test.Repositories
                 return account;
         }
 
-        public Accounts AddFriendByPhoneNumber(Accounts account, string phoneNumber)
-        {
-            Accounts a = GetAccountByPhoneNumber(phoneNumber);
-            if(a==null)
-            {
-                return null;
-            }
-            else
-            {
-                if(account.FriendsAccount == null)
-                {
-                    account.FriendsAccount = new List<Accounts>();
-                }
-                if (a.FriendsAccount == null)
-                {
-                    a.FriendsAccount = new List<Accounts>();
-                }
-                account.FriendsAccount.Add(a);
-                a.FriendsAccount.Add(account);
-                Session.SaveOrUpdate(account);
-                Session.Flush();
-                Session.SaveOrUpdate(a);
-                Session.Flush();
-            }
-            return a;
-        }
+        
         public Accounts SaveOrUpdateExpoToken(Accounts a,string expoToken)
         {
-            a.ExpoToken = expoToken;
-            Session.SaveOrUpdate(a);
-            Session.Flush();
+            using (var session = SessionFactory.OpenSession())
+            {
+                a.ExpoToken = expoToken;
+                session.SaveOrUpdate(a);
+                session.Flush();
+                session.Close();
+            }
+           
             return a;
         }
 

@@ -3,7 +3,7 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly ="Domain"
                    namespace="Domain">
-  <class name ="Travel" table ="travels">
+  <class lazy="false" name ="Travel" table ="travels">
     <id name = "IdTravel" column="id_travel" type="int">
       <generator class ="native"></generator>
     </id>
@@ -17,18 +17,20 @@
     <property name ="EndDateTravel" column ="end_date_travel" not-null="false"/>
     
     <property name ="TransportTypeTravel" column ="transport_type_travel" not-null="false"/>
-    
+    <property name ="IsPaused" column ="is_paused_travel" not-null="false"/>
+    <property name ="IsFinished" column ="is_finished_travel" not-null="false"/>
+
     <property name ="BaseDistanceTravel" column ="base_distance_travel" not-null="false"/>
     <property name ="ProgressionTravel" column ="progression_travel" not-null="false"/>
 
-    <bag name="UserPositionsTravel" cascade="save-update">
+    <bag lazy="false" name="UserPositionsTravel" cascade="save-update">
       <key column="id_positions_travel" />
       <one-to-many class="Positions" />
     </bag>
 
 
 
-    <bag name="UserDistanceTravel" table="user_distances">
+    <bag lazy="false" name="UserDistanceTravel" table="user_distances">
       <key column="id_travel"/>
       <element column="distance" type="Int32"/>
     </bag>
