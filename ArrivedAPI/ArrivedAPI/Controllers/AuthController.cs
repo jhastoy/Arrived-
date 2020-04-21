@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ArrivedAPI.Services;
 using Domain;
-using Test.Repositories;
+using DAL.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 

@@ -17,7 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Domain;
-using Test.Repositories;
+using DAL.Repositories;
 
 
 namespace ArrivedAPI

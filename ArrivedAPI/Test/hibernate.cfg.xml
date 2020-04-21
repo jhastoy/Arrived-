@@ -12,7 +12,7 @@
 	</property>
     <property name="current_session_context_class">thread_static</property>
     <property name="connection.connection_string">
-  	Server=localhost;Database=arrived;User ID=admin;Password=test;
+  	Server=localhost;Database=arrived;User ID=admin;Password=DAL;
 	</property>
     <property name="dialect">
       NHibernate.Dialect.MySQL5Dialect

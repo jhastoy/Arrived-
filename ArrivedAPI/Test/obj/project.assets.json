@@ -2363,9 +2363,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj",
-      "projectName": "Test",
-      "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj",
+      "projectUniqueName": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\DAL.csproj",
+      "projectName": "DAL",
+      "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\DAL.csproj",
       "packagesPath": "C:\\Users\\j--ea\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\obj\\",
       "projectStyle": "PackageReference",

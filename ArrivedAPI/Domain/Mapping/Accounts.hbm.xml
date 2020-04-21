@@ -33,15 +33,6 @@
       <many-to-many class ="Accounts" column ="id_account"/>
     </bag>
    
-    <bag lazy="false" name ="BraceletsAccount" table ="accounts_bracelets" cascade="save-update">
-      <key column ="id_account"/>
-      <many-to-many class ="Bracelets" column ="id_bracelet"/>
-    </bag>
-
-    <bag lazy="false" name="ExternalsAccount">
-      <key column="id_account" />
-      <one-to-many class="Externals" />
-    </bag>
     <bag lazy="false" name="PlacesAccount" cascade="save-update">
       <key column="id_account" />
       <one-to-many class="Places" />

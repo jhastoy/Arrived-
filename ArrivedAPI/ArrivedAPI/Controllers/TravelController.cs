@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Domain;
-using Test.Repositories;
+using DAL.Repositories;
 using System.Security.Claims;
 using Domain.FromBodyClasses;
 using Microsoft.AspNetCore.Authorization;
@@ -66,9 +66,9 @@ namespace ArrivedAPI.Controllers
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var a = _accountRepo.GetById(GetIdByToken(identity));
-            
-            Travel t = new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel,a.TravelAccount.IsPaused,a.TravelAccount.IsFinished);
-            return Ok(t);
+            if (a.TravelAccount != null) { Travel t = new Travel(a.TravelAccount.StartDateTravel, a.TravelAccount.EndDateTravel, a.TravelAccount.TransportTypeTravel, a.TravelAccount.ProgressionTravel, a.TravelAccount.IsPaused, a.TravelAccount.IsFinished); return Ok(t);
+            }
+            return Ok();
         }
         [Authorize]
         [Route("[action]")]
@@ -104,6 +104,15 @@ namespace ArrivedAPI.Controllers
             
             return Ok(followed);
         }
+
+       
+
+        
+
+
+
+
+        
 
         [Authorize]
         [Route("[action]")]

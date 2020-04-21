@@ -7,13 +7,15 @@ import {
   Text,
   View,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import MapView from "react-native-maps";
+import { getSurnameAccount } from "../../../API/Storage";
 
 class ProfilPage extends React.Component {
   constructor(props) {
     super(props);
+    this.state = { surname: "" };
   }
   _navigateToPlaces() {
     console.log("navigate");
@@ -22,6 +24,11 @@ class ProfilPage extends React.Component {
   _navigateToFriends() {
     console.log("navigate");
     this.props.navigation.navigate("Friends");
+  }
+  async componentDidMount() {
+    let surname = await getSurnameAccount();
+    console.log(surname);
+    this.setState({ surname: surname });
   }
 
   render() {
@@ -33,7 +40,7 @@ class ProfilPage extends React.Component {
             source={require("../../../Includes/profil_test.jpg")}
           ></Image>
         </View>
-        <Text style={styles.welcomeText}>Bonjour, Jean</Text>
+        <Text style={styles.welcomeText}>Bonjour, {this.state.surname}</Text>
         <View style={styles.rowButtons}>
           <TouchableOpacity
             onPress={() => this._navigateToFriends()}
@@ -57,7 +64,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   circle: {
     margin: 10,
@@ -70,33 +77,33 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
-    elevation: 6
+    elevation: 6,
   },
   profilImage: {
     resizeMode: "cover",
     width: 130,
     height: 130,
-    borderRadius: 65
+    borderRadius: 65,
   },
   welcomeText: {
-    fontSize: 20
+    fontSize: 20,
   },
   rowButtons: {
     flexDirection: "row",
     justifyContent: "center",
     height: 70,
     alignItems: "center",
-    marginTop: 20
+    marginTop: 20,
   },
   button: {
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
@@ -107,10 +114,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 20,
-    borderRadius: 10
+    borderRadius: 10,
   },
   buttonText: {
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });
 export default ProfilPage;

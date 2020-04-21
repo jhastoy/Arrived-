@@ -7,7 +7,7 @@ using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Test.Repositories;
+using DAL.Repositories;
 
 namespace ArrivedAPI.Controllers
 {

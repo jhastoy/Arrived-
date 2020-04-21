@@ -30,8 +30,8 @@
               "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj": {
                 "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Domain\\Domain.csproj"
               },
-              "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj": {
-                "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj"
+              "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\DAL.csproj": {
+                "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\DAL.csproj"
               }
             }
           }
@@ -127,12 +127,12 @@
         "net461": {}
       }
     },
-    "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj": {
+    "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj",
-        "projectName": "Test",
-        "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\Test.csproj",
+        "projectUniqueName": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\DAL.csproj",
+        "projectName": "DAL",
+        "projectPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\DAL.csproj",
         "packagesPath": "C:\\Users\\j--ea\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\j--ea\\Desktop\\Arrived-\\ArrivedAPI\\Test\\obj\\",
         "projectStyle": "PackageReference",

@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v3.1": {
       "ArrivedAPI/1.0.0": {
         "dependencies": {
+          "DAL": "1.0.0",
           "Domain": "1.0.0",
           "Microsoft.AspNet.WebHelpers": "3.2.7",
           "Microsoft.AspNetCore.Authentication.JwtBearer": "3.1.0",
@@ -36,7 +37,6 @@
           "System.Configuration.ConfigurationManager": "4.7.0",
           "System.IdentityModel.Tokens.Jwt": "5.6.0",
           "System.Management": "4.7.0",
-          "Test": "1.0.0",
           "jQuery": "3.4.1",
           "Microsoft.AspNetCore.Antiforgery": "3.1.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "3.1.0.0",
@@ -2085,24 +2085,24 @@
           "ref/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
       },
+      "DAL/1.0.0": {
+        "dependencies": {
+          "Domain": "1.0.0",
+          "NHibernate": "5.2.6"
+        },
+        "runtime": {
+          "DAL.dll": {}
+        },
+        "compile": {
+          "DAL.dll": {}
+        }
+      },
       "Domain/1.0.0": {
         "runtime": {
           "Domain.exe": {}
         },
         "compile": {
           "Domain.exe": {}
-        }
-      },
-      "Test/1.0.0": {
-        "dependencies": {
-          "Domain": "1.0.0",
-          "NHibernate": "5.2.6"
-        },
-        "runtime": {
-          "Test.dll": {}
-        },
-        "compile": {
-          "Test.dll": {}
         }
       },
       "Google.Maps/0.32.0.0": {
@@ -4877,12 +4877,12 @@
       "path": "system.xml.xpath.xmldocument/4.0.1",
       "hashPath": "system.xml.xpath.xmldocument.4.0.1.nupkg.sha512"
     },
-    "Domain/1.0.0": {
+    "DAL/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
     },
-    "Test/1.0.0": {
+    "Domain/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

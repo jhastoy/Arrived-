@@ -1,7 +1,7 @@
 using NHibernate;
 using NHibernate.Cfg;
 
-namespace Test.Repositories
+namespace DAL.Repositories
 {
     /// <summary>
     /// Superclasse de tous les repository

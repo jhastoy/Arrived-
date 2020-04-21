@@ -83,3 +83,18 @@ export async function saveInDanger(inDanger) {
     console.log(e.message);
   }
 }
+export async function getSurnameAccount() {
+  try {
+    surname = await AsyncStorage.getItem("surname");
+  } catch (e) {
+    console.log(e.message);
+  }
+  return surname;
+}
+export async function saveSurnameAccount(surname) {
+  try {
+    AsyncStorage.setItem("surname", surname);
+  } catch (e) {
+    console.log(e.message);
+  }
+}

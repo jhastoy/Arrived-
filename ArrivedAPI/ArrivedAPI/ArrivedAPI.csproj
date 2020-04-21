@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>f142d5e0-8774-4cfd-a185-91a465a3ce62</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -40,7 +41,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
-    <ProjectReference Include="..\Test\Test.csproj" />
+    <ProjectReference Include="..\Test\DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>

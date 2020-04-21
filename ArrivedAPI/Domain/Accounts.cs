@@ -206,6 +206,8 @@ namespace Domain
         }
         public virtual void SendPushNotification(string ExpoToken,string message)
         {
+
+            Console.WriteLine("envoi");
             dynamic body = new
             {
                 to = ExpoToken,

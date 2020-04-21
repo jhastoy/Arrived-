@@ -4,11 +4,13 @@ import {
   savePlaces,
   saveInTravel,
   saveInDanger,
+  saveSurnameAccount,
 } from "./Storage";
 import { Notifications } from "expo";
 import * as Permissions from "expo-permissions";
 import UpdateExpoToken, { IsTokenValid } from "./Authentification";
 import { RefreshDataUser } from "./Authentification";
+import Constants from "expo-constants";
 
 export default async function initData(response) {
   await saveToken(response.token);
@@ -17,7 +19,9 @@ export default async function initData(response) {
   console.log("Intravel :" + response.inTravel);
   await saveInTravel(response.inTravel);
   await saveInDanger(response.inDanger);
-  //await registerForPushNotificationsAsync();
+  await saveSurnameAccount(response.surnameAccount);
+
+  await registerForPushNotificationsAsync();
 }
 
 export async function RefreshData() {
@@ -31,16 +35,21 @@ export async function RefreshData() {
   await saveFriends(response.friendsAccount);
   await savePlaces(response.placesAccount);
   await saveInTravel(response.inTravel);
+  console.log(response.surnameAccount);
+  await saveSurnameAccount(response.surnameAccount);
   return true;
 }
 
 export async function registerForPushNotificationsAsync() {
-  const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-  if (status !== "granted") {
-    alert("No notification permissions!");
-    return;
+  if (Constants.isDevice) {
+    const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    if (status !== "granted") {
+      alert("No notification permissions!");
+      return;
+    }
+    let token = await Notifications.getExpoPushTokenAsync();
+    console.log("toekn:");
+    console.log(token);
+    await UpdateExpoToken(token);
   }
-  let token = await Notifications.getExpoPushTokenAsync();
-  console.log(token);
-  await UpdateExpoToken(token);
 }

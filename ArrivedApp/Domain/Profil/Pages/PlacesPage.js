@@ -5,7 +5,7 @@ import {
   StyleSheet,
   View,
   Dimensions,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { Icon } from "react-native-elements";
 import { RefreshData } from "../../../API/Data";
@@ -25,12 +25,12 @@ class PlacesPage extends React.Component {
           style={{
             alignItems: "center",
             justifyContent: "center",
-            marginRight: 15
+            marginRight: 15,
           }}
         >
           <Icon name="ios-add" size={35} type="ionicon" />
         </TouchableOpacity>
-      )
+      ),
     };
   };
   constructor(props) {
@@ -50,7 +50,7 @@ class PlacesPage extends React.Component {
     await RefreshData();
     let places = await getPlaces();
     await this.setState({
-      placesData: JSON.parse(places)
+      placesData: JSON.parse(places),
     });
   }
   _displaySeparator() {
@@ -81,7 +81,7 @@ class PlacesPage extends React.Component {
               placeName={item.namePlace}
             />
           )}
-          keyExtractor={item => item.namePlace.toString()}
+          keyExtractor={(item) => item.namePlace.toString()}
         />
       </View>
     );
@@ -100,47 +100,47 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     backgroundColor: "white",
-    alignItems: "center"
+    alignItems: "center",
   },
   placesContainer: {
     width: "100%",
     height: "100%",
     marginTop: 10,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   text: {
     fontSize: 25,
-    marginLeft: 10
+    marginLeft: 10,
   },
   addPlaceText: {
     color: "#4B6584",
     fontSize: 20,
-    marginLeft: 5
+    marginLeft: 5,
   },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 5
+    marginBottom: 5,
   },
   addPlaceContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginRight: 5
+    marginRight: 5,
   },
   addImage: {
     width: 15,
-    height: 15
+    height: 15,
   },
   buttonsRow: {
     flexDirection: "row",
-    justifyContent: "space-around"
+    justifyContent: "space-around",
   },
   buttons: {
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
@@ -152,12 +152,12 @@ const styles = StyleSheet.create({
     margin: 20,
     backgroundColor: "#4B6584",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   flatList: {
     width: "96%",
     borderRadius: 10,
-    flexGrow: 0
+    flexGrow: 0,
   },
   flatListContainer: {
     alignItems: "center",
@@ -165,28 +165,28 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     shadowOpacity: 0.15,
     shadowRadius: 2,
-    elevation: 1
+    elevation: 1,
   },
   placeContainer: {
     marginTop: 1,
     width: Dimensions.get("screen").width,
     backgroundColor: "#F9F9F9",
     height: 60,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   placeText: {
     fontSize: 25,
-    marginLeft: 20
+    marginLeft: 20,
   },
   nextButton: {
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
@@ -197,13 +197,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 10,
-    borderRadius: 10
-  }
+    borderRadius: 10,
+  },
 });
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    idPlaceDetailled: state.selectDetailledPlace.idPlaceDetailled
+    idPlaceDetailled: state.selectDetailledPlace.idPlaceDetailled,
   };
 };
 

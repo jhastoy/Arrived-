@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Domain;
 
-namespace Test.Repositories
+namespace DAL.Repositories
 {
     public interface IAccountRepository
     {

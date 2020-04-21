@@ -19,7 +19,7 @@ import { Header } from "react-native-elements";
 class TravelPage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { travelsData: "", isFetching: false };
+    this.state = { travelsData: [], isFetching: false };
   }
   static navigationOptions = {
     title: "Trajets en cours",
@@ -32,10 +32,17 @@ class TravelPage extends React.Component {
       this.setState({ travelsData: response, isFetching: false });
     });
   }
+  async _refreshTravelsTimer() {
+    if (this.state.travelsData.length != 0) {
+      Refresh().then((response) => {
+        console.log(response);
+        this.setState({ travelsData: response });
+      });
+    }
+  }
   componentDidMount() {
     this._refreshTravels();
-
-    //setInterval(() => this.setState({ time: Date.now() }), 50000);
+    this.timer = setInterval(() => this._refreshTravelsTimer(), 5000);
   }
 
   render() {

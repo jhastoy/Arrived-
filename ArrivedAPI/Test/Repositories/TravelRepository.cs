@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Domain;
 
-namespace Test.Repositories
+namespace DAL.Repositories
 {
     public class TravelRepository:Repository,ITravelRepository
     {

@@ -25,7 +25,8 @@
       "infoPlist": {
         "UIBackgroundModes": ["location", "fetch"]
       },
-      "supportsTablet": true
+      "supportsTablet": true,
+      "notification.iosDisplayInForeground": true
     },
     "android": {
       "package": "jean.hastoy.arrived",

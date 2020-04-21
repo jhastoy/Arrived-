@@ -10,7 +10,7 @@ import { ThemeConsumer } from "react-native-elements";
 class HomePage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { travel: {}, isFetching: false, inTravel: false };
+    this.state = { travel: {}, inTravel: false };
     this.props.navigation.addListener("willFocus", async () => {
       let inTravel = (await getInTravel()) == "true";
       let inDanger = (await getInDanger()) == "true";
@@ -19,14 +19,7 @@ class HomePage extends React.Component {
       }
       if (inTravel) {
         console.log("prout");
-        this.setState({ isFetching: true, inTravel: true });
-        let travel = await this._getTravel();
-        if (travel == null) {
-          await saveInTravel(false);
-          this.setState({ isFetching: false, inTravel: false });
-        } else {
-          this.setState({ isFetching: false, travel: travel });
-        }
+        this.setState({ inTravel: true });
       }
     });
     this._stopTravel = this._stopTravel.bind(this);
@@ -44,9 +37,7 @@ class HomePage extends React.Component {
       <View style={styles.container}>
         <MyTravelComponent
           stopTravel={this._stopTravel}
-          travel={this.state.travel}
           navigation={this.props.navigation}
-          isFetching={this.state.isFetching}
           inTravel={this.state.inTravel}
         />
         <AlertComponent

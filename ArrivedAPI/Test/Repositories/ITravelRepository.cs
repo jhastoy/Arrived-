@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Domain;
-namespace Test.Repositories
+namespace DAL.Repositories
 {
     public interface ITravelRepository
     {

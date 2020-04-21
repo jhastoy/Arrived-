@@ -11,33 +11,72 @@ import { Icon } from "react-native-elements";
 import * as TaskManager from "expo-task-manager";
 import * as Location from "expo-location";
 import * as Permissions from "expo-permissions";
-import { StopTravel, PauseOrStartTravel } from "../../../API/Travels";
+import {
+  StopTravel,
+  PauseOrStartTravel,
+  GetUserTravel,
+} from "../../../API/Travels";
 import { saveInTravel } from "../../../API/Storage";
-import { min } from "moment";
 
 class MyTravelComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      paused: this.props.travel.isPaused,
+      travel: null,
+      paused: false,
+      isFetching: true,
       isPlayPauseTravelFetching: false,
       isStopTravelFetching: false,
+      locationStarted: false,
+      finished: false,
     };
   }
+
   componentDidMount() {
-    console.log("COMPONENT DID MOUNT");
-    this.setState({ paused: this.props.travel.isPaused });
+    this.timer = setInterval(() => this._refreshTravel(), 5000);
   }
 
-  _display() {
-    console.log("ispaaaaaaaused");
-    console.log(this.props.travel.isPaused);
+  async _refreshTravel() {
     if (this.props.inTravel) {
-      if (this.props.isFetching) {
-        return this._displayGeneralLoading();
+      let travel;
+      if (this.state.travel == null) {
+        this.setState({ isFetching: true });
+        console.log("refreshtraveltnulll");
+        travel = await GetUserTravel();
+        this.setState({
+          isFetching: false,
+          travel: travel,
+          paused: travel.isPaused,
+          finished: travel.isFinished,
+        });
+      } else {
+        if (!this.state.paused && !this.state.finished) {
+          console.log("refreshtraveltnulll");
+
+          travel = await GetUserTravel();
+          if (!travel.isFinished && !travel.isPaused) this._startLocation();
+          this.setState({
+            isFetching: false,
+            travel: travel,
+            paused: travel.isPaused,
+            finished: travel.isFinished,
+          });
+        } else {
+          if (this.state.paused || this.state.finished) {
+            this._stopLocationSending();
+          }
+        }
       }
-      if (this.props.travel.isFinished) {
-        return this._displayTravelFinished();
+    }
+  }
+  _display() {
+    if (this.props.inTravel) {
+      if (this.state.isFetching) {
+        return this._displayGeneralLoading();
+      } else {
+        if (this.state.finished) {
+          return this._displayTravelFinished();
+        }
       }
       return this._displayInTravel();
     } else {
@@ -57,7 +96,7 @@ class MyTravelComponent extends React.Component {
   async _playPauseTravel() {
     this.setState({ isPlayPauseTravelFetching: true });
     await PauseOrStartTravel();
-    Location.stopLocationUpdatesAsync("SENDING_POSITION");
+
     if (this.state.paused) {
       this.setState({ paused: false, isPlayPauseTravelFetching: false });
     } else {
@@ -126,9 +165,8 @@ class MyTravelComponent extends React.Component {
     } else return "pause";
   }
   _displayEndHour() {
-    let date = new Date(this.props.travel.endDateTravel);
+    let date = new Date(this.state.travel.endDateTravel);
     let minutes = date.getMinutes().toString();
-    console.log(date);
     if (minutes.length == 1) {
       let minutes = "0" + minutes;
     }
@@ -163,7 +201,7 @@ class MyTravelComponent extends React.Component {
             <Text>Progression</Text>
             <View style={styles.info}>
               <Text style={styles.infoText}>
-                {this.props.travel.progressionTravel} %
+                {Math.round(this.state.travel.progressionTravel)} %
               </Text>
             </View>
           </View>
@@ -209,19 +247,23 @@ class MyTravelComponent extends React.Component {
       </View>
     );
   }
+  async _stopLocationSending() {
+    let taskRegistered = await TaskManager.isTaskRegisteredAsync(
+      "SENDING_POSITION"
+    );
+
+    if (taskRegistered) {
+      await Location.stopLocationUpdatesAsync("SENDING_POSITION");
+    }
+  }
 
   async _startLocation() {
-    if (
-      this.props.inTravel &&
-      !this.state.paused &&
-      !this.props.travel.isFinished
-    ) {
+    if (this.props.inTravel) {
       console.log("startlocation");
       let taskRegistered = await TaskManager.isTaskRegisteredAsync(
         "SENDING_POSITION"
       );
-      console.log("is task registered");
-      console.log(taskRegistered);
+
       if (!taskRegistered) {
         const { status, permissions } = await Permissions.askAsync(
           Permissions.LOCATION
@@ -261,8 +303,6 @@ class MyTravelComponent extends React.Component {
     StopTravel();
   }
   render() {
-    this._startLocation();
-
     return this._display();
   }
 }
