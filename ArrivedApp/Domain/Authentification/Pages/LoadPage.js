@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import { deleteToken, getToken } from "../../../API/Storage";
 import isTokenValid from "../../../API/Authentification";
@@ -19,8 +19,7 @@ class LoadPage extends React.Component {
   }
 
   _refresh() {
-    getToken().then(token => {
-      console.log(token);
+    getToken().then((token) => {
       if (token != null) {
         response = isTokenValid();
         if (response) {

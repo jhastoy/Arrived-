@@ -7,7 +7,7 @@ import {
   View,
   Dimensions,
   Button,
-  TouchableOpacity
+  TouchableOpacity,
 } from "react-native";
 import { connect } from "react-redux";
 import PlaceComponent from "../Components/PlaceComponent";
@@ -17,7 +17,7 @@ import { getPlaces } from "../../../API/Storage";
 
 class PlaceChoicePage extends React.Component {
   static navigationOptions = {
-    title: "Où-vas-tu ?"
+    title: "Où-vas-tu ?",
   };
   constructor(props) {
     super(props);
@@ -26,15 +26,12 @@ class PlaceChoicePage extends React.Component {
   _getPlaces() {
     this.setState({ isFetching: true });
     getPlaces()
-      .then(req => JSON.parse(req))
-      .then(json => {
-        console.log("Places:");
-        console.log(json);
+      .then((req) => JSON.parse(req))
+      .then((json) => {
         this.setState({ placesData: json, isFetching: false });
       });
   }
   componentDidMount() {
-    console.log("COmponent did mount");
     this._getPlaces();
   }
   _navigate() {
@@ -47,7 +44,7 @@ class PlaceChoicePage extends React.Component {
       this.state.placesData.length != 0
     ) {
       const position = this.state.placesData.find(
-        e => e.idPlace == this.props.idSelected
+        (e) => e.idPlace == this.props.idSelected
       ).positionPlace;
       return (
         <View>
@@ -59,13 +56,13 @@ class PlaceChoicePage extends React.Component {
                 latitude: Number.parseFloat(position.latitudePosition),
                 longitude: Number.parseFloat(position.longitudePosition),
                 latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421
+                longitudeDelta: 0.0421,
               }}
             >
               <Marker
                 coordinate={{
                   latitude: Number.parseFloat(position.latitudePosition),
-                  longitude: Number.parseFloat(position.longitudePosition)
+                  longitude: Number.parseFloat(position.longitudePosition),
                 }}
               />
             </MapView>
@@ -100,7 +97,7 @@ class PlaceChoicePage extends React.Component {
                 idPlace={item.idPlace}
               ></PlaceComponent>
             )}
-            keyExtractor={item => item.idPlace.toString()}
+            keyExtractor={(item) => item.idPlace.toString()}
           />
         </View>
 
@@ -115,33 +112,33 @@ const styles = StyleSheet.create({
   placeContainer: { marginTop: 10, backgroundColor: "white", flex: 2 },
   text: {
     fontSize: 25,
-    marginLeft: 10
+    marginLeft: 10,
   },
   addPlaceText: {
     color: "#4B6584",
     fontSize: 20,
-    marginLeft: 5
+    marginLeft: 5,
   },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 5
+    marginBottom: 5,
   },
   addPlaceContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginRight: 5
+    marginRight: 5,
   },
   addImage: {
     width: 15,
-    height: 15
+    height: 15,
   },
   nextButton: {
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
@@ -152,17 +149,17 @@ const styles = StyleSheet.create({
     width: Dimensions.get("screen").width,
     backgroundColor: "#4B6584",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   nextText: {
     color: "white",
-    fontSize: 25
+    fontSize: 25,
   },
   mapContainer: {
     backgroundColor: "#4B6584",
     height: Dimensions.get("screen").height / 4,
     width: Dimensions.get("screen").width,
-    alignItems: "center"
+    alignItems: "center",
   },
   map: {
     marginTop: 10,
@@ -170,12 +167,12 @@ const styles = StyleSheet.create({
 
     flex: 1,
     width: Dimensions.get("screen").width,
-    backgroundColor: "black"
-  }
+    backgroundColor: "black",
+  },
 });
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    idSelected: state.selectPlace.idSelected
+    idSelected: state.selectPlace.idSelected,
   };
 };
 

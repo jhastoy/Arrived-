@@ -22,7 +22,6 @@ class TravelComponent extends React.Component {
   _formatTime(time) {
     let date = new Date(time);
     let minutes = date.getMinutes().toString();
-    console.log(date);
     if (minutes.length == 1) {
       minutes = "0" + minutes;
     }
@@ -210,7 +209,6 @@ class TravelComponent extends React.Component {
   _openPhoneCall() {
     {
       let phone = this.props.phoneNumber;
-      console.log(phone);
       let phoneNumber;
       if (Platform.OS !== "android") {
         phoneNumber = `telprompt:${phone}`;

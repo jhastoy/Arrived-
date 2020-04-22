@@ -41,16 +41,13 @@ class AlertComponent extends React.Component {
     if (this.props.inTravel) {
       await Location.stopLocationUpdatesAsync("SENDING_POSITION");
     }
-    console.log("startlocation");
     let taskRegistered = await TaskManager.isTaskRegisteredAsync(
       "SENDING_POSITION"
     );
-    console.log(taskRegistered);
     const { status, permissions } = await Permissions.askAsync(
       Permissions.LOCATION
     );
 
-    console.log(status);
     if (status === "granted") {
       await Location.startLocationUpdatesAsync("SENDING_POSITION_ALERT", {
         accuracy: Location.Accuracy.Highest,

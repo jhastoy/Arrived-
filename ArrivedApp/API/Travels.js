@@ -29,7 +29,6 @@ export async function GetUserTravel() {
       Authorization: "Bearer " + token,
     },
   }).then((response) => {
-    console.log(response.ok);
     if (response.ok) {
       return response.json();
     } else {
@@ -41,14 +40,6 @@ export async function GetUserTravel() {
 }
 
 export async function AddTravel(friendsIds, startPosition, EndPlaceId, type) {
-  console.log(
-    JSON.stringify({
-      FollowerAccountsIds: friendsIds,
-      StartPositionTravel: startPosition,
-      EndPlaceId: EndPlaceId,
-      TransportTypeTravel: type,
-    })
-  );
   return getToken().then((token) =>
     fetch("https://arrivedapi.conveyor.cloud/api/Travel/AddTravel", {
       method: "POST",
@@ -109,7 +100,6 @@ export async function StopTravel() {
       Authorization: "Bearer " + token,
     },
   }).then((response) => {
-    console.log(response.ok);
     if (response.ok) {
       return response;
     } else {
@@ -132,7 +122,6 @@ export async function PauseOrStartTravel() {
       },
     }
   ).then((response) => {
-    console.log(response.ok);
     if (response.ok) {
       return response;
     } else {

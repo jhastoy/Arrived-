@@ -7,7 +7,7 @@ import {
   Text,
   View,
   ActivityIndicator,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import { connect } from "react-redux";
 
@@ -16,8 +16,9 @@ class FriendComponent extends React.Component {
     super(props);
 
     if (
-      this.props.idsSelected.findIndex(item => item === this.props.idAccount) !=
-      -1
+      this.props.idsSelected.findIndex(
+        (item) => item === this.props.idAccount
+      ) != -1
     ) {
       this.state = { checked: true };
     } else {
@@ -39,7 +40,7 @@ class FriendComponent extends React.Component {
         width: Dimensions.get("screen").width,
         backgroundColor: "#F9F9F9",
         height: 80,
-        justifyContent: "center"
+        justifyContent: "center",
       };
     else
       return {
@@ -47,19 +48,19 @@ class FriendComponent extends React.Component {
         width: Dimensions.get("screen").width,
         backgroundColor: "#4B6584",
         height: 80,
-        justifyContent: "center"
+        justifyContent: "center",
       };
   }
 
   _textStyle() {
     if (this.state.checked == false)
       return {
-        fontSize: 25
+        fontSize: 25,
       };
     else
       return {
         fontSize: 25,
-        color: "white"
+        color: "white",
       };
   }
 
@@ -80,7 +81,7 @@ class FriendComponent extends React.Component {
         width: 60,
         height: 60,
         borderRadius: 75,
-        marginLeft: 25
+        marginLeft: 25,
       };
     else
       return {
@@ -90,12 +91,11 @@ class FriendComponent extends React.Component {
         borderRadius: 75,
         marginLeft: 25,
         borderColor: "white",
-        borderWidth: 2
+        borderWidth: 2,
       };
   }
 
   render() {
-    console.log(this.props);
     return (
       <TouchableOpacity
         onPress={() => this._selectItem()}
@@ -123,13 +123,13 @@ const styles = StyleSheet.create({
     width: Dimensions.get("screen").width,
     backgroundColor: "white",
     height: 80,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   containerChecked: {
     width: Dimensions.get("screen").width,
     backgroundColor: "#F9F9F9",
     height: 80,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   profilImage: {
     resizeMode: "cover",
@@ -138,33 +138,33 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     marginLeft: 25,
     borderColor: "white",
-    borderWidth: 2
+    borderWidth: 2,
   },
   rowContainer: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   textContainer: {
     justifyContent: "center",
     width: 250,
     height: 60,
-    marginLeft: 20
+    marginLeft: 20,
   },
   text: {
-    fontSize: 25
+    fontSize: 25,
   },
   tick: {
     width: 30,
-    height: 30
-  }
+    height: 30,
+  },
 });
 // Components/FilmDetail.js
 
 //...
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    idsSelected: state.selectFriend.idsSelected
+    idsSelected: state.selectFriend.idsSelected,
   };
 };
 

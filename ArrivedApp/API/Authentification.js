@@ -1,17 +1,15 @@
 import { getToken, saveToken } from "./Storage";
 export function Login(email, password) {
-  console.log(email);
-  console.log(password);
   return fetch("https://arrivedapi.conveyor.cloud/api/Auth/Login", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       EmailAccount: email,
-      PasswordAccount: password
-    })
-  }).then(response => {
+      PasswordAccount: password,
+    }),
+  }).then((response) => {
     if (response.ok) {
       return response.json();
     } else {
@@ -30,16 +28,16 @@ export function Register(name, surname, email, password, phoneNumber) {
   return fetch("https://arrivedapi.conveyor.cloud/api/Auth/Register", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       PasswordAccount: password,
       EmailAccount: email,
       NameAccount: name,
       SurnameAccount: surname,
-      PhoneNumberAccount: phoneNumber
-    })
-  }).then(response => {
+      PhoneNumberAccount: phoneNumber,
+    }),
+  }).then((response) => {
     if (response.ok) {
       return response.json();
     } else {
@@ -59,10 +57,9 @@ export async function RefreshDataUser() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    }
-  }).then(response => {
-    console.log(response.ok);
+      Authorization: "Bearer " + token,
+    },
+  }).then((response) => {
     if (response.ok) {
       return response.json();
     } else {
@@ -78,9 +75,9 @@ export async function IsTokenValid() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token
-    }
-  }).then(response => {
+      Authorization: "Bearer " + token,
+    },
+  }).then((response) => {
     if (response.ok) {
       return true;
     } else {
@@ -90,18 +87,17 @@ export async function IsTokenValid() {
 }
 
 export default async function UpdateExpoToken(expoToken) {
-  console.log("UPDATE TOKEN");
   let token = await getToken();
   await fetch("https://arrivedapi.conveyor.cloud/api/Token/UpdateExpoToken", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token
+      Authorization: "Bearer " + token,
     },
     body: JSON.stringify({
-      expoToken: expoToken
-    })
-  }).then(response => {
+      expoToken: expoToken,
+    }),
+  }).then((response) => {
     if (!response.ok) throw new Error("Erreur réseau");
   });
 }

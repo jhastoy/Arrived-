@@ -16,12 +16,10 @@ class MyTravel extends React.Component {
   }
 
   async componentDidMount() {
-    console.log("startlocation");
     const { status, permissions } = await Permissions.askAsync(
       Permissions.LOCATION
     );
 
-    console.log(status);
     if (status === "granted") {
       await Location.startLocationUpdatesAsync("SENDING_POSITION", {
         accuracy: Location.Accuracy.Highest,
@@ -34,7 +32,6 @@ class MyTravel extends React.Component {
   }
   async _refresh() {
     let yo = await RefreshData();
-    console.log(yo);
   }
   async _stopLocation() {
     await Location.stopLocationUpdatesAsync("SENDING_POSITION");

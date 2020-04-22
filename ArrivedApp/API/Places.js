@@ -1,7 +1,6 @@
 import { getToken } from "./Storage";
 
 export default async function DeletePlace(idPlace) {
-  console.log("UPDATE TOKEN");
   let token = await getToken();
   return fetch(
     "https://arrivedapi.conveyor.cloud/api/Place/DeletePlaceAccount",
@@ -9,13 +8,13 @@ export default async function DeletePlace(idPlace) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
-        idPlace: idPlace
-      })
+        idPlace: idPlace,
+      }),
     }
-  ).then(response => {
+  ).then((response) => {
     if (!response.ok) throw new Error("Erreur réseau");
   });
 }
@@ -25,10 +24,10 @@ export async function AddPlace(place) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: "Bearer " + token
+      Authorization: "Bearer " + token,
     },
-    body: JSON.stringify(place)
-  }).then(response => {
+    body: JSON.stringify(place),
+  }).then((response) => {
     if (!response.ok) throw new Error("Erreur réseau");
   });
 }

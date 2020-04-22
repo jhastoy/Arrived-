@@ -28,14 +28,12 @@ class TravelPage extends React.Component {
   _refreshTravels() {
     this.setState({ isFetching: true });
     Refresh().then((response) => {
-      console.log(response);
       this.setState({ travelsData: response, isFetching: false });
     });
   }
   async _refreshTravelsTimer() {
     if (this.state.travelsData.length != 0) {
       Refresh().then((response) => {
-        console.log(response);
         this.setState({ travelsData: response });
       });
     }

@@ -37,7 +37,6 @@ export async function StopAlert() {
       Authorization: "Bearer " + token,
     },
   }).then((response) => {
-    console.log(response.ok);
     if (response.ok) {
       return response;
     } else {

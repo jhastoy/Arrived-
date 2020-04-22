@@ -32,9 +32,7 @@ let positions = new Array();
 
 TaskManager.defineTask("SENDING_POSITION", async ({ data, error }) => {
   let travel;
-  if (error) {
-    console.log(error.message);
-  }
+
   if (data) {
     const { locations } = data;
     positions = [
@@ -45,12 +43,9 @@ TaskManager.defineTask("SENDING_POSITION", async ({ data, error }) => {
         dateTimePosition: new Date(locations[0].timestamp),
       },
     ];
-    console.log("new position travel");
     if (positions.length == 3) {
       travel = await UpdateUserPosition(positions);
       positions = [];
-      console.log("TRAVEL :");
-      console.log(travel);
       if (travel.isFinished) {
         Location.stopLocationUpdatesAsync("SENDING_POSITION");
       }
@@ -58,9 +53,6 @@ TaskManager.defineTask("SENDING_POSITION", async ({ data, error }) => {
   }
 });
 TaskManager.defineTask("SENDING_POSITION_ALERT", ({ data, error }) => {
-  if (error) {
-    console.log(error.message);
-  }
   if (data) {
     const { locations } = data;
     position = {
@@ -68,7 +60,6 @@ TaskManager.defineTask("SENDING_POSITION_ALERT", ({ data, error }) => {
       longitudePosition: locations[0].coords.longitude.toString(),
       dateTimePosition: new Date(locations[0].timestamp),
     };
-    console.log("new position travel alert");
     UpdateUserPositionAlert(position);
   }
 });

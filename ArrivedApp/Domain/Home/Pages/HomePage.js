@@ -18,7 +18,6 @@ class HomePage extends React.Component {
         this.props.navigation.replace("Alert");
       }
       if (inTravel) {
-        console.log("prout");
         this.setState({ inTravel: true });
       }
     });

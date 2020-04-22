@@ -5,7 +5,7 @@ import {
   View,
   TouchableOpacity,
   ActivityIndicator,
-  Alert
+  Alert,
 } from "react-native";
 import { Icon } from "react-native-elements";
 
@@ -63,10 +63,9 @@ class PlaceDetailsComponent extends React.Component {
       [
         {
           text: "Annuler",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
+          style: "cancel",
         },
-        { text: "OK", onPress: () => this._deletePlace() }
+        { text: "OK", onPress: () => this._deletePlace() },
       ],
       { cancelable: false }
     );
@@ -108,13 +107,13 @@ class PlaceDetailsComponent extends React.Component {
             latitude: this.props.latitude,
             longitude: this.props.longitude,
             latitudeDelta: 0.01,
-            longitudeDelta: 0.01
+            longitudeDelta: 0.01,
           }}
         >
           <Marker
             coordinate={{
               latitude: this.props.latitude,
-              longitude: this.props.longitude
+              longitude: this.props.longitude,
             }}
           />
         </MapView>
@@ -133,32 +132,32 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     height: 80,
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
   },
   arrowDown: {
-    marginRight: 20
+    marginRight: 20,
   },
   arrowUp: {
     marginRight: 20,
-    marginTop: 10
+    marginTop: 10,
   },
   delete: {
     marginTop: 10,
     marginRight: 5,
-    marginLeft: 5
+    marginLeft: 5,
   },
   placeText: {
     fontSize: 25,
-    marginLeft: 20
+    marginLeft: 20,
   },
   placeTextMaximized: {
-    fontSize: 25
+    fontSize: 25,
   },
   nextButton: {
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
@@ -169,44 +168,44 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     margin: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
   placeMaximizedContainer: {
     marginTop: 1,
     width: "100%",
     backgroundColor: "white",
-    height: 250
+    height: 250,
   },
   placeTextContainer: {
     marginTop: 10,
     width: "70%",
     marginLeft: 20,
     flexDirection: "row",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   adressTextContainer: {
     marginLeft: 15,
     marginTop: 10,
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   adressText: {
-    fontSize: 15
+    fontSize: 15,
   },
   headerPlaceContainer: {
     marginTop: 10,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
   },
   map: {
     marginTop: 5,
-    flex: 1
-  }
+    flex: 1,
+  },
 });
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    idPlaceDetailled: state.selectDetailledPlace.idPlaceDetailled
+    idPlaceDetailled: state.selectDetailledPlace.idPlaceDetailled,
   };
 };
 

@@ -8,15 +8,14 @@ import { RefreshData } from "../../../API/Data";
 
 class TravelConfirmationPage extends React.Component {
   static navigationOptions = {
-    headerShown: false
+    headerShown: false,
   };
   constructor(props) {
     super(props);
     this.state = { startPosition: null, isLoading: true };
-    console.log(props);
   }
-  sleep = milliseconds => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds));
+  sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
   };
 
   _displayLoading() {
@@ -38,7 +37,7 @@ class TravelConfirmationPage extends React.Component {
         this.props.dispatch(action);
         const navigateAction = StackActions.reset({
           index: 0,
-          actions: [NavigationActions.navigate({ routeName: "Home" })]
+          actions: [NavigationActions.navigate({ routeName: "Home" })],
         });
         this.props.navigation.dispatch(navigateAction);
       });
@@ -49,7 +48,7 @@ class TravelConfirmationPage extends React.Component {
             backgroundColor: "#57E976",
             flex: 1,
             alignItems: "center",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <Image
@@ -66,10 +65,10 @@ class TravelConfirmationPage extends React.Component {
 
   _getLocation() {
     navigator.geolocation.getCurrentPosition(
-      async position => {
+      async (position) => {
         const startPosition = {
           latitudePosition: position.coords.latitude.toString(),
-          longitudePosition: position.coords.longitude.toString()
+          longitudePosition: position.coords.longitude.toString(),
         };
 
         await AddTravel(
@@ -79,10 +78,9 @@ class TravelConfirmationPage extends React.Component {
           parseInt(this.props.type)
         );
         let isRefreshDataValid = await RefreshData();
-        console.log(isRefreshDataValid);
         this.setState({ isLoading: false });
       },
-      error => Alert.alert(error.message),
+      (error) => Alert.alert(error.message),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   }
@@ -103,11 +101,11 @@ class TravelConfirmationPage extends React.Component {
 }
 
 const styles = StyleSheet.create({});
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     type: state.selectType.type,
     friendsSelected: state.selectFriend.idsSelected,
-    placeSelected: state.selectPlace.idSelected
+    placeSelected: state.selectPlace.idSelected,
   };
 };
 

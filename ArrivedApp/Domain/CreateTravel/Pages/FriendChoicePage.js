@@ -5,7 +5,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import { getFriends } from "../../../API/Storage";
 import FriendComponent from "../Components/FriendComponent";
@@ -14,7 +14,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 class FriendChoicePage extends React.Component {
   static navigationOptions = {
-    title: "Qui veux-tu prévenir ?"
+    title: "Qui veux-tu prévenir ?",
   };
   constructor(props) {
     super(props);
@@ -23,13 +23,12 @@ class FriendChoicePage extends React.Component {
   _getFriends() {
     this.setState({ isFetching: true });
     getFriends()
-      .then(req => JSON.parse(req))
-      .then(json => {
+      .then((req) => JSON.parse(req))
+      .then((json) => {
         this.setState({ friendsData: json, isFetching: false });
       });
   }
   componentDidMount() {
-    console.log("COmponent did mount");
     this._getFriends();
   }
   _displayButton() {
@@ -50,7 +49,7 @@ class FriendChoicePage extends React.Component {
   DATA = [
     { idAccount: 1, surnameAccount: "Jean", nameAccount: "Hastoy" },
     { idAccount: 2, surnameAccount: "Matéo", nameAccount: "Fournié" },
-    { idAccount: 3, surnameAccount: "Solène", nameAccount: "Hanrio" }
+    { idAccount: 3, surnameAccount: "Solène", nameAccount: "Hanrio" },
   ];
   render() {
     return (
@@ -71,7 +70,7 @@ class FriendChoicePage extends React.Component {
                 idAccount={item.idAccount}
               ></FriendComponent>
             )}
-            keyExtractor={item => item.idAccount.toString()}
+            keyExtractor={(item) => item.idAccount.toString()}
           />
         </View>
         {this._displayButton()}
@@ -85,43 +84,43 @@ const styles = StyleSheet.create({
   friendContainer: { marginTop: 10, backgroundColor: "white", flex: 1 },
   text: {
     fontSize: 25,
-    marginLeft: 10
+    marginLeft: 10,
   },
   addFriendText: {
     color: "#4B6584",
     fontSize: 20,
-    marginLeft: 5
+    marginLeft: 5,
   },
   headerContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 5
+    marginBottom: 5,
   },
   addFriendContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginRight: 5
+    marginRight: 5,
   },
   addImage: {
     width: 15,
-    height: 15
+    height: 15,
   },
   nextButton: {
     height: 60,
     width: Dimensions.get("screen").width,
     backgroundColor: "#4B6584",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   nextText: {
     color: "white",
-    fontSize: 25
-  }
+    fontSize: 25,
+  },
 });
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    idsSelected: state.selectFriend.idsSelected
+    idsSelected: state.selectFriend.idsSelected,
   };
 };
 

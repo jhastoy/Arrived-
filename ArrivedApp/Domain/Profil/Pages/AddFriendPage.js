@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   Dimensions,
   Keyboard,
-  Alert
+  Alert,
 } from "react-native";
 import { RefreshData } from "../../../API/Data";
 import { GetFriendByPhoneNumber, AddFriend } from "../../../API/Friends";
@@ -16,7 +16,7 @@ import FriendsDetailsComponent from "../Components/FriendDetailsComponent";
 
 class AddFriendPage extends React.Component {
   static navigationOptions = {
-    title: "Ajouter un ami"
+    title: "Ajouter un ami",
   };
   constructor(props) {
     super(props);
@@ -26,7 +26,7 @@ class AddFriendPage extends React.Component {
       idAccount: 0,
       surnameAccount: "",
       phoneNumberFriend: "",
-      isButtonFetching: false
+      isButtonFetching: false,
     };
   }
 
@@ -38,7 +38,7 @@ class AddFriendPage extends React.Component {
       idAccount: account.idAccount,
       surnameAccount: account.surnameAccount,
       phoneNumberFriend: account.phoneNumberAccount,
-      isFetching: false
+      isFetching: false,
     });
   }
   async _addFriend() {
@@ -50,7 +50,6 @@ class AddFriendPage extends React.Component {
   }
   _displayAccountDetails() {
     if (this.state.nameAccount != "") {
-      console.log("account details");
       if (this.state.nameAccount == null) {
         Alert.alert(
           "Ajout d'un ami",
@@ -60,8 +59,8 @@ class AddFriendPage extends React.Component {
               text: "Ok",
               onPress: () =>
                 this.setState({ nameAccount: "", phoneNumberFriend: "" }),
-              style: "cancel"
-            }
+              style: "cancel",
+            },
           ],
           { cancelable: false }
         );
@@ -84,7 +83,7 @@ class AddFriendPage extends React.Component {
       await this.setState({
         ...this.state,
         phoneNumberFriend: text,
-        isFetching: true
+        isFetching: true,
       });
       await this._searchFriend();
     } else {
@@ -131,7 +130,7 @@ class AddFriendPage extends React.Component {
             value={this.state.phoneNumberFriend}
             maxLength={10}
             keyboardType="numeric"
-            onChangeText={text => {
+            onChangeText={(text) => {
               this._phoneNumberUpdate(text);
             }}
             style={styles.placeNameInput}
@@ -150,10 +149,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   searchLoading: {
-    marginTop: 40
+    marginTop: 40,
   },
   friendDetailContainer: {
     marginTop: 40,
@@ -161,23 +160,23 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     shadowOpacity: 0.15,
     shadowRadius: 2,
     elevation: 1,
     borderRadius: 10,
-    backgroundColor: "white"
+    backgroundColor: "white",
   },
   buttonContainer: {
     position: "absolute",
-    bottom: 0
+    bottom: 0,
   },
   button: {
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.27,
     shadowRadius: 4.65,
@@ -188,18 +187,18 @@ const styles = StyleSheet.create({
     width: Dimensions.get("screen").width,
     backgroundColor: "#4B6584",
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   buttonText: {
     color: "white",
-    fontSize: 25
+    fontSize: 25,
   },
   placeNameInput: {
     marginTop: 20,
     marginBottom: 10,
     width: "50%",
     fontSize: 25,
-    borderBottomWidth: 1
+    borderBottomWidth: 1,
   },
   placeHeader: {
     flexDirection: "row",
@@ -210,17 +209,17 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     shadowOpacity: 0.15,
     shadowRadius: 2,
-    elevation: 1
+    elevation: 1,
   },
   map: {
     marginTop: 5,
     height: "100%",
-    width: "100%"
-  }
+    width: "100%",
+  },
 });
 
 export default AddFriendPage;

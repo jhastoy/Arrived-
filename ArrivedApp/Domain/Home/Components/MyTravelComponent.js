@@ -41,7 +41,6 @@ class MyTravelComponent extends React.Component {
       let travel;
       if (this.state.travel == null) {
         this.setState({ isFetching: true });
-        console.log("refreshtraveltnulll");
         travel = await GetUserTravel();
         this.setState({
           isFetching: false,
@@ -51,8 +50,6 @@ class MyTravelComponent extends React.Component {
         });
       } else {
         if (!this.state.paused && !this.state.finished) {
-          console.log("refreshtraveltnulll");
-
           travel = await GetUserTravel();
           if (!travel.isFinished && !travel.isPaused) this._startLocation();
           this.setState({
@@ -259,7 +256,6 @@ class MyTravelComponent extends React.Component {
 
   async _startLocation() {
     if (this.props.inTravel) {
-      console.log("startlocation");
       let taskRegistered = await TaskManager.isTaskRegisteredAsync(
         "SENDING_POSITION"
       );
@@ -288,7 +284,6 @@ class MyTravelComponent extends React.Component {
       [
         {
           text: "Annuler",
-          onPress: () => console.log("Cancel Pressed"),
           style: "cancel",
         },
         { text: "Oui", onPress: () => this._stopLocation() },

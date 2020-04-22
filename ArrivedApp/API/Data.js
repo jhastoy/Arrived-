@@ -16,7 +16,6 @@ export default async function initData(response) {
   await saveToken(response.token);
   await saveFriends(response.friendsAccount);
   await savePlaces(response.placesAccount);
-  console.log("Intravel :" + response.inTravel);
   await saveInTravel(response.inTravel);
   await saveInDanger(response.inDanger);
   await saveSurnameAccount(response.surnameAccount);
@@ -27,15 +26,12 @@ export default async function initData(response) {
 export async function RefreshData() {
   let isTokenValid = await IsTokenValid();
   if (!isTokenValid) {
-    console.log("token not valid");
     return false;
   }
   let response = await RefreshDataUser();
-  console.log(response);
   await saveFriends(response.friendsAccount);
   await savePlaces(response.placesAccount);
   await saveInTravel(response.inTravel);
-  console.log(response.surnameAccount);
   await saveSurnameAccount(response.surnameAccount);
   return true;
 }
@@ -48,8 +44,6 @@ export async function registerForPushNotificationsAsync() {
       return;
     }
     let token = await Notifications.getExpoPushTokenAsync();
-    console.log("toekn:");
-    console.log(token);
     await UpdateExpoToken(token);
   }
 }

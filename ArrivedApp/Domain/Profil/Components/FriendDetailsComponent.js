@@ -6,7 +6,7 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  Alert
+  Alert,
 } from "react-native";
 import { Icon } from "react-native-elements";
 import { DeleteFriend } from "../../../API/Friends";
@@ -25,10 +25,9 @@ class FriendsDetailsComponent extends React.Component {
       [
         {
           text: "Annuler",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
+          style: "cancel",
         },
-        { text: "OK", onPress: () => this._deleteFriend() }
+        { text: "OK", onPress: () => this._deleteFriend() },
       ],
       { cancelable: false }
     );
@@ -87,34 +86,34 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     marginLeft: 25,
     borderColor: "white",
-    borderWidth: 2
+    borderWidth: 2,
   },
   rowContainer: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
   },
   textContainer: {
     justifyContent: "center",
     width: 250,
     height: 60,
-    marginLeft: 20
+    marginLeft: 20,
   },
   text: {
-    fontSize: 25
+    fontSize: 25,
   },
   containerStyleDetails: {
     width: "100%",
     backgroundColor: "white",
     height: 80,
     justifyContent: "center",
-    borderRadius: 10
+    borderRadius: 10,
   },
   containerStyle: {
     width: "100%",
     backgroundColor: "white",
     height: 80,
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });
 
 export default FriendsDetailsComponent;

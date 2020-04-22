@@ -18,16 +18,13 @@ class ProfilPage extends React.Component {
     this.state = { surname: "" };
   }
   _navigateToPlaces() {
-    console.log("navigate");
     this.props.navigation.navigate("Places");
   }
   _navigateToFriends() {
-    console.log("navigate");
     this.props.navigation.navigate("Friends");
   }
   async componentDidMount() {
     let surname = await getSurnameAccount();
-    console.log(surname);
     this.setState({ surname: surname });
   }
 

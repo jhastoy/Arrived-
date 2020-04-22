@@ -1,14 +1,14 @@
 import { getToken } from "./Storage";
 
 export function GetFriends() {
-  return getToken().then(token =>
+  return getToken().then((token) =>
     fetch("https://arrivedapi.conveyor.cloud/api/Friend/GetFriendAccount", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
-      }
-    }).then(response => {
+        Authorization: "Bearer " + token,
+      },
+    }).then((response) => {
       if (response.ok) {
         return response.json();
       } else {
@@ -21,7 +21,6 @@ export function GetFriends() {
 }
 
 export async function DeleteFriend(idFriend) {
-  console.log("UPDATE TOKEN");
   let token = await getToken();
   return fetch(
     "https://arrivedapi.conveyor.cloud/api/Friend/DeleteFriendAccount",
@@ -29,18 +28,17 @@ export async function DeleteFriend(idFriend) {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
-        idAccount: idFriend
-      })
+        idAccount: idFriend,
+      }),
     }
-  ).then(response => {
+  ).then((response) => {
     if (!response.ok) throw new Error("Erreur réseau");
   });
 }
 export async function GetFriendByPhoneNumber(phoneNumber) {
-  console.log("UPDATE TOKEN");
   let token = await getToken();
   return fetch(
     "https://arrivedapi.conveyor.cloud/api/Friend/GetAccountByPhoneNumber",
@@ -48,13 +46,13 @@ export async function GetFriendByPhoneNumber(phoneNumber) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
-        phoneNumberAccount: phoneNumber
-      })
+        phoneNumberAccount: phoneNumber,
+      }),
     }
-  ).then(response => {
+  ).then((response) => {
     if (!response.ok) throw new Error("Erreur réseau");
     else {
       let responseJson = response.json();
@@ -63,8 +61,6 @@ export async function GetFriendByPhoneNumber(phoneNumber) {
   });
 }
 export async function AddFriend(phoneNumber) {
-  console.log(phoneNumber);
-  console.log("UPDATE TOKEN");
   let token = await getToken();
   return fetch(
     "https://arrivedapi.conveyor.cloud/api/Friend/AddFriendAccount",
@@ -72,13 +68,13 @@ export async function AddFriend(phoneNumber) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: "Bearer " + token
+        Authorization: "Bearer " + token,
       },
       body: JSON.stringify({
-        phoneNumberAccount: phoneNumber
-      })
+        phoneNumberAccount: phoneNumber,
+      }),
     }
-  ).then(response => {
+  ).then((response) => {
     if (!response.ok) throw new Error("Erreur réseau");
     else {
       let responseJson = response.json();
